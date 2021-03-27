@@ -38,10 +38,12 @@ export const SingleRow = ({
   ]);
   const addFish = useCallback(() => {
     const score = (fishInPounds * 100) / specimenWeight;
+    /*
     console.log('score', score);
     console.log('specimenWeight', specimenWeight);
     console.log('fishInPounds', fishInPounds);
     console.log(fishInPounds >= specimenWeight);
+    */
     if (score === 0) return;
     const fish = {
       name: specimen,
