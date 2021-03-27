@@ -9,12 +9,14 @@ export const SelectNumber = ({
   title,
   width,
   padding,
+  value,
 }: {
-  onChange: () => void;
+  onChange: (value: number) => void;
   // eslint-disable-next-line react/require-default-props
   title?: string;
   width: number;
   padding: number;
+  value: number;
 }): JSX.Element => {
   return (
     <Box flex={1} display="flex" flexDirection="column">
@@ -38,7 +40,8 @@ export const SelectNumber = ({
           style={{width: '50px'}}
           max={100}
           defaultValue={0}
-          onChange={onChange}
+          value={value}
+          onChange={(newValue) => onChange(newValue)}
         />
       </Box>
     </Box>

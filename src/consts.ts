@@ -1,9 +1,10 @@
-export const deviceWidth = Math.max(
+export const deviceWidth = Math.min(
   document.body.scrollWidth,
   document.documentElement.scrollWidth,
   document.body.offsetWidth,
   document.documentElement.offsetWidth,
   document.documentElement.clientWidth,
+  180,
 );
 
 export const fishSpecies = [
