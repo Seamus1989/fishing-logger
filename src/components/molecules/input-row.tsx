@@ -187,12 +187,13 @@ export const InputRow = ({
     const newTotal = 1 + howManyRows;
     setHowManyRows(newTotal);
   }, [howManyRows]);
-
+  /*
   const removeRow = useCallback(() => {
     // TODO
     const newTotal = -1 + howManyRows;
     setHowManyRows(newTotal);
   }, [howManyRows]);
+  */
 
   return (
     <Box

@@ -120,6 +120,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
     setUsers(null);
     setCurrentUser('');
   }, []);
+  // eslint-disable-next-line no-console
   console.log(users);
 
   const deleteUser = useCallback(() => {
