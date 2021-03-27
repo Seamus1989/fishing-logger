@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 
 import {InputNumber} from 'antd';
@@ -10,6 +11,7 @@ export const SelectNumber = ({
   width,
   padding,
   value,
+  renderRight,
 }: {
   onChange: (value: number) => void;
   // eslint-disable-next-line react/require-default-props
@@ -17,7 +19,11 @@ export const SelectNumber = ({
   width: number;
   padding: number;
   value: number;
+  renderRight?: JSX.Element;
 }): JSX.Element => {
+  const renderWidth = renderRight
+    ? `${50 + 2 * padding}px`
+    : `${100 + 2 * padding}px`;
   return (
     <Box flex={1} display="flex" flexDirection="column">
       {title && (
@@ -29,7 +35,7 @@ export const SelectNumber = ({
       )}
       <Box
         px={`${padding}px`}
-        width="50px"
+        width={renderWidth}
         display="flex"
         flexDirection="row"
         flex={1}
@@ -37,12 +43,13 @@ export const SelectNumber = ({
         <InputNumber
           inputMode="decimal"
           min={0}
-          style={{width: '50px'}}
+          style={{width: renderWidth}}
           max={100}
           defaultValue={0}
           value={value}
           onChange={(newValue) => onChange(newValue)}
         />
+        {renderRight || null}
       </Box>
     </Box>
   );

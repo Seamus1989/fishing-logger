@@ -94,30 +94,65 @@ const SingleRow = ({
 
   const removeFish = useCallback(() => {
     deleteFish(`${specimen}-${rowNumber}`);
+    setPounds(0);
+    setOunces(0);
+    setDrams(0);
   }, [deleteFish, rowNumber, specimen]);
+
+  const handleClick = useCallback(() => {
+    if (isAdded) {
+      removeFish();
+      return;
+    }
+    addFish();
+  }, [addFish, isAdded, removeFish]);
+
+  const renderRight = useMemo(() => {
+    return (
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        flexDirection="column"
+        flex={1}
+        pl="10px"
+        onClick={() => handleClick()}
+      >
+        <Box
+          borderBottomStyle="solid"
+          borderBottomWidth={1}
+          borderBottomColor="black"
+        >
+          <Text lineHeight="20px" fontWeight={300} fontSize="12px">
+            {isAdded ? ` Delete ` : ` Add `}
+          </Text>
+        </Box>
+      </Box>
+    );
+  }, [handleClick, isAdded]);
 
   return (
     <Box py="5px" flex={1} display="flex" flexDirection="row">
       <SelectNumber
-        width={100}
+        width={50}
         padding={5}
         title={isFirst ? 'Pounds' : undefined}
         onChange={(value) => setPounds(value)}
         value={pounds}
       />
       <SelectNumber
-        width={100}
+        width={50}
         padding={5}
         title={isFirst ? 'Ounces' : undefined}
         onChange={(value) => setOunces(value)}
         value={ounces}
       />
       <SelectNumber
-        width={100}
+        width={50}
         padding={5}
         title={isFirst ? 'Drams' : undefined}
         onChange={(value) => setDrams(value)}
         value={drams}
+        renderRight={renderRight}
       />
     </Box>
   );
@@ -167,7 +202,13 @@ export const InputRow = ({
       borderRadius="5px"
       bg="#FFC2BB"
     >
-      <Box flex={1} margin="5px" display="flex" flexDirection="row">
+      <Box
+        onClick={() => setShowDropdown(!showDropdown)}
+        flex={1}
+        margin="5px"
+        display="flex"
+        flexDirection="row"
+      >
         <Box
           display="flex"
           flex={1}
