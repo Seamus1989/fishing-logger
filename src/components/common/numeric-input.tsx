@@ -44,7 +44,6 @@ export const SelectNumber = ({
           inputMode="decimal"
           min={0}
           style={{width: renderWidth}}
-          max={100}
           defaultValue={0}
           value={value}
           onChange={(newValue) => onChange(newValue)}

@@ -6,8 +6,14 @@ export const deviceWidth = Math.min(
   document.documentElement.clientWidth,
   // TODO sort out
 );
+export const totalPlusIconWidth = 32;
+type Fish = {
+  name: string;
+  specimenWeight: number;
+};
+export type FishList = Fish[];
 
-export const fishSpecies = [
+export const fishSpecies: FishList = [
   {
     name: 'Bass',
     specimenWeight: 8.0,
