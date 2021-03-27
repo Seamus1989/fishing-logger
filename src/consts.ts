@@ -4,7 +4,7 @@ export const deviceWidth = Math.min(
   document.body.offsetWidth,
   document.documentElement.offsetWidth,
   document.documentElement.clientWidth,
-  180,
+  // TODO sort out
 );
 
 export const fishSpecies = [
