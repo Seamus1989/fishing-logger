@@ -10,7 +10,6 @@ import {AppHeader} from './components/molecules/user-header';
 import {StyledImage} from './components/random';
 import {UserProvider, useUserContext} from './context/all-user-score';
 import {FishProvider, useFishContext} from './context/fish-list';
-import {ModalProvider} from './context/modal-context';
 import logo from './logo.png';
 
 const StyledContainer = styled.div<{disabled: boolean}>`
@@ -57,13 +56,11 @@ const AppInner = () => {
 };
 export const App = () => {
   return (
-    <ModalProvider>
-      <UserProvider>
-        <FishProvider>
-          <AppInner />
-        </FishProvider>
-      </UserProvider>
-    </ModalProvider>
+    <UserProvider>
+      <FishProvider>
+        <AppInner />
+      </FishProvider>
+    </UserProvider>
   );
 };
 
@@ -96,6 +93,10 @@ modal to show all user info https://ant.design/components/modal/ - evertyhing el
 Add other fish
 Handle rounding numbersssss
 Style font sizes a bit for mobile
+
+BONUS
+REGIONS
+User header info to transition in
 
 
 
