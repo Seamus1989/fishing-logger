@@ -114,4 +114,96 @@ export const fishSpecies: FishList = [
     name: 'Red Mullet',
     specimenWeight: 1.25,
   },
+  {
+    name: 'Thick Lip Mullet',
+    specimenWeight: 4.0,
+  },
+  {
+    name: 'Thin Lip Mullet',
+    specimenWeight: 3.5,
+  },
+  {
+    name: 'Plaice',
+    specimenWeight: 2.5,
+  },
+  {
+    name: 'Polluck',
+    specimenWeight: 3.75,
+  },
+  {
+    name: 'Pouting',
+    specimenWeight: 1.5,
+  },
+  {
+    name: 'Blonde Ray',
+    specimenWeight: 13.0,
+  },
+  {
+    name: 'Small Eyed Ray',
+    specimenWeight: 8.0,
+  },
+  {
+    name: 'Spotted Ray',
+    specimenWeight: 5.0,
+  },
+  {
+    name: 'Sting Ray',
+    specimenWeight: 20.0,
+  },
+  {
+    name: 'Thornback Ray',
+    specimenWeight: 10.0,
+  },
+  {
+    name: 'Undulate Ray',
+    specimenWeight: 12.0,
+  },
+  {
+    name: 'Rockling',
+    specimenWeight: 1.5,
+  },
+  {
+    name: 'Scad',
+    specimenWeight: 1.0,
+  },
+  {
+    name: 'Silver Eel',
+    specimenWeight: 2.5,
+  },
+  {
+    name: 'Smooth Hounds',
+    specimenWeight: 8.0,
+  },
+  {
+    name: 'Sole',
+    specimenWeight: 1.75,
+  },
+  {
+    name: 'Spurdog',
+    specimenWeight: 8.0,
+  },
+  {
+    name: 'Tope',
+    specimenWeight: 25,
+  },
+  {
+    name: 'Trigger Fish',
+    specimenWeight: 2.5,
+  },
+  {
+    name: 'Turbot',
+    specimenWeight: 3.0,
+  },
+  {
+    name: 'Whiting',
+    specimenWeight: 1.5,
+  },
+  {
+    name: 'Ballan Wrasse',
+    specimenWeight: 4.0,
+  },
+  {
+    name: 'Cucko Wrasse',
+    specimenWeight: 1.25,
+  },
 ];
