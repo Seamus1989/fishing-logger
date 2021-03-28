@@ -1,6 +1,7 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import {Input} from 'antd';
 import styled from 'styled-components';
+import AnimateHeight from 'react-animate-height';
 import {useUserContext} from '../../context/all-user-score';
 import {Box} from '../common/box';
 import {Text} from '../common/text';
@@ -22,6 +23,7 @@ const StyledContainer = styled.div`
 
 const UserHeaderProfile = () => {
   const {currentUser, users} = useUserContext();
+  const [height, setHeight] = useState<string | number>(0);
 
   const {setShow} = useModalContext();
   const user = users
@@ -38,17 +40,25 @@ const UserHeaderProfile = () => {
     return '';
   }, [user, users]);
 
-  if (!user) return null;
+  useEffect(() => {
+    if (!user) {
+      setHeight(0);
+    }
+
+    if (user) {
+      setHeight('auto');
+    }
+  }, [user]);
 
   return (
-    <>
+    <AnimateHeight duration={500} height={height}>
       <Box m="10px" bg="#FFC2BB" borderRadius="10px" p="15px">
         <Box>
           <Text lineHeight="20px" fontWeight={600} fontSize="18px">
-            {user.name}
+            {user ? user.name : ''}
           </Text>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Total Points: {user.score}
+            Total Points: {user ? user.score : 0}
           </Text>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
             Total Fish: {user?.allFish?.length || 0}
@@ -63,7 +73,7 @@ const UserHeaderProfile = () => {
           <UserModalContent />
         </Box>
       </Box>
-    </>
+    </AnimateHeight>
   );
 };
 export const AppHeader = ({
