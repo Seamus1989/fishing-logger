@@ -4,8 +4,16 @@ export const deviceWidth = Math.min(
   document.body.offsetWidth,
   document.documentElement.offsetWidth,
   document.documentElement.clientWidth,
-  // TODO sort out
 );
+
+export const deviceHeight = Math.min(
+  document.body.scrollHeight,
+  document.documentElement.scrollHeight,
+  document.body.offsetHeight,
+  document.documentElement.offsetHeight,
+  document.documentElement.clientHeight,
+);
+
 export const totalPlusIconWidth = 32;
 type Fish = {
   name: string;
