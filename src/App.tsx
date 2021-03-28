@@ -3,11 +3,15 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 
 import './App.css';
+import {Box} from './components/common/box';
 import {InputRow} from './components/molecules/input-row';
+import {Nav} from './components/molecules/nav';
 import {AppHeader} from './components/molecules/user-header';
-
+import {StyledImage} from './components/random';
 import {UserProvider, useUserContext} from './context/all-user-score';
 import {FishProvider, useFishContext} from './context/fish-list';
+import {ModalProvider} from './context/modal-context';
+import logo from './logo.png';
 
 const StyledContainer = styled.div<{disabled: boolean}>`
   overflow-y: scroll;
@@ -21,6 +25,19 @@ const AppInner = () => {
   return (
     <>
       <AppHeader showMessage={showMessage} />
+      <Box
+        py="15px"
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
+        flex={1}
+      >
+        <Box flex={1} />
+        <Box>
+          <StyledImage height={150} src={logo} width={150} />
+        </Box>
+        <Box flex={1} />
+      </Box>
       <StyledContainer
         disabled={!currentUser}
         onClick={() => {
@@ -34,16 +51,19 @@ const AppInner = () => {
           return <InputRow specimen={name} specimenWeight={specimenWeight} />;
         })}
       </StyledContainer>
+      <Nav />
     </>
   );
 };
 export const App = () => {
   return (
-    <UserProvider>
-      <FishProvider>
-        <AppInner />
-      </FishProvider>
-    </UserProvider>
+    <ModalProvider>
+      <UserProvider>
+        <FishProvider>
+          <AppInner />
+        </FishProvider>
+      </UserProvider>
+    </ModalProvider>
   );
 };
 
@@ -68,5 +88,24 @@ Nav = add user ? scoreboard ? view Current ? search fish
 
 ALSO
 Handle rounding numbersssss
+
+
+TONIGHT
+modal to show all user info https://ant.design/components/modal/ - evertyhing else is shit
+// or use nav menu and router
+Add other fish
+Handle rounding numbersssss
+Style font sizes a bit for mobile
+
+
+
+Later
+The bit I've made comments about
+user background // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
+multiple users - need a button, next user - reset all form values (when I do that big)
+Error toast
+Check TODO
+Test
+
 
 */
