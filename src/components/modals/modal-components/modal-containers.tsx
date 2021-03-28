@@ -20,7 +20,7 @@ const ModalContainer = styled.div<{
 }>`
   background-color: ${(props) =>
     props.backgroundColor ? props.backgroundColor : 'white'};
-  height: '72vh';
+  height: '62vh';
   width: '85vw';
   border-radius: 15px;
   border-width: 2px;
@@ -184,8 +184,6 @@ const ModalInnerContainer = ({
         flexDirection="column"
         justifyContent="space-between"
         flex={1}
-        height={modalSize.height}
-        width={modalSize.width}
       >
         {children}
       </Box>
