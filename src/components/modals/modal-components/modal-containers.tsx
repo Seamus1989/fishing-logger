@@ -184,6 +184,11 @@ const ModalInnerContainer = ({
         flexDirection="column"
         justifyContent="space-between"
         flex={1}
+        maxHeight={modalSize.height}
+        width={modalSize.width}
+        // height={modalSize.height}
+        // width={modalSize.width}
+        // SEAMO see how this handles lodads of content!
       >
         {children}
       </Box>

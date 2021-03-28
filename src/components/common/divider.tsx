@@ -7,7 +7,7 @@ export const Divider = (): JSX.Element => {
 
 export const CentralDivider = (): JSX.Element => {
   return (
-    <Box display="flex" flexDirection="row" my="two" px="two">
+    <Box display="flex" flexDirection="row" my="5px" px="5px">
       <Box flex={5}>
         <Divider />
       </Box>

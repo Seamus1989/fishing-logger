@@ -20,6 +20,11 @@ const ModalProvider = (props: {children: JSX.Element}): JSX.Element => {
   const [animate, setAnimateModal] = useState(false);
 
   const setShow = useCallback((val: boolean) => {
+    // overflow: hidden;
+    document.body.setAttribute(
+      'style',
+      val ? 'overflow-y: hidden;' : 'overflow-y: scroll;',
+    );
     setShowModal(val);
   }, []);
   const setAnimate = useCallback((val: boolean) => {
