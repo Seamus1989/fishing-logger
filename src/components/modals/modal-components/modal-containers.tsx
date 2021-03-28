@@ -3,7 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import {deviceHeight, deviceWidth} from '../../../consts';
 import {Box} from '../../common/box';
-import {Button} from '../../common/button';
+
+import {Text} from '../../common/text';
+import {StyledImage} from '../../random';
+import remove from '../../../remove.svg';
 
 const ModalContainer = styled.div<{
   animate: boolean;
@@ -16,9 +19,8 @@ const ModalContainer = styled.div<{
 }>`
   background-color: ${(props) =>
     props.backgroundColor ? props.backgroundColor : 'white'};
-  height: ${(props) => props.modalSize.height};
-  width: ${(props) => props.modalSize.width};
-  margin: 40px;
+  height: '72vh';
+  width: '85vw';
   border-radius: 15px;
   border-width: 2px;
   border-color: black;
@@ -80,31 +82,27 @@ const ModalHeader = ({
   show: boolean;
 }): JSX.Element => {
   return (
-    <Box backgroundColor="green">
-      <Box p="two" m="four">
-        {title}
-      </Box>
-
-      <Box position="absolute" top="10px" right="10px">
-        <Button
-          tabIndex={0}
-          style={{
-            fontSize: '9px',
-            borderRadius: '15px',
-            display: 'block',
-            padding: '1px 5px',
-            margin: '0 auto',
-          }}
-          onKeyDown={() => {
-            setAnimate(false);
-          }}
-          onClick={() => {
-            setAnimate(false);
-          }}
-          variant="closeButton"
+    <Box backgroundColor="white">
+      <Box p="10px" m="15px" display="flex" flexDirection="row">
+        <Box display="flex" flexDirection="column" justifyContent="center">
+          <Text lineHeight="18px" fontWeight={400} fontSize="14px">
+            {title}
+          </Text>
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="flex-end"
+          flex={1}
         >
-          &#215;
-        </Button>
+          <Box
+            onClick={() => {
+              setAnimate(false);
+            }}
+          >
+            <StyledImage height={25} width={25} src={remove} alt="logo" />
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
