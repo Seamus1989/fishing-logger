@@ -1,0 +1,13 @@
+{
+    "extends": "eslint-config-planes",
+    "rules": {
+      "react/jsx-props-no-spreading": 0
+    },
+    "env": {
+      "browser": true,
+      "jest" : true
+    },
+    "globals": {
+      "Stripe": true
+    }
+  }
