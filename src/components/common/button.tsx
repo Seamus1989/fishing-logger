@@ -41,6 +41,8 @@ export const Button = styled.button<
     appearance: 'none',
     whiteSpace: 'normal',
     '&:hover, :active': {
+      transition: 'background 0.1s, border 0.2s',
+      bottom: '3px',
       cursor: 'pointer',
       buttonShadow: '0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.1)',
     },

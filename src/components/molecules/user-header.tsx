@@ -4,33 +4,66 @@ import styled from 'styled-components';
 import {useUserContext} from '../../context/all-user-score';
 import {Box} from '../common/box';
 import {Text} from '../common/text';
-import {StyledImage} from '../random';
+import {StyledImage, UnderlinedText} from '../random';
 import plus from '../../plus.svg';
 import {useFishContext} from '../../context/fish-list';
 import {MyDropdown} from './input-row';
+import {useModalContext} from '../../context/modal-context';
+import {UserModalContent} from '../modals/user-modal';
 
 const StyledContainer = styled.div`
   position: sticky;
   position: -webkit-sticky;
   top: 0;
   left: 0;
+  background-color: #ff8883;
+  z-index: 100;
 `;
 
 const UserHeaderProfile = () => {
   const {currentUser, users} = useUserContext();
+
+  const {setShow} = useModalContext();
   const user = users
     ? users.find((thisUser) => thisUser.name === currentUser)
     : null;
+
+  const specimensString = useMemo(() => {
+    if (users && users.length) {
+      if (!user) return '';
+      if (!user.totalSpecimenNumber) return '';
+
+      return new Array(user.totalSpecimenNumber).fill('🐟').join(' ');
+    }
+    return '';
+  }, [user, users]);
+
   if (!user) return null;
+
   return (
-    <Box>
-      <Box>
-        <Text>{user.name}</Text>
-        <Text>Total Points: {user.score}</Text>
-        <Text>Total Fish: {user?.allFish?.length || 0}</Text>
-        <Text>Specimen number: {user?.specimens?.length || 0}</Text>
+    <>
+      <Box m="10px" bg="#FFC2BB" borderRadius="10px" p="15px">
+        <Box>
+          <Text lineHeight="20px" fontWeight={600} fontSize="18px">
+            {user.name}
+          </Text>
+          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+            Total Points: {user.score}
+          </Text>
+          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+            Total Fish: {user?.allFish?.length || 0}
+          </Text>
+          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+            Total Specimen: {specimensString}
+          </Text>
+
+          <Box onClick={() => setShow(true)} mt="5px">
+            <UnderlinedText>See All</UnderlinedText>
+          </Box>
+          <UserModalContent />
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 export const AppHeader = ({
@@ -38,21 +71,10 @@ export const AppHeader = ({
 }: {
   showMessage: boolean;
 }): JSX.Element => {
-  const {currentUser, changeUser, users} = useUserContext();
+  const {currentUser, changeUser} = useUserContext();
   const {filterFish} = useFishContext();
   const [text, setText] = useState('');
   const [fishFilter, setFishFilter] = useState('');
-
-  const specimensString = useMemo(() => {
-    if (users && users.length) {
-      const user = users.find((thisUser) => thisUser.name === currentUser);
-      if (!user) return '';
-      if (!user.totalSpecimenNumber) return '';
-
-      return new Array(user.totalSpecimenNumber).fill('🐟').join(' ');
-    }
-    return '';
-  }, [currentUser, users]);
 
   return (
     <StyledContainer>
@@ -66,10 +88,11 @@ export const AppHeader = ({
                 max={100}
                 defaultValue={0}
                 value={text}
+                disabled={!!currentUser}
                 onChange={(newValue) => setText(newValue.currentTarget.value)}
                 placeholder="Enter a new fisherer..."
               />
-              {currentUser ? null : (
+              {currentUser || text === '' ? null : (
                 <Box
                   ml="15px"
                   mr="5px"
@@ -79,6 +102,19 @@ export const AppHeader = ({
                   onClick={() => changeUser(text)}
                 >
                   <StyledImage height={20} width={20} src={plus} alt="logo" />
+                </Box>
+              )}
+              {!!currentUser && (
+                <Box
+                  onClick={() => {
+                    changeUser('');
+                    setText('');
+                  }}
+                  ml="20px"
+                  justifyContent="center"
+                  flex={1}
+                >
+                  <UnderlinedText>Edit User</UnderlinedText>
                 </Box>
               )}
             </Box>
@@ -97,14 +133,6 @@ export const AppHeader = ({
               />
             </Box>
           </Box>
-
-          {specimensString !== '' ? (
-            <Box flex={1} display="flex" flexDirection="row">
-              <Text lineHeight="12px" fontSize="10px">
-                {specimensString}
-              </Text>
-            </Box>
-          ) : null}
         </Box>
 
         <Box flex={1} display="flex">

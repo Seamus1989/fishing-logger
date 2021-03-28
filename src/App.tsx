@@ -10,6 +10,7 @@ import {AppHeader} from './components/molecules/user-header';
 import {StyledImage} from './components/random';
 import {UserProvider, useUserContext} from './context/all-user-score';
 import {FishProvider, useFishContext} from './context/fish-list';
+import {ModalProvider} from './context/modal-context';
 import logo from './logo.png';
 
 const StyledContainer = styled.div<{disabled: boolean}>`
@@ -56,11 +57,13 @@ const AppInner = () => {
 };
 export const App = () => {
   return (
-    <UserProvider>
-      <FishProvider>
-        <AppInner />
-      </FishProvider>
-    </UserProvider>
+    <ModalProvider>
+      <UserProvider>
+        <FishProvider>
+          <AppInner />
+        </FishProvider>
+      </UserProvider>
+    </ModalProvider>
   );
 };
 
@@ -97,7 +100,7 @@ Style font sizes a bit for mobile
 BONUS
 REGIONS
 User header info to transition in
-
+edit font family in text inputs!
 
 
 Later

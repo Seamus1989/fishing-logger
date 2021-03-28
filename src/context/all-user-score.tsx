@@ -97,10 +97,11 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         const newInfo = {
           name,
           allFish: allFish ? [...allFish, newFish] : [newFish],
-          specimens: specimens ? [...specimens, newFish] : [specimens],
+          specimens: specimens ? [...specimens, newFish] : [newFish],
           score: score + scoreToAdd,
           totalSpecimenNumber: totalSpecimenNumber + 1,
         } as User;
+
         setUsers([...otherUsers, newInfo]);
       }
     },
@@ -109,6 +110,10 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
 
   const changeUser = useCallback(
     (newUser: string) => {
+      if (newUser === '') {
+        setCurrentUser('');
+        return;
+      }
       setCurrentUser(newUser);
       const allUsers = users ? [...users] : [];
       setUsers([...allUsers, {name: newUser, ...defaultNewUserFields}]);

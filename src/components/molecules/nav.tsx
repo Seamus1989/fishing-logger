@@ -6,8 +6,8 @@ import user from '../../user.svg';
 import {Box} from '../common/box';
 import {StyledImage} from '../random';
 
-const navMenuHeight = '70px';
-const navIconHeight = 40;
+const navMenuHeight = '50px';
+const navIconHeight = 30;
 const NavMenuContainer = styled.div`
   background: #ff8883;
   font-family: roboto;
@@ -86,7 +86,7 @@ export const Nav = (): JSX.Element => {
           render={() => (
             <>
               <StyledImage
-                height={30}
+                height={(2 * navIconHeight) / 3}
                 width={navIconHeight}
                 src={user}
                 alt="logo"
@@ -101,7 +101,7 @@ export const Nav = (): JSX.Element => {
           onClick={showGroupUserInfo}
           render={() => (
             <StyledImage
-              height={60}
+              height={navIconHeight}
               width={navIconHeight}
               src={group}
               alt="logo"
