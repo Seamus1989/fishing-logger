@@ -68,48 +68,33 @@ export const App = () => {
 };
 
 /*
-// TODO
+// MAIN TODO
+1. Main task - having multiple users, clearing fields and being able to edit user by clicking in
 
-// TODO NOW
-1. Delete fish - and associate each with id = ${name}${number} and add to fish context
-2. Add bin Icon to bin fish
+2. User modal - list all fish logged, and connect to nav menu buttons
+create components for fish - add large fish emoji for specimens
 
-// add species total into row
-3. Add user input and sticky header, disable fields if user === '', add fish emoji to header for specimen number
-4. Add tick button to action add user
-5. Add tick button to fish to add fish - if fields not all === 0
-6. Add 10 fish and test Test, make changes
-7. Create bottom nav menu + modals
-Nav = add user ? scoreboard ? view Current ? search fish
-8. Edit user from all user screen ? 
-9. Filter fish via search
-10. Error toast? https://www.npmjs.com/package/react-toastify
-11. Message to display on input - enter weight like this or like this
-
-ALSO
-Handle rounding numbersssss
+3. Do some of the other tasks
 
 
-TONIGHT
-modal to show all user info https://ant.design/components/modal/ - evertyhing else is shit
-// or use nav menu and router
-Add other fish
-Handle rounding numbersssss
-Style font sizes a bit for mobile
+
+// RANDOM LIST
+1. Delete fish - and associate each with id = ${name}${number} and add to fish context BUG FIXXX
+5. Add check to this --- tick button to fish to add fish - if fields not all === 0
+10. Error toast? https://www.npmjs.com/package/react-toastify - modal - create Error modal
+
 
 BONUS
+BONUS POINTS
 REGIONS
-User header info to transition in
-edit font family in text inputs!
+Handle rounding numbersssss
 
 
 Later
-The bit I've made comments about
-user background // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
-multiple users - need a button, next user - reset all form values (when I do that big)
-Error toast
-Check TODO
+Check all todos
 Test
+user background  - on main page // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
+
 
 
 */

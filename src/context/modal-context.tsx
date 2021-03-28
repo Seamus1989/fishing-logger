@@ -18,6 +18,7 @@ const ModalContext = createContext<{
 const ModalProvider = (props: {children: JSX.Element}): JSX.Element => {
   const [show, setShowModal] = useState(false);
   const [animate, setAnimateModal] = useState(false);
+  console.log(animate, show);
 
   const setShow = useCallback((val: boolean) => {
     setShowModal(val);

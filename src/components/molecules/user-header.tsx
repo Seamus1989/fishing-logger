@@ -51,12 +51,14 @@ const UserHeaderProfile = () => {
   }, [user]);
 
   return (
-    <AnimateHeight duration={500} height={height}>
+    <AnimateHeight duration={450} height={height}>
       <Box m="10px" bg="#FFC2BB" borderRadius="10px" p="15px">
         <Box>
-          <Text lineHeight="20px" fontWeight={600} fontSize="18px">
-            {user ? user.name : ''}
-          </Text>
+          <Box pb="5px">
+            <Text lineHeight="20px" fontWeight={600} fontSize="18px">
+              {user ? user.name : ''}
+            </Text>
+          </Box>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
             Total Points: {user ? user.score : 0}
           </Text>

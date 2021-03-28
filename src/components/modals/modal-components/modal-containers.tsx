@@ -7,6 +7,7 @@ import {Box} from '../../common/box';
 import {Text} from '../../common/text';
 import {StyledImage} from '../../random';
 import remove from '../../../remove.svg';
+import {Divider} from '../../common/divider';
 
 const ModalContainer = styled.div<{
   animate: boolean;
@@ -83,7 +84,7 @@ const ModalHeader = ({
 }): JSX.Element => {
   return (
     <Box backgroundColor="white">
-      <Box p="10px" m="15px" display="flex" flexDirection="row">
+      <Box px="15px" py="10px" display="flex" flexDirection="row">
         <Box display="flex" flexDirection="column" justifyContent="center">
           <Text lineHeight="18px" fontWeight={400} fontSize="14px">
             {title}
@@ -104,6 +105,7 @@ const ModalHeader = ({
           </Box>
         </Box>
       </Box>
+      <Divider />
     </Box>
   );
 };
