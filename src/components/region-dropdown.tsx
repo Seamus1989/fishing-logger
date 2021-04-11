@@ -6,6 +6,9 @@ import {useFishContext} from '../context/fish-list';
 const options = [
   {value: RegionEnum.North_devon as string, label: 'North Devon'},
   {value: RegionEnum.South_devon as string, label: 'South Devon'},
+  {value: RegionEnum.Cornwall as string, label: 'Cornwall'},
+  {value: RegionEnum.Dorset as string, label: 'Dorset & Hampshire'},
+  {value: RegionEnum.Somerset as string, label: 'Avon & Somerset'},
 ];
 
 export const RegionSelect = ({disabled}: {disabled: boolean}) => {
