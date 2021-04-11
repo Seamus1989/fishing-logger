@@ -132,7 +132,7 @@ export const InputRow = ({
           justifyContent="center"
         >
           <Text lineHeight="12px" fontSize="10px">
-            {specimenWeight} lbs
+            {`${'🏆'} ${specimenWeight}`} lbs
           </Text>
         </Box>
         <Box
