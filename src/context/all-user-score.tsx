@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, {createContext, useContext, useCallback, useState} from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {randomFishEmojiGenerator, Region} from '../consts';
 
 export type Fish = {

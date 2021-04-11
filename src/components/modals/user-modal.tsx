@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useUserContext} from '../../context/all-user-score';
-import {roundToThreeDP} from '../../utils';
+import {roundToDecimanPlace} from '../../utils';
 import {AllLoggedFish} from '../all-logged-fish';
 import {Box} from '../common/box';
 import {Text} from '../common/text';
@@ -31,7 +31,7 @@ export const UserModalContent = () => {
               </Text>
             </Box>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-              Total Points: {user ? roundToThreeDP(user.score) : 0}
+              Total Points: {user ? roundToDecimanPlace(user.score) : 0}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
               Total Fish: {user?.allFish?.length || 0}
@@ -54,11 +54,11 @@ export const UserModalContent = () => {
               Total Specimen: {user?.specimenStringArray.join(' ') || 0}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-              Bonus Points: {roundToThreeDP(bonusPoints)}
+              Bonus Points: {roundToDecimanPlace(bonusPoints)}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
               Total Points:{' '}
-              {user ? roundToThreeDP(user.score + bonusPoints) : 0}
+              {user ? roundToDecimanPlace(user.score + bonusPoints) : 0}
             </Text>
           </Box>
           <AllLoggedFish user={user} />

@@ -10,7 +10,7 @@ import plus from '../../plus.svg';
 import {useFishContext} from '../../context/fish-list';
 import {useModalContext} from '../../context/modal-context';
 import {UserModalContent} from '../modals/user-modal';
-import {capitaliseMe, roundToThreeDP} from '../../utils';
+import {capitaliseMe, roundToDecimanPlace} from '../../utils';
 
 const StyledContainer = styled.div`
   position: sticky;
@@ -54,14 +54,36 @@ const UserHeaderProfile = () => {
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
             Total Fish: {user?.allFish?.length || 0}
           </Text>
+          <Box display="flex" flexDirection="row">
+            {user?.specimenStringArray && user?.specimenStringArray.length ? (
+              user?.specimenStringArray.map((specimensString, index) => {
+                if (index === 0) {
+                  return (
+                    <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+                      Total Specimen: {specimensString}
+                    </Text>
+                  );
+                }
+                return (
+                  <Box pl="5px">
+                    <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+                      {specimensString}
+                    </Text>
+                  </Box>
+                );
+              })
+            ) : (
+              <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+                Total Specimen:{' '}
+              </Text>
+            )}
+          </Box>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Total Specimen: {user?.specimenStringArray.join(' ') || 0}
+            Bonus Points: {roundToDecimanPlace(bonusPoints)}
           </Text>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Bonus Points: {roundToThreeDP(bonusPoints)}
-          </Text>
-          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Total Points: {user ? roundToThreeDP(user.score + bonusPoints) : 0}
+            Total Points:{' '}
+            {user ? roundToDecimanPlace(user.score + bonusPoints) : 0}
           </Text>
 
           <Box onClick={() => setShow(true)} mt="5px">

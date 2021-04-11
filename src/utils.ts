@@ -26,13 +26,15 @@ export const capitaliseMe = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
-const rounded = (decimals: number) => Math.round(decimals * 1000) / 1000;
+const rounded = (decimals: number, howMany: number) =>
+  Math.round(decimals * howMany) / howMany;
 
-export const roundToThreeDP = (num: number) => {
+export const roundToDecimanPlace = (num: number, howMany?: number) => {
+  const factor = 10 ** (howMany || 2);
   const round = Math.round(num);
   const leftOvers = num - round;
   if (leftOvers > 0) {
-    return round + rounded(leftOvers);
+    return round + rounded(leftOvers, factor);
   }
-  return round + rounded(leftOvers);
+  return round + rounded(leftOvers, factor);
 };
