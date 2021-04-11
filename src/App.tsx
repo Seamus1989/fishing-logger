@@ -42,8 +42,8 @@ const AppInner = () => {
         }}
       >
         <Box
-          pt="65px"
-          pb="15px"
+          pt="35px"
+          pb="10px"
           display="flex"
           flexDirection="row"
           justifyContent="center"
@@ -57,15 +57,15 @@ const AppInner = () => {
         </Box>
 
         {!!currentUser && (
-          <Box py="30px" m="10px">
+          <Box py="10px" mx="10px">
             <RegionSelect disabled={!currentUser} />
           </Box>
         )}
         {fish && (
-          <Box display="flex" py="10px" flexDirection="row">
+          <Box display="flex" p="10px" flexDirection="row">
             <Input
               min={0}
-              style={{width: '150px'}}
+              style={{width: '200px'}}
               max={100}
               defaultValue={0}
               value={fishFilter}
