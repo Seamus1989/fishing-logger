@@ -15,11 +15,18 @@ export const deviceHeight = Math.max(
 );
 
 export const totalPlusIconWidth = 32;
-type Fish = {
+type ListedFish = {
   name: string;
   specimenWeight: number;
 };
-export type FishList = Fish[];
+export type FishList = ListedFish[];
+export const rodEmoji = '🎣';
+export const fishEmojis = ['🐟', '🐠', '🐡', rodEmoji];
+const randomNumberGenerator = (num: number) =>
+  Math.floor(num * fishEmojis.length);
+
+export const randomFishEmojiGenerator = (num: number): string =>
+  fishEmojis[randomNumberGenerator(num)];
 
 export const fishSpecies: FishList = [
   {

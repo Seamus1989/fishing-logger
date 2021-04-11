@@ -48,9 +48,7 @@ export const InputRow = ({
   specimenWeight: number;
 }): JSX.Element => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [howManyRows, setHowManyRows] = useState(1);
 
-  const rowsArray = new Array(howManyRows).fill('');
   const {users, currentUser} = useUserContext();
 
   const specimensString = useMemo(() => {
@@ -58,11 +56,12 @@ export const InputRow = ({
       const user = users.find((thisUser) => thisUser.name === currentUser);
       if (!user) return '';
       if (!user.specimens) return '';
-      const specimens = user.specimens.filter(
+      const {specimenStringArray} = user;
+      const thisSpecimenNumber = user.specimens.filter(
         (fish) => fish && fish.name === specimen,
-      );
-
-      return new Array(specimens.length).fill('🐟').join(' ');
+      ).length;
+      if (thisSpecimenNumber === 0) return '';
+      return specimenStringArray.slice(0, thisSpecimenNumber).join(' ');
     }
     return '';
   }, [currentUser, specimen, users]);
@@ -95,19 +94,6 @@ export const InputRow = ({
     return 0;
   }, [currentUser, specimen, users]);
 
-  const addRow = useCallback(() => {
-    const newTotal = 1 + howManyRows;
-    setHowManyRows(newTotal);
-  }, [howManyRows]);
-
-  const removeRow = useCallback(
-    (index) => {
-      const newTotal = -1 + howManyRows;
-      if (newTotal > 0) setHowManyRows(newTotal);
-    },
-    [howManyRows],
-  );
-
   const handleDropdownClick = useCallback(() => {
     if (!currentUser) return;
     setShowDropdown(!showDropdown);
@@ -131,22 +117,23 @@ export const InputRow = ({
         <Box display="flex" flex={1} flexDirection="row">
           <Box display="flex" flexDirection="column" justifyContent="center">
             <Text lineHeight="12px" fontWeight={500} fontSize="10px">
-              {specimen.toUpperCase()}
+              {`${specimen.toUpperCase()}${
+                specimensString === '' ? '' : ` ${specimensString}`
+              }`}
             </Text>
           </Box>
-          {specimensString === '' ? null : (
-            <Box
-              flex={1}
-              display="flex"
-              flexDirection="column"
-              pl="10px"
-              justifyContent="center"
-            >
-              <Text lineHeight="12px" fontSize="10px">
-                {specimensString}
-              </Text>
-            </Box>
-          )}
+        </Box>
+
+        <Box
+          flex={1}
+          display="flex"
+          flexDirection="column"
+          pl="10px"
+          justifyContent="center"
+        >
+          <Text lineHeight="12px" fontSize="10px">
+            {specimenWeight} lbs
+          </Text>
         </Box>
         <Box
           flex={1}
@@ -172,7 +159,7 @@ export const InputRow = ({
         </Box>
         <Box
           display="flex"
-          flex={1}
+          flex={0.5}
           flexDirection="row"
           justifyContent="flex-end"
         >
@@ -192,22 +179,7 @@ export const InputRow = ({
           justifyContent="space-between"
         >
           <Box display="flex" flexDirection="column" flex={1} mr="5px">
-            {rowsArray.map((row, index) => {
-              // SEAMO maybe these rows map from fish recorded??
-              // for each fish, we see if any exist for user, if not render empty
-              // if fish exist we render accordingly and we will not need to hand remove functionality
-              // SEAMO HERE WE ARE TODO
-              return (
-                <SingleRow
-                  specimen={specimen}
-                  specimenWeight={specimenWeight}
-                  isFirst={index === 0}
-                  rowNumber={index + 1}
-                  addRow={addRow}
-                  removeRow={removeRow}
-                />
-              );
-            })}
+            <SingleRow specimen={specimen} specimenWeight={specimenWeight} />
           </Box>
         </Box>
       </MyDropdown>

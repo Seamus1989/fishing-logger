@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Input} from 'antd';
 import styled from 'styled-components';
 import AnimateHeight from 'react-animate-height';
@@ -8,7 +8,6 @@ import {Text} from '../common/text';
 import {StyledImage, UnderlinedText} from '../random';
 import plus from '../../plus.svg';
 import {useFishContext} from '../../context/fish-list';
-import {MyDropdown} from './input-row';
 import {useModalContext} from '../../context/modal-context';
 import {UserModalContent} from '../modals/user-modal';
 
@@ -29,16 +28,6 @@ const UserHeaderProfile = () => {
   const user = users
     ? users.find((thisUser) => thisUser.name === currentUser)
     : null;
-
-  const specimensString = useMemo(() => {
-    if (users && users.length) {
-      if (!user) return '';
-      if (!user.totalSpecimenNumber) return '';
-
-      return new Array(user.totalSpecimenNumber).fill('🐟').join(' ');
-    }
-    return '';
-  }, [user, users]);
 
   useEffect(() => {
     if (!user) {
@@ -66,7 +55,7 @@ const UserHeaderProfile = () => {
             Total Fish: {user?.allFish?.length || 0}
           </Text>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Total Specimen: {specimensString}
+            Total Specimen: {user?.specimenStringArray.join(' ')}
           </Text>
 
           <Box onClick={() => setShow(true)} mt="5px">
@@ -78,11 +67,7 @@ const UserHeaderProfile = () => {
     </AnimateHeight>
   );
 };
-export const AppHeader = ({
-  showMessage,
-}: {
-  showMessage: boolean;
-}): JSX.Element => {
+export const AppHeader = (): JSX.Element => {
   const {currentUser, changeUser} = useUserContext();
   const {filterFish} = useFishContext();
   const [text, setText] = useState('');
@@ -126,7 +111,7 @@ export const AppHeader = ({
                   justifyContent="center"
                   flex={1}
                 >
-                  <UnderlinedText>Edit User</UnderlinedText>
+                  <UnderlinedText>Next User</UnderlinedText>
                 </Box>
               )}
             </Box>
@@ -151,18 +136,6 @@ export const AppHeader = ({
           <UserHeaderProfile />
         </Box>
       </Box>
-      <MyDropdown open={showMessage}>
-        <Box m="10px" justifyContent="center" flex={1}>
-          <Text
-            textAlign="center"
-            lineHeight="20px"
-            fontSize="16px"
-            color="red"
-          >
-            Please enter a user before making selections
-          </Text>
-        </Box>
-      </MyDropdown>
     </StyledContainer>
   );
 };

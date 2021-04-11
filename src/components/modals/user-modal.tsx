@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {useUserContext} from '../../context/all-user-score';
 import {Box} from '../common/box';
@@ -15,16 +15,6 @@ export const UserModalContent = (): JSX.Element => {
   const user = users
     ? users.find((thisUser) => thisUser.name === currentUser)
     : null;
-
-  const specimensString = useMemo(() => {
-    if (users && users.length) {
-      if (!user) return '';
-      if (!user.totalSpecimenNumber) return '';
-
-      return new Array(user.totalSpecimenNumber).fill('🐟').join(' ');
-    }
-    return '';
-  }, [user, users]);
 
   return (
     <Modal title="User Score">
@@ -43,7 +33,7 @@ export const UserModalContent = (): JSX.Element => {
               Total Fish: {user?.allFish?.length || 0}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-              Total Specimen: {specimensString === '' ? 0 : specimensString}
+              Total Specimen:{' '}
             </Text>
           </Box>
           <Box py="20px">
@@ -69,7 +59,7 @@ export const UserModalContent = (): JSX.Element => {
               Total Fish: {user?.allFish?.length || 0}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-              Total Specimen: {specimensString === '' ? 0 : specimensString}
+              Total Specimen: Total Specimen:{' '}
             </Text>
           </Box>
           <Box py="20px">
@@ -95,7 +85,7 @@ export const UserModalContent = (): JSX.Element => {
               Total Fish: {user?.allFish?.length || 0}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-              Total Specimen: {specimensString === '' ? 0 : specimensString}
+              Total Specimen:{' '}
             </Text>
           </Box>
           <Box py="20px">
@@ -121,7 +111,7 @@ export const UserModalContent = (): JSX.Element => {
               Total Fish: {user?.allFish?.length || 0}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-              Total Specimen: {specimensString === '' ? 0 : specimensString}
+              Total Specimen:{' '}
             </Text>
           </Box>
           <Box py="20px">
@@ -148,7 +138,7 @@ export const UserModalContent = (): JSX.Element => {
               Total Fish: {user?.allFish?.length || 0}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-              Total Specimen: {specimensString === '' ? 0 : specimensString}
+              Total Specimen:{' '}
             </Text>
           </Box>
           <Box py="20px">
@@ -174,7 +164,7 @@ export const UserModalContent = (): JSX.Element => {
               Total Fish: {user?.allFish?.length || 0}
             </Text>
             <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-              Total Specimen: {specimensString === '' ? 0 : specimensString}
+              Total Specimen:{' '}
             </Text>
           </Box>
           <Box py="20px">

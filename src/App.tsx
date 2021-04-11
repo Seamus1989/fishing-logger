@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import './App.css';
+import {ToastContainer} from 'react-toastify';
 import {Box} from './components/common/box';
+import {useToast} from './hooks/toast';
 import {InputRow} from './components/molecules/input-row';
 import {Nav} from './components/molecules/nav';
 import {AppHeader} from './components/molecules/user-header';
@@ -12,19 +14,20 @@ import {UserProvider, useUserContext} from './context/all-user-score';
 import {FishProvider, useFishContext} from './context/fish-list';
 import {ModalProvider} from './context/modal-context';
 import logo from './logo.png';
+import 'react-toastify/dist/ReactToastify.css';
 
 const StyledContainer = styled.div<{disabled: boolean}>`
   overflow-y: scroll;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `;
 const AppInner = () => {
-  const [showMessage, setShowMessage] = useState(false);
   const {fish} = useFishContext();
   const {currentUser} = useUserContext();
+  const {showToast} = useToast();
 
   return (
     <>
-      <AppHeader showMessage={showMessage} />
+      <AppHeader />
       <Box
         py="15px"
         display="flex"
@@ -42,8 +45,7 @@ const AppInner = () => {
         disabled={!currentUser}
         onClick={() => {
           if (!currentUser) {
-            setShowMessage(true);
-            setTimeout(() => setShowMessage(false), 4000);
+            showToast('Please select a user before making selections', true);
           }
         }}
       >
@@ -60,7 +62,10 @@ export const App = () => {
     <ModalProvider>
       <UserProvider>
         <FishProvider>
-          <AppInner />
+          <>
+            <AppInner />
+            <ToastContainer />
+          </>
         </FishProvider>
       </UserProvider>
     </ModalProvider>
@@ -68,7 +73,28 @@ export const App = () => {
 };
 
 /*
+DONE LIST
+handle flex box inside sfsh component, stop drop down arrow flexing, and flex in weight
+Deleting fish is to be done via single user modal, inside of which you can delete fish
+
+
+NEW plan
+change mechanism we use to delete/add, have this in single user modal, with text saying edit entries on top header (to ope modal)
+React drop down with multiple regions
+Bottom nav will change pages - one shows modal. 
+add speciment weight to fish row
+
+create Rows for logged fish (component)
+
+Loose the error toast for user message and use https://www.npmjs.com/package/react-toastify
+
+5. Add check to this --- tick button to fish to add fish - if fields not all === 0
+
+Handle rounding numbersssss
+
 // MAIN TODO
+
+
 1. Main task - having multiple users, clearing fields and being able to edit user by clicking in
 
 2. User modal - list all fish logged, and connect to nav menu buttons
@@ -80,14 +106,13 @@ create components for fish - add large fish emoji for specimens
 
 // RANDOM LIST
 1. Delete fish - and associate each with id = ${name}${number} and add to fish context BUG FIXXX
-5. Add check to this --- tick button to fish to add fish - if fields not all === 0
+
 10. Error toast? https://www.npmjs.com/package/react-toastify - modal - create Error modal
 
 
 BONUS
 BONUS POINTS
 REGIONS
-Handle rounding numbersssss
 
 
 Later

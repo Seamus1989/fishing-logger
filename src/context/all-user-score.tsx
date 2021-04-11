@@ -1,23 +1,26 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, {createContext, useContext, useCallback, useState} from 'react';
+import {randomFishEmojiGenerator} from '../consts';
 
-type Fish = {
+export type Fish = {
   name: string;
   id: string;
   specimenWeight: number;
   scoredPoints: number;
 };
-type User = {
+export type User = {
   name: string;
   score: number;
   totalSpecimenNumber: number;
+  specimenStringArray: string[];
   specimens: Fish[] | null;
   allFish: Fish[] | null;
 };
 const defaultNewUserFields = {
   score: 0,
   totalSpecimenNumber: 0,
+  specimenStringArray: [],
   specimens: null,
   allFish: null,
 };
@@ -92,7 +95,19 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           (compareUser) => compareUser.name !== currentUser,
         );
 
-        const {allFish, specimens, score, totalSpecimenNumber, name} = user;
+        const {
+          allFish,
+          specimens,
+          score,
+          totalSpecimenNumber,
+          name,
+          specimenStringArray,
+        } = user;
+
+        const newSpecimenArr = [
+          ...specimenStringArray,
+          randomFishEmojiGenerator(Math.random()),
+        ];
 
         const newInfo = {
           name,
@@ -100,6 +115,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           specimens: specimens ? [...specimens, newFish] : [newFish],
           score: score + scoreToAdd,
           totalSpecimenNumber: totalSpecimenNumber + 1,
+          specimenStringArray: newSpecimenArr,
         } as User;
 
         setUsers([...otherUsers, newInfo]);
@@ -149,7 +165,14 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           (compareUser) => compareUser.name !== currentUser,
         );
 
-        const {allFish, specimens, score, totalSpecimenNumber, name} = user;
+        const {
+          allFish,
+          specimens,
+          score,
+          totalSpecimenNumber,
+          specimenStringArray,
+          name,
+        } = user;
         if (!allFish || !allFish.length) return;
 
         const indexToDelete = allFish.findIndex((e) => e.id === id);
@@ -164,19 +187,22 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
             specimensToDelete = 1;
           }
         }
-
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [del, ...newSpecimenArr] = specimenStringArray;
         const newInfo = {
           name,
           allFish,
           specimens,
           score: score - old[0].scoredPoints,
           totalSpecimenNumber: totalSpecimenNumber - specimensToDelete,
+          specimenStringArray: newSpecimenArr,
         } as User;
         setUsers([...otherUsers, newInfo]);
       }
     },
     [currentUser, users],
   );
+
   return (
     <UserContext.Provider
       value={{
