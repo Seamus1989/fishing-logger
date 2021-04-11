@@ -7,7 +7,6 @@ import {Box} from '../common/box';
 import {Text} from '../common/text';
 import {StyledImage, UnderlinedText} from '../random';
 import plus from '../../plus.svg';
-import {useFishContext} from '../../context/fish-list';
 import {useModalContext} from '../../context/modal-context';
 import {UserModalContent} from '../modals/user-modal';
 import {capitaliseMe, roundToDecimanPlace} from '../../utils';
@@ -47,41 +46,23 @@ const UserHeaderProfile = () => {
       <Box m="10px" bg="#FFC2BB" borderRadius="10px" p="15px">
         <Box>
           <Box pb="5px">
-            <Text lineHeight="20px" fontWeight={600} fontSize="18px">
+            <Text lineHeight="18px" fontWeight={600} fontSize="16px">
               {user ? user.name : ''}
             </Text>
           </Box>
-          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
             Total Fish: {user?.allFish?.length || 0}
           </Text>
-          <Box display="flex" flexDirection="row">
-            {user?.specimenStringArray && user?.specimenStringArray.length ? (
-              user?.specimenStringArray.map((specimensString, index) => {
-                if (index === 0) {
-                  return (
-                    <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-                      Total Specimen: {specimensString}
-                    </Text>
-                  );
-                }
-                return (
-                  <Box pl="5px">
-                    <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-                      {specimensString}
-                    </Text>
-                  </Box>
-                );
-              })
-            ) : (
-              <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-                Total Specimen:{' '}
-              </Text>
-            )}
-          </Box>
-          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
+            Total Specimen: {user?.totalSpecimenNumber || 0}
+          </Text>
+          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
+            Score Points: {user ? roundToDecimanPlace(user.score) : 0}
+          </Text>
+          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
             Bonus Points: {roundToDecimanPlace(bonusPoints)}
           </Text>
-          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
             Total Points:{' '}
             {user ? roundToDecimanPlace(user.score + bonusPoints) : 0}
           </Text>
@@ -97,19 +78,25 @@ const UserHeaderProfile = () => {
 };
 export const AppHeader = (): JSX.Element => {
   const {currentUser, changeUser} = useUserContext();
-  const {filterFish} = useFishContext();
   const [text, setText] = useState('');
-  const [fishFilter, setFishFilter] = useState('');
 
   return (
     <StyledContainer>
       <Box display="flex" flex={1} flexDirection="row">
-        <Box p="10px" my="10px" flex={1} display="flex" flexDirection="row">
+        <Box
+          pt="10px"
+          pb="10px"
+          pl="10px"
+          my="10px"
+          flex={1}
+          display="flex"
+          flexDirection="row"
+        >
           <Box display="flex" flexDirection="column">
-            <Box display="flex" py="10px" flexDirection="row">
+            <Box display="flex" pb="5px" pt="10px" flexDirection="row">
               <Input
                 min={0}
-                style={{width: '150px'}}
+                style={{width: '100px'}}
                 max={100}
                 defaultValue={0}
                 value={text}
@@ -117,7 +104,7 @@ export const AppHeader = (): JSX.Element => {
                 onChange={(newValue) =>
                   setText(capitaliseMe(newValue.currentTarget.value))
                 }
-                placeholder="Enter a new fisherer..."
+                placeholder="Enter a user"
               />
               {currentUser || text === '' ? null : (
                 <Box
@@ -131,34 +118,28 @@ export const AppHeader = (): JSX.Element => {
                   <StyledImage height={20} width={20} src={plus} alt="logo" />
                 </Box>
               )}
-              {!!currentUser && (
-                <Box
-                  onClick={() => {
-                    changeUser('');
-                    setText('');
-                  }}
-                  ml="20px"
-                  justifyContent="center"
-                  flex={1}
-                >
-                  <UnderlinedText>Next User</UnderlinedText>
-                </Box>
-              )}
             </Box>
-            <Box display="flex" py="10px" flexDirection="row">
-              <Input
-                min={0}
-                style={{width: '150px'}}
-                max={100}
-                defaultValue={0}
-                value={fishFilter}
-                onChange={(newValue) => {
-                  setFishFilter(newValue.currentTarget.value);
-                  filterFish(newValue.currentTarget.value);
+
+            {!!currentUser && (
+              <Box
+                onClick={() => {
+                  changeUser('');
+                  setText('');
                 }}
-                placeholder="Filter specimen..."
-              />
-            </Box>
+                pb="10px"
+                justifyContent="center"
+                flex={1}
+              >
+                <Box
+                  display="flex"
+                  flex={1}
+                  justifyContent="flex-end"
+                  flexDirection="row"
+                >
+                  <UnderlinedText small>Next User</UnderlinedText>
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
 

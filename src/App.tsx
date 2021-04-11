@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 import './App.css';
 import {ToastContainer} from 'react-toastify';
+import {Input} from 'antd';
 import {Box} from './components/common/box';
 import {useToast} from './hooks/toast';
 import {InputRow} from './components/molecules/input-row';
@@ -20,28 +21,18 @@ import {RegionSelect} from './components/region-dropdown';
 const StyledContainer = styled.div<{disabled: boolean}>`
   overflow-y: scroll;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  padding-bottom: 100px;
 `;
 const AppInner = () => {
   const {fish} = useFishContext();
   const {currentUser} = useUserContext();
+  const [fishFilter, setFishFilter] = useState('');
+  const {filterFish} = useFishContext();
   const {showToast} = useToast();
 
   return (
     <>
       <AppHeader />
-      <Box
-        py="15px"
-        display="flex"
-        flexDirection="row"
-        justifyContent="center"
-        flex={1}
-      >
-        <Box flex={1} />
-        <Box>
-          <StyledImage height={150} src={logo} width={150} />
-        </Box>
-        <Box flex={1} />
-      </Box>
       <StyledContainer
         disabled={!currentUser}
         onClick={() => {
@@ -50,9 +41,42 @@ const AppInner = () => {
           }
         }}
       >
-        <Box py="30px" m="10px">
-          <RegionSelect disabled={!currentUser} />
+        <Box
+          pt="65px"
+          pb="15px"
+          display="flex"
+          flexDirection="row"
+          justifyContent="center"
+          flex={1}
+        >
+          <Box flex={1} />
+          <Box>
+            <StyledImage height={150} src={logo} width={150} />
+          </Box>
+          <Box flex={1} />
         </Box>
+
+        {!!currentUser && (
+          <Box py="30px" m="10px">
+            <RegionSelect disabled={!currentUser} />
+          </Box>
+        )}
+        {fish && (
+          <Box display="flex" py="10px" flexDirection="row">
+            <Input
+              min={0}
+              style={{width: '150px'}}
+              max={100}
+              defaultValue={0}
+              value={fishFilter}
+              onChange={(newValue) => {
+                setFishFilter(newValue.currentTarget.value);
+                filterFish(newValue.currentTarget.value);
+              }}
+              placeholder="Filter specimen..."
+            />
+          </Box>
+        )}
 
         {fish
           ? fish.map(({name, specimenWeight}) => {
@@ -82,23 +106,32 @@ export const App = () => {
 };
 
 /*
+
+NOW
+Some issue with entering drams, on score calculation
+^^ on that note have a general test of everything!
+scroll to bottom looks dodgey when we have info - add some bottom padding of like 80px
+Create single user modal
+fish all list, and fish by fish, so all bass in one row with summary
+create Rows for logged fish (component)
+Add check to this --- tick button to fish to add fish - if fields not all === 0
+
+Add a few regions to app
+
+
 DONE LIST
+make text box less width and put edit user underneath
+hide filter when no fish selected, and maybe move to the top of the fish list??
+fix scroll of the region selection, I think by flexing parent to fill all space when no region present
+change emoji in header to a number - stop flexing issues
 handle flex box inside sfsh component, stop drop down arrow flexing, and flex in weight
 Deleting fish is to be done via single user modal, inside of which you can delete fish
 
 NEW plan
 change mechanism we use to delete/add, have this in single user modal, with text saying edit entries on top header (to ope modal)
-React drop down with multiple regions
+
 Bottom nav will change pages - one shows modal. 
-add speciment weight to fish row
 
-create Rows for logged fish (component)
-
-Loose the error toast for user message and use https://www.npmjs.com/package/react-toastify
-
-5. Add check to this --- tick button to fish to add fish - if fields not all === 0
-
-Handle rounding numbersssss
 
 // MAIN TODO
 
@@ -119,9 +152,7 @@ create components for fish - add large fish emoji for specimens
 
 
 BONUS
-BONUS POINTS
-REGIONS
-Toast positioning when scrolling down
+Toast positioning when scrolling down ???  seems okay now
 
 
 Later
@@ -129,6 +160,8 @@ Check all todos
 Test
 user background  - on main page // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
 
+ALL USERS TABLE
+Score table first
 
 
 */

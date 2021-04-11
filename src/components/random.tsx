@@ -8,11 +8,11 @@ const StyledImage = styled.img<{height: number; width: number}>`
   height: ${(props) => props.height}px;
   width: ${(props) => props.width}px;
 `;
-const UnderlinedText = styled.p`
+const UnderlinedText = styled.p<{small?: boolean}>`
   text-decoration: underline;
-  line-height: 16px;
+  line-height: ${(props) => (props.small ? '14px' : '16px')};
   font-weight: 300;
-  font-size: 14px;
+  font-size: ${(props) => (props.small ? '12px' : '14px')};
   margin: 0;
 `;
 export {UnderlinedText, StyledImage, StyledRotate};
