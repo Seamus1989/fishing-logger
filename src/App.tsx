@@ -33,6 +33,21 @@ const AppInner = () => {
   return (
     <>
       <AppHeader />
+
+      <Box
+        pt="35px"
+        pb="10px"
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
+        flex={1}
+      >
+        <Box flex={1} />
+        <Box>
+          <StyledImage height={150} src={logo} width={150} />
+        </Box>
+        <Box flex={1} />
+      </Box>
       <StyledContainer
         disabled={!currentUser}
         onClick={() => {
@@ -41,21 +56,6 @@ const AppInner = () => {
           }
         }}
       >
-        <Box
-          pt="35px"
-          pb="10px"
-          display="flex"
-          flexDirection="row"
-          justifyContent="center"
-          flex={1}
-        >
-          <Box flex={1} />
-          <Box>
-            <StyledImage height={150} src={logo} width={150} />
-          </Box>
-          <Box flex={1} />
-        </Box>
-
         {!!currentUser && (
           <Box py="10px" mx="10px">
             <RegionSelect disabled={!currentUser} />
@@ -110,7 +110,6 @@ export const App = () => {
 NOW
 Some issue with entering drams, on score calculation
 ^^ on that note have a general test of everything!
-scroll to bottom looks dodgey when we have info - add some bottom padding of like 80px
 Create single user modal
 fish all list, and fish by fish, so all bass in one row with summary
 create Rows for logged fish (component)
@@ -120,6 +119,7 @@ Add a few regions to app
 
 
 DONE LIST
+scroll to bottom looks dodgey when we have info - add some bottom padding of like 80px
 make text box less width and put edit user underneath
 hide filter when no fish selected, and maybe move to the top of the fish list??
 fix scroll of the region selection, I think by flexing parent to fill all space when no region present
