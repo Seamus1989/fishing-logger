@@ -10,7 +10,7 @@ import plus from '../../plus.svg';
 import {useFishContext} from '../../context/fish-list';
 import {useModalContext} from '../../context/modal-context';
 import {UserModalContent} from '../modals/user-modal';
-import {capitaliseMe} from '../../utils';
+import {capitaliseMe, roundToThreeDP} from '../../utils';
 
 const StyledContainer = styled.div`
   position: sticky;
@@ -58,10 +58,10 @@ const UserHeaderProfile = () => {
             Total Specimen: {user?.specimenStringArray.join(' ') || 0}
           </Text>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Bonus Points: {bonusPoints}
+            Bonus Points: {roundToThreeDP(bonusPoints)}
           </Text>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Total Points: {user ? user.score + bonusPoints : 0}
+            Total Points: {user ? roundToThreeDP(user.score + bonusPoints) : 0}
           </Text>
 
           <Box onClick={() => setShow(true)} mt="5px">

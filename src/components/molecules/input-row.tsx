@@ -9,6 +9,7 @@ import arrow from '../../down-arrow.svg';
 import {useUserContext} from '../../context/all-user-score';
 import {SingleRow} from './single-row';
 import {StyledImage, StyledRotate} from '../random';
+import {roundToThreeDP} from '../../utils';
 
 const DropdownArrow = ({
   onClick,
@@ -154,7 +155,7 @@ export const InputRow = ({
           justifyContent="center"
         >
           <Text lineHeight="12px" fontSize="10px">
-            Points: {totalPoints}
+            Points: {roundToThreeDP(totalPoints)}
           </Text>
         </Box>
         <Box

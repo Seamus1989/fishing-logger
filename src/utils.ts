@@ -25,3 +25,14 @@ export const getFishInPounds = (
 export const capitaliseMe = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
+
+const rounded = (decimals: number) => Math.round(decimals * 1000) / 1000;
+
+export const roundToThreeDP = (num: number) => {
+  const round = Math.round(num);
+  const leftOvers = num - round;
+  if (leftOvers > 0) {
+    return round + rounded(leftOvers);
+  }
+  return round + rounded(leftOvers);
+};
