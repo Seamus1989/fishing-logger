@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, {createContext, useContext, useCallback, useState} from 'react';
-import {randomFishEmojiGenerator} from '../consts';
+import {randomFishEmojiGenerator, Region} from '../consts';
 
 export type Fish = {
   name: string;
   id: string;
   specimenWeight: number;
   scoredPoints: number;
+  region: Region;
 };
 export type User = {
   name: string;
@@ -16,6 +17,7 @@ export type User = {
   specimenStringArray: string[];
   specimens: Fish[] | null;
   allFish: Fish[] | null;
+  bonusPoints: number;
 };
 const defaultNewUserFields = {
   score: 0,
@@ -23,6 +25,7 @@ const defaultNewUserFields = {
   specimenStringArray: [],
   specimens: null,
   allFish: null,
+  bonusPoints: 0,
 };
 const UserContext = createContext<{
   users: User[] | null;
@@ -74,8 +77,13 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         );
 
         const {allFish, score, ...rest} = user;
+        const sortedFish = allFish
+          ? [...allFish, newFish].sort((a, b) => {
+              return a.scoredPoints - b.scoredPoints;
+            })
+          : [newFish];
         const newInfo = {
-          allFish: allFish ? [...allFish, newFish] : [newFish],
+          allFish: sortedFish,
           score: score + scoreToAdd,
           ...rest,
         } as User;
@@ -102,20 +110,26 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           totalSpecimenNumber,
           name,
           specimenStringArray,
+          bonusPoints,
         } = user;
 
         const newSpecimenArr = [
           ...specimenStringArray,
           randomFishEmojiGenerator(Math.random()),
         ];
-
+        const sortedFish = allFish
+          ? [...allFish, newFish].sort((a, b) => {
+              return a.scoredPoints - b.scoredPoints;
+            })
+          : [newFish];
         const newInfo = {
           name,
-          allFish: allFish ? [...allFish, newFish] : [newFish],
+          allFish: sortedFish,
           specimens: specimens ? [...specimens, newFish] : [newFish],
           score: score + scoreToAdd,
           totalSpecimenNumber: totalSpecimenNumber + 1,
           specimenStringArray: newSpecimenArr,
+          bonusPoints: bonusPoints + 3,
         } as User;
 
         setUsers([...otherUsers, newInfo]);
@@ -172,6 +186,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           totalSpecimenNumber,
           specimenStringArray,
           name,
+          bonusPoints,
         } = user;
         if (!allFish || !allFish.length) return;
 
@@ -196,6 +211,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           score: score - old[0].scoredPoints,
           totalSpecimenNumber: totalSpecimenNumber - specimensToDelete,
           specimenStringArray: newSpecimenArr,
+          bonusPoints: bonusPoints === 3 ? 0 : bonusPoints - 3,
         } as User;
         setUsers([...otherUsers, newInfo]);
       }

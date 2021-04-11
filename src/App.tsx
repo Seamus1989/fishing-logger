@@ -15,6 +15,7 @@ import {FishProvider, useFishContext} from './context/fish-list';
 import {ModalProvider} from './context/modal-context';
 import logo from './logo.png';
 import 'react-toastify/dist/ReactToastify.css';
+import {RegionSelect} from './components/region-dropdown';
 
 const StyledContainer = styled.div<{disabled: boolean}>`
   overflow-y: scroll;
@@ -49,9 +50,17 @@ const AppInner = () => {
           }
         }}
       >
-        {fish.map(({name, specimenWeight}) => {
-          return <InputRow specimen={name} specimenWeight={specimenWeight} />;
-        })}
+        <Box py="30px" m="10px">
+          <RegionSelect disabled={!currentUser} />
+        </Box>
+
+        {fish
+          ? fish.map(({name, specimenWeight}) => {
+              return (
+                <InputRow specimen={name} specimenWeight={specimenWeight} />
+              );
+            })
+          : null}
       </StyledContainer>
       <Nav />
     </>
@@ -59,16 +68,16 @@ const AppInner = () => {
 };
 export const App = () => {
   return (
-    <ModalProvider>
-      <UserProvider>
-        <FishProvider>
+    <FishProvider>
+      <ModalProvider>
+        <UserProvider>
           <>
             <AppInner />
             <ToastContainer />
           </>
-        </FishProvider>
-      </UserProvider>
-    </ModalProvider>
+        </UserProvider>
+      </ModalProvider>
+    </FishProvider>
   );
 };
 
@@ -76,7 +85,6 @@ export const App = () => {
 DONE LIST
 handle flex box inside sfsh component, stop drop down arrow flexing, and flex in weight
 Deleting fish is to be done via single user modal, inside of which you can delete fish
-
 
 NEW plan
 change mechanism we use to delete/add, have this in single user modal, with text saying edit entries on top header (to ope modal)
@@ -113,6 +121,7 @@ create components for fish - add large fish emoji for specimens
 BONUS
 BONUS POINTS
 REGIONS
+Toast positioning when scrolling down
 
 
 Later

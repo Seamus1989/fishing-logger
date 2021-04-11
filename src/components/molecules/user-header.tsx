@@ -10,6 +10,7 @@ import plus from '../../plus.svg';
 import {useFishContext} from '../../context/fish-list';
 import {useModalContext} from '../../context/modal-context';
 import {UserModalContent} from '../modals/user-modal';
+import {capitaliseMe} from '../../utils';
 
 const StyledContainer = styled.div`
   position: sticky;
@@ -39,6 +40,8 @@ const UserHeaderProfile = () => {
     }
   }, [user]);
 
+  const bonusPoints = user?.bonusPoints || 0;
+
   return (
     <AnimateHeight duration={450} height={height}>
       <Box m="10px" bg="#FFC2BB" borderRadius="10px" p="15px">
@@ -49,17 +52,20 @@ const UserHeaderProfile = () => {
             </Text>
           </Box>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Total Points: {user ? user.score : 0}
-          </Text>
-          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
             Total Fish: {user?.allFish?.length || 0}
           </Text>
           <Text lineHeight="18px" fontWeight={300} fontSize="14px">
-            Total Specimen: {user?.specimenStringArray.join(' ')}
+            Total Specimen: {user?.specimenStringArray.join(' ') || 0}
+          </Text>
+          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+            Bonus Points: {bonusPoints}
+          </Text>
+          <Text lineHeight="18px" fontWeight={300} fontSize="14px">
+            Total Points: {user ? user.score + bonusPoints : 0}
           </Text>
 
           <Box onClick={() => setShow(true)} mt="5px">
-            <UnderlinedText>See All</UnderlinedText>
+            <UnderlinedText>See All / Edit</UnderlinedText>
           </Box>
           <UserModalContent />
         </Box>
@@ -86,7 +92,9 @@ export const AppHeader = (): JSX.Element => {
                 defaultValue={0}
                 value={text}
                 disabled={!!currentUser}
-                onChange={(newValue) => setText(newValue.currentTarget.value)}
+                onChange={(newValue) =>
+                  setText(capitaliseMe(newValue.currentTarget.value))
+                }
                 placeholder="Enter a new fisherer..."
               />
               {currentUser || text === '' ? null : (

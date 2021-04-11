@@ -8,6 +8,7 @@ import {getFishInPounds} from '../../utils';
 import {useUserContext} from '../../context/all-user-score';
 import plus from '../../plus.svg';
 import {StyledImage} from '../random';
+import {useFishContext} from '../../context/fish-list';
 
 export const SingleRow = ({
   specimenWeight,
@@ -16,6 +17,7 @@ export const SingleRow = ({
   specimenWeight: number;
   specimen: string;
 }): JSX.Element => {
+  const {region} = useFishContext();
   const [pounds, setPounds] = useState(0);
   const [ounces, setOunces] = useState(0);
   const [drams, setDrams] = useState(0);
@@ -27,6 +29,8 @@ export const SingleRow = ({
     pounds,
   ]);
   const addFish = useCallback(() => {
+    // throw Error TODO
+    if (!region) return;
     const score = (fishInPounds * 100) / specimenWeight;
 
     if (score === 0) return;
@@ -37,14 +41,15 @@ export const SingleRow = ({
       specimenWeight,
     };
     if (fishInPounds >= specimenWeight) {
-      addSpecimenToUser({...fish, scoredPoints: score}, score);
+      addSpecimenToUser({...fish, scoredPoints: score, region}, score);
       return;
     }
-    addFishToUser({...fish, scoredPoints: score}, score);
+    addFishToUser({...fish, scoredPoints: score, region}, score);
   }, [
     addFishToUser,
     addSpecimenToUser,
     fishInPounds,
+    region,
     specimen,
     specimenWeight,
   ]);
