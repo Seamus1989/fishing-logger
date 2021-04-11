@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+
 import React, {createContext, useContext, useCallback, useState} from 'react';
+import {randomFishEmojiGenerator} from '../consts';
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {randomFishEmojiGenerator, Region} from '../consts';
+import {Region} from '../fish-data';
 
 export type Fish = {
   name: string;

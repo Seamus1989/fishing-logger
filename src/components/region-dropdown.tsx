@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import Select from 'react-select';
-import {RegionEnum} from '../consts';
+import {RegionEnum} from '../fish-data';
 import {useFishContext} from '../context/fish-list';
 
 const options = [
