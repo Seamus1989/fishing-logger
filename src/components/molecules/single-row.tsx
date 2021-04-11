@@ -28,6 +28,7 @@ export const SingleRow = ({
     ounces,
     pounds,
   ]);
+  console.log(fishInPounds);
   const addFish = useCallback(() => {
     // throw Error TODO
     if (!region) return;
