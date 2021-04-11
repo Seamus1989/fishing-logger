@@ -10,7 +10,6 @@ export const useToast = () => {
       duration?: number,
       position?: ToastPosition,
     ) => {
-      console.log('ijfirif');
       if (isError) {
         toast.error(message, {
           position: position || 'top-center',
