@@ -11,7 +11,6 @@ import {roundToDecimalPlace} from '../../utils';
 
 const StyledContainer = styled.div`
   overflow-y: scroll;
-  padding-bottom: 50px;
 `;
 
 export const UserModalContent = () => {
@@ -45,8 +44,10 @@ export const UserModalContent = () => {
               />
             </Box>
           </Box>
-          <TableHeader text="All Logged Fish" />
-          <AllLoggedFish user={user} />
+          <Box pb="50px">
+            <TableHeader text="All Logged Fish" />
+            <AllLoggedFish user={user} />
+          </Box>
         </Box>
       </StyledContainer>
     </Modal>
