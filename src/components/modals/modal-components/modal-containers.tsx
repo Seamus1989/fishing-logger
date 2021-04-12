@@ -6,7 +6,7 @@ import {Box} from '../../common/box';
 
 import {Text} from '../../common/text';
 import {StyledImage} from '../../random';
-import remove from '../../../remove.svg';
+import remove from '../../../cancel.svg';
 import {Divider} from '../../common/divider';
 
 const ModalContainer = styled.div<{
