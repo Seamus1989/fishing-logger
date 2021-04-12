@@ -23,7 +23,7 @@ export const Modal = ({
         <ModalComponent
           title={title}
           modalSize={{
-            height: height || `${deviceHeight - 100}px`,
+            height: height || `${deviceHeight - 300}px`,
             width: width || `${deviceWidth - 60}px`,
           }}
           bg="white"
