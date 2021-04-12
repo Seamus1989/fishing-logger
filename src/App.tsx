@@ -124,61 +124,24 @@ export const App = () => {
 /*
 
 NOW
-User modal specimen fish emoji?
-Test removing fish removes emojis from string?
 
-USER MODAL
-1. Specimen table (create reusable table component?)
-2. Table by fish? Like in UI selection?
+New modal context, so we can show multiple user info
+
+Create multiple user modal
+
+Create table component? Then easy to make the three below
 
 Group User modal
 1. All user score table
 2. All fish by biggest recorded
 3. Specimen league
 
-Rename components and reorganise into file/structure
-
-create empty component
-new close button on modal header, use something else! use red to delete fish?
-^^ on that note have a general test of everything!
-Create single user modal
-fish all list, and fish by fish, so all bass in one row with summary
-create Rows for logged fish (component)
-Add check to this --- tick button to fish to add fish - if fields not all === 0
-Edit region weights to be correct
-
-
-DONE LIST
-Reset button on fish filter
-Bug when selecting region
-background close onclick modal?
-Add a few regions to app
-put zero on fish points
-sort dyls bug with bonus points
-make logo bigger
-Some issue with entering drams, on score calculation
-
-scroll to bottom looks dodgey when we have info - add some bottom padding of like 80px
-make text box less width and put edit user underneath
-hide filter when no fish selected, and maybe move to the top of the fish list??
-fix scroll of the region selection, I think by flexing parent to fill all space when no region present
-change emoji in header to a number - stop flexing issues
-handle flex box inside sfsh component, stop drop down arrow flexing, and flex in weight
-Deleting fish is to be done via single user modal, inside of which you can delete fish
-
-
-2. User modal - list all fish logged, and connect to nav menu buttons
-create components for fish - add large fish emoji for specimens
-
+Add/edit all fish info for regions! DONE
 
 BONUS
 Toast positioning when scrolling down ???  seems okay now
 Bottom nav will change pages - one shows modal. 
-
-
-Later
-Check all todos
-Test
+Rename components and reorganise into file/structure
 user background  - on main page // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
 
 
