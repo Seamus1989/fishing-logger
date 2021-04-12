@@ -35,7 +35,10 @@ export const SingleLoggedFish = ({
               : `${name} ${randomFishEmojiGenerator(Math.random())}`
           }
         />
-        <TextDisplayRow verticalPadding={5} text={`${scoredPoints}`} />
+        <TextDisplayRow
+          verticalPadding={5}
+          text={`${roundToDecimalPlace(scoredPoints)}`}
+        />
         <TextDisplayRow verticalPadding={5} text={`${region}`} />
         <TextDisplayRow
           verticalPadding={5}
@@ -69,7 +72,10 @@ export const SingleLoggedFish = ({
                 : `${name} ${randomFishEmojiGenerator(Math.random())}`
             }
           />
-          <TextDisplayRow verticalPadding={5} text={`${scoredPoints}`} />
+          <TextDisplayRow
+            verticalPadding={5}
+            text={`${roundToDecimalPlace(scoredPoints)}`}
+          />
           <TextDisplayRow verticalPadding={5} text={`${region}`} />
           <TextDisplayRow verticalPadding={5} text={`${recordedWeight} lbs`} />
           <TextDisplayRow

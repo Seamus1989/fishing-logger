@@ -11,6 +11,7 @@ import {roundToDecimalPlace} from '../../utils';
 
 const StyledContainer = styled.div`
   overflow-y: scroll;
+  max-height: 100%;
 `;
 
 export const UserModalContent = () => {

@@ -25,7 +25,7 @@ const StyledContainer = styled.div<{disabled: boolean}>`
 `;
 const AppInner = () => {
   const {fish} = useFishContext();
-  const {currentUser} = useUserContext();
+  const {currentUser, users} = useUserContext();
   const [fishFilter, setFishFilter] = useState('');
   const {filterFish} = useFishContext();
   const {showToast} = useToast();
@@ -102,7 +102,7 @@ const AppInner = () => {
             })
           : null}
       </StyledContainer>
-      <Nav />
+      {users && users.length && <Nav />}
     </>
   );
 };
