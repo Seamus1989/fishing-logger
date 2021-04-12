@@ -10,6 +10,8 @@ import plus from '../../plus.svg';
 import {useModalContext} from '../../context/modal-context';
 import {UserModalContent} from '../modals/user-modal';
 import {capitaliseMe, roundToDecimanPlace} from '../../utils';
+import {TextDisplayColumn} from '../common/text-display-column';
+import {useFishContext} from '../../context/fish-list';
 
 const StyledContainer = styled.div`
   position: sticky;
@@ -39,8 +41,6 @@ const UserHeaderProfile = () => {
     }
   }, [user]);
 
-  const bonusPoints = user?.bonusPoints || 0;
-
   return (
     <AnimateHeight duration={450} height={height}>
       <Box m="10px" bg="#FFC2BB" borderRadius="10px" p="15px">
@@ -50,22 +50,15 @@ const UserHeaderProfile = () => {
               {user ? user.name : ''}
             </Text>
           </Box>
-          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
-            Total Fish: {user?.allFish?.length || 0}
-          </Text>
-          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
-            Total Specimen: {user?.totalSpecimenNumber || 0}
-          </Text>
-          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
-            Score Points: {user ? roundToDecimanPlace(user.score) : 0}
-          </Text>
-          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
-            Bonus Points: {roundToDecimanPlace(bonusPoints)}
-          </Text>
-          <Text lineHeight="16px" fontWeight={300} fontSize="12px">
-            Total Points:{' '}
-            {user ? roundToDecimanPlace(user.score + bonusPoints) : 0}
-          </Text>
+          <TextDisplayColumn
+            text={`Total Fish: ${user?.allFish?.length || 0}`}
+          />
+          <TextDisplayColumn
+            text={`Total Specimen: ${user?.totalSpecimenNumber || 0}`}
+          />
+          <TextDisplayColumn
+            text={`Score Points: ${user ? roundToDecimanPlace(user.score) : 0}`}
+          />
 
           <Box onClick={() => setShow(true)} mt="5px">
             <UnderlinedText>See All / Edit</UnderlinedText>
@@ -79,6 +72,7 @@ const UserHeaderProfile = () => {
 export const AppHeader = (): JSX.Element => {
   const {currentUser, changeUser} = useUserContext();
   const [text, setText] = useState('');
+  const {toggleRegion} = useFishContext();
 
   return (
     <StyledContainer>
@@ -121,22 +115,22 @@ export const AppHeader = (): JSX.Element => {
             </Box>
 
             {!!currentUser && (
-              <Box
-                onClick={() => {
-                  changeUser('');
-                  setText('');
-                }}
-                pb="10px"
-                justifyContent="center"
-                flex={1}
-              >
+              <Box pb="10px" justifyContent="center" flex={1}>
                 <Box
                   display="flex"
                   flex={1}
                   justifyContent="flex-end"
                   flexDirection="row"
                 >
-                  <UnderlinedText small>Next User</UnderlinedText>
+                  <Box
+                    onClick={() => {
+                      changeUser('');
+                      setText('');
+                      toggleRegion(undefined);
+                    }}
+                  >
+                    <UnderlinedText small>Next User</UnderlinedText>
+                  </Box>
                 </Box>
               </Box>
             )}
