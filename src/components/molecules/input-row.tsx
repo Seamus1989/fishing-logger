@@ -9,7 +9,7 @@ import arrow from '../../down-arrow.svg';
 import {useUserContext} from '../../context/all-user-score';
 import {SingleRow} from './single-row';
 import {StyledImage, StyledRotate} from '../random';
-import {roundToDecimanPlace} from '../../utils';
+import {roundToDecimalPlace} from '../../utils';
 import {TextDisplayRow} from '../common/text-display-row';
 
 const DropdownArrow = ({
@@ -139,7 +139,7 @@ export const InputRow = ({
           <TextDisplayRow text={`${'🏆  '} ${specimenWeight} lbs`} />
           <TextDisplayRow text={`Fish: ${totalFish || 0}`} />
           <TextDisplayRow
-            text={`Points: ${roundToDecimanPlace(totalPoints)}`}
+            text={`Points: ${roundToDecimalPlace(totalPoints)}`}
           />
           <Box
             display="flex"

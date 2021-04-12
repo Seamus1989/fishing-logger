@@ -9,7 +9,7 @@ import {StyledImage, UnderlinedText} from '../random';
 import plus from '../../plus.svg';
 import {useModalContext} from '../../context/modal-context';
 import {UserModalContent} from '../modals/user-modal';
-import {capitaliseMe, roundToDecimanPlace} from '../../utils';
+import {capitaliseMe, roundToDecimalPlace} from '../../utils';
 import {TextDisplayColumn} from '../common/text-display-column';
 import {useFishContext} from '../../context/fish-list';
 
@@ -57,7 +57,7 @@ const UserHeaderProfile = () => {
             text={`Total Specimen: ${user?.totalSpecimenNumber || 0}`}
           />
           <TextDisplayColumn
-            text={`Score Points: ${user ? roundToDecimanPlace(user.score) : 0}`}
+            text={`Score Points: ${user ? roundToDecimalPlace(user.score) : 0}`}
           />
 
           <Box onClick={() => setShow(true)} mt="5px">

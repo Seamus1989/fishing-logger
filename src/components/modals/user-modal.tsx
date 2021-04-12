@@ -7,10 +7,11 @@ import {Box} from '../common/box';
 import {Modal} from './modal-components/modal';
 import {TextDisplayColumn} from '../common/text-display-column';
 import {Text} from '../common/text';
-import {roundToDecimanPlace} from '../../utils';
+import {roundToDecimalPlace} from '../../utils';
 
 const StyledContainer = styled.div`
   overflow-y: scroll;
+  padding-bottom: 50px;
 `;
 
 export const UserModalContent = () => {
@@ -23,24 +24,26 @@ export const UserModalContent = () => {
   return (
     <Modal title="User Score">
       <StyledContainer>
-        <Box p="20px" flex={1} bg="#FFC2BB">
-          <Box pl="10px" pb="25px">
+        <Box p="15px" flex={1} bg="#FFC2BB">
+          <Box pb="25px">
             <Box pb="5px">
               <Text lineHeight="18px" fontWeight={600} fontSize="16px">
                 {user ? user.name : ''}
               </Text>
             </Box>
-            <TextDisplayColumn
-              text={`Total Fish: ${user?.allFish?.length || 0}`}
-            />
-            <TextDisplayColumn
-              text={`Total Specimen: ${user?.totalSpecimenNumber || 0}`}
-            />
-            <TextDisplayColumn
-              text={`Score Points: ${
-                user ? roundToDecimanPlace(user.score) : 0
-              }`}
-            />
+            <Box pl="5px">
+              <TextDisplayColumn
+                text={`Total Fish: ${user?.allFish?.length || 0}`}
+              />
+              <TextDisplayColumn
+                text={`Total Specimen: ${user?.totalSpecimenNumber || 0}`}
+              />
+              <TextDisplayColumn
+                text={`Score Points: ${
+                  user ? roundToDecimalPlace(user.score) : 0
+                }`}
+              />
+            </Box>
           </Box>
           <TableHeader text="All Logged Fish" />
           <AllLoggedFish user={user} />

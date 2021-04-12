@@ -1,6 +1,7 @@
 import React from 'react';
 import {randomFishEmojiGenerator} from '../../consts';
 import {useUserContext} from '../../context/all-user-score';
+import {roundToDecimalPlace} from '../../utils';
 import {Box} from '../common/box';
 import {TextDisplayRow} from '../common/text-display-row';
 
@@ -27,18 +28,21 @@ export const SingleLoggedFish = ({
     return (
       <Box display="flex" flexDirection="row">
         <TextDisplayRow
-          verticalPadding={2}
+          verticalPadding={5}
           text={
             !isSpecimen
               ? name
               : `${name} ${randomFishEmojiGenerator(Math.random())}`
           }
         />
-        <TextDisplayRow verticalPadding={2} text={`${scoredPoints}`} />
-        <TextDisplayRow verticalPadding={2} text={`${region}`} />
-        <TextDisplayRow verticalPadding={2} text={`${recordedWeight} lbs`} />
+        <TextDisplayRow verticalPadding={5} text={`${scoredPoints}`} />
+        <TextDisplayRow verticalPadding={5} text={`${region}`} />
         <TextDisplayRow
-          verticalPadding={2}
+          verticalPadding={5}
+          text={`${roundToDecimalPlace(recordedWeight)} lbs`}
+        />
+        <TextDisplayRow
+          verticalPadding={5}
           underline
           text="Remove"
           onClick={() => deleteFish(id)}
@@ -57,12 +61,19 @@ export const SingleLoggedFish = ({
           <TextDisplayRow bold text="Delete" />
         </Box>
         <Box display="flex" flexDirection="row">
-          <TextDisplayRow verticalPadding={2} text={name} />
-          <TextDisplayRow verticalPadding={2} text={`${scoredPoints}`} />
-          <TextDisplayRow verticalPadding={2} text={`${region}`} />
-          <TextDisplayRow verticalPadding={2} text={`${recordedWeight} lbs`} />
           <TextDisplayRow
-            verticalPadding={2}
+            verticalPadding={5}
+            text={
+              !isSpecimen
+                ? name
+                : `${name} ${randomFishEmojiGenerator(Math.random())}`
+            }
+          />
+          <TextDisplayRow verticalPadding={5} text={`${scoredPoints}`} />
+          <TextDisplayRow verticalPadding={5} text={`${region}`} />
+          <TextDisplayRow verticalPadding={5} text={`${recordedWeight} lbs`} />
+          <TextDisplayRow
+            verticalPadding={5}
             underline
             text="Remove"
             onClick={() => deleteFish(id)}

@@ -29,7 +29,7 @@ export const capitaliseMe = (text: string) => {
 const rounded = (decimals: number, howMany: number) =>
   Math.round(decimals * howMany) / howMany;
 
-export const roundToDecimanPlace = (num: number, howMany?: number) => {
+export const roundToDecimalPlace = (num: number, howMany?: number) => {
   const factor = 10 ** (howMany || 2);
   const round = Math.round(num);
   const leftOvers = num - round;
