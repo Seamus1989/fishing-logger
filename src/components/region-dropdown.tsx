@@ -24,14 +24,16 @@ export const RegionSelect = ({disabled}: {disabled: boolean}) => {
   );
 
   return (
-    <Select
-      className="basic-single"
-      value={selection}
-      onChange={handleChange}
-      options={options}
-      isSearchable
-      isDisabled={disabled}
-      placeholder="Select a fishing region..."
-    />
+    <>
+      <Select
+        className="basic-single"
+        value={selection}
+        onChange={handleChange}
+        options={options}
+        isSearchable
+        isDisabled={disabled}
+        placeholder="Select a fishing region..."
+      />
+    </>
   );
 };

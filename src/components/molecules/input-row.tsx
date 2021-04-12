@@ -10,6 +10,7 @@ import {useUserContext} from '../../context/all-user-score';
 import {SingleRow} from './single-row';
 import {StyledImage, StyledRotate} from '../random';
 import {roundToDecimanPlace} from '../../utils';
+import {TextDisplayRow} from '../common/text-display-row';
 
 const DropdownArrow = ({
   onClick,
@@ -101,98 +102,72 @@ export const InputRow = ({
   }, [currentUser, showDropdown]);
 
   return (
-    <Box
-      maxWidth={`${deviceWidth}px`}
-      margin="10px"
-      padding="5px"
-      borderRadius="5px"
-      bg="#FFC2BB"
-    >
-      <Box display="flex" flex={1} pt="5px" pl="5px" flexDirection="row">
-        {specimensArr.map((specimensString, index) => {
-          return (
-            <Box pl={index === 0 ? '0px' : '12px'}>
+    <>
+      <Box
+        maxWidth={`${deviceWidth}px`}
+        margin="10px"
+        padding="5px"
+        borderRadius="5px"
+        bg="#FFC2BB"
+      >
+        <Box display="flex" flex={1} pt="5px" pl="5px" flexDirection="row">
+          {specimensArr.map((specimensString, index) => {
+            return (
+              <Box pl={index === 0 ? '0px' : '12px'}>
+                <Text lineHeight="12px" fontWeight={500} fontSize="10px">
+                  {specimensString}
+                </Text>
+              </Box>
+            );
+          })}
+        </Box>
+        <Box
+          onClick={() => handleDropdownClick()}
+          flex={1}
+          margin="5px"
+          display="flex"
+          flexDirection="row"
+        >
+          <Box display="flex" flex={1} flexDirection="row">
+            <Box display="flex" flexDirection="column" justifyContent="center">
               <Text lineHeight="12px" fontWeight={500} fontSize="10px">
-                {specimensString}
+                {`${specimen.toUpperCase()}`}
               </Text>
             </Box>
-          );
-        })}
-      </Box>
-      <Box
-        onClick={() => handleDropdownClick()}
-        flex={1}
-        margin="5px"
-        display="flex"
-        flexDirection="row"
-      >
-        <Box display="flex" flex={1} flexDirection="row">
-          <Box display="flex" flexDirection="column" justifyContent="center">
-            <Text lineHeight="12px" fontWeight={500} fontSize="10px">
-              {`${specimen.toUpperCase()}`}
-            </Text>
           </Box>
-        </Box>
 
-        <Box
-          flex={1}
-          display="flex"
-          flexDirection="column"
-          pl="10px"
-          justifyContent="center"
-        >
-          <Text lineHeight="12px" fontSize="10px">
-            {`${'🏆  '} ${specimenWeight}`} lbs
-          </Text>
-        </Box>
-        <Box
-          flex={1}
-          display="flex"
-          flexDirection="column"
-          pl="10px"
-          justifyContent="center"
-        >
-          <Text lineHeight="12px" fontSize="10px">
-            Fish: {totalFish}
-          </Text>
-        </Box>
-        <Box
-          flex={1}
-          display="flex"
-          flexDirection="column"
-          pl="10px"
-          justifyContent="center"
-        >
-          <Text lineHeight="12px" fontSize="10px">
-            Points: {roundToDecimanPlace(totalPoints)}
-          </Text>
-        </Box>
-        <Box
-          display="flex"
-          flex={0.5}
-          flexDirection="row"
-          justifyContent="flex-end"
-        >
-          <Box>
-            <DropdownArrow
-              show={showDropdown}
-              onClick={() => handleDropdownClick()}
-            />
+          <TextDisplayRow text={`${'🏆  '} ${specimenWeight} lbs`} />
+          <TextDisplayRow text={`Fish: ${totalFish || 0}`} />
+          <TextDisplayRow
+            text={`Points: ${roundToDecimanPlace(totalPoints)}`}
+          />
+          <Box
+            display="flex"
+            flex={0.5}
+            flexDirection="row"
+            justifyContent="flex-end"
+          >
+            <Box>
+              <DropdownArrow
+                show={showDropdown}
+                onClick={() => handleDropdownClick()}
+              />
+            </Box>
           </Box>
         </Box>
+        <MyDropdown open={showDropdown}>
+          <Box
+            display="flex"
+            flexDirection="row"
+            flex={1}
+            justifyContent="space-between"
+          >
+            <Box display="flex" flexDirection="column" flex={1} mr="5px">
+              <SingleRow specimen={specimen} specimenWeight={specimenWeight} />
+            </Box>
+          </Box>
+        </MyDropdown>
       </Box>
-      <MyDropdown open={showDropdown}>
-        <Box
-          display="flex"
-          flexDirection="row"
-          flex={1}
-          justifyContent="space-between"
-        >
-          <Box display="flex" flexDirection="column" flex={1} mr="5px">
-            <SingleRow specimen={specimen} specimenWeight={specimenWeight} />
-          </Box>
-        </Box>
-      </MyDropdown>
-    </Box>
+    </>
   );
 };

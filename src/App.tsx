@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import styled from 'styled-components';
 
 import './App.css';
@@ -10,7 +10,7 @@ import {useToast} from './hooks/toast';
 import {InputRow} from './components/molecules/input-row';
 import {Nav} from './components/molecules/nav';
 import {AppHeader} from './components/molecules/user-header';
-import {StyledImage} from './components/random';
+import {StyledImage, UnderlinedText} from './components/random';
 import {UserProvider, useUserContext} from './context/all-user-score';
 import {FishProvider, useFishContext} from './context/fish-list';
 import {ModalProvider} from './context/modal-context';
@@ -30,6 +30,14 @@ const AppInner = () => {
   const {filterFish} = useFishContext();
   const {showToast} = useToast();
 
+  const handleFilterInput = useCallback(
+    (value: string) => {
+      setFishFilter(value);
+      filterFish(value);
+    },
+    [filterFish],
+  );
+
   return (
     <>
       <AppHeader />
@@ -44,7 +52,7 @@ const AppInner = () => {
       >
         <Box flex={1} />
         <Box>
-          <StyledImage height={150} src={logo} width={150} />
+          <StyledImage height={180} src={logo} width={180} />
         </Box>
         <Box flex={1} />
       </Box>
@@ -56,7 +64,7 @@ const AppInner = () => {
           }
         }}
       >
-        {!!currentUser && (
+        {(!!currentUser || fish) && (
           <Box py="10px" mx="10px">
             <RegionSelect disabled={!currentUser} />
           </Box>
@@ -70,11 +78,13 @@ const AppInner = () => {
               defaultValue={0}
               value={fishFilter}
               onChange={(newValue) => {
-                setFishFilter(newValue.currentTarget.value);
-                filterFish(newValue.currentTarget.value);
+                handleFilterInput(newValue.currentTarget.value);
               }}
               placeholder="Filter specimen..."
             />
+            <Box onClick={() => handleFilterInput('')} pl="10px">
+              <UnderlinedText>Clear Filter</UnderlinedText>
+            </Box>
           </Box>
         )}
 
@@ -108,17 +118,27 @@ export const App = () => {
 /*
 
 NOW
-Some issue with entering drams, on score calculation
+User modal specimen fish emoji?
+Test removing fish removes emojis from string?
+new close button on modal header, use something else! use red to delete fish?
 ^^ on that note have a general test of everything!
 Create single user modal
 fish all list, and fish by fish, so all bass in one row with summary
 create Rows for logged fish (component)
 Add check to this --- tick button to fish to add fish - if fields not all === 0
-
-Add a few regions to app
+Edit region weights to be correct
 
 
 DONE LIST
+Reset button on fish filter
+Bug when selecting region
+background close onclick modal?
+Add a few regions to app
+put zero on fish points
+sort dyls bug with bonus points
+make logo bigger
+Some issue with entering drams, on score calculation
+
 scroll to bottom looks dodgey when we have info - add some bottom padding of like 80px
 make text box less width and put edit user underneath
 hide filter when no fish selected, and maybe move to the top of the fish list??

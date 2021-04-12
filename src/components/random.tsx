@@ -8,11 +8,27 @@ const StyledImage = styled.img<{height: number; width: number}>`
   height: ${(props) => props.height}px;
   width: ${(props) => props.width}px;
 `;
-const UnderlinedText = styled.p<{small?: boolean}>`
+const UnderlinedText = styled.p<{small?: boolean; verySmall?: boolean}>`
   text-decoration: underline;
-  line-height: ${(props) => (props.small ? '14px' : '16px')};
+  line-height: ${(props) => {
+    if (props.small) {
+      return '14px';
+    }
+    if (props.verySmall) {
+      return '12px';
+    }
+    return '16px';
+  }};
   font-weight: 300;
-  font-size: ${(props) => (props.small ? '12px' : '14px')};
+  font-size: ${(props) => {
+    if (props.small) {
+      return '12px';
+    }
+    if (props.verySmall) {
+      return '10px';
+    }
+    return '14px';
+  }};
   margin: 0;
 `;
 export {UnderlinedText, StyledImage, StyledRotate};

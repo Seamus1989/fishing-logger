@@ -28,7 +28,7 @@ export const SingleRow = ({
     ounces,
     pounds,
   ]);
-  console.log(fishInPounds);
+
   const addFish = useCallback(() => {
     // throw Error TODO
     if (!region) return;
@@ -37,15 +37,17 @@ export const SingleRow = ({
     if (score === 0) return;
     const fish = {
       name: specimen,
-      // TODO ID ? do wee actually need it, not really?
-      id: `${specimen}`,
+      // TODO ID ? do wee actually need it, not really? Maybe not when fullstacked?
+      id: `${specimen}-${region}-${fishInPounds}`,
       specimenWeight,
+      region,
+      recordedWeight: fishInPounds,
     };
     if (fishInPounds >= specimenWeight) {
-      addSpecimenToUser({...fish, scoredPoints: score, region}, score);
+      addSpecimenToUser({...fish, scoredPoints: score}, score);
       return;
     }
-    addFishToUser({...fish, scoredPoints: score, region}, score);
+    addFishToUser({...fish, scoredPoints: score}, score);
   }, [
     addFishToUser,
     addSpecimenToUser,

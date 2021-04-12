@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 import {
   ModalAnimateOpacity,
   ModalContainer,
@@ -58,24 +59,26 @@ export const ModalComponent = ({
           animate={animate}
           transitionEnd={transitionEnd}
         >
-          <ModalContainer
-            animate={animate}
-            delay={delay}
-            modalSize={modalSize || undefined}
-            backgroundColor={bg}
-          >
-            <ModalInnerContainer modalSize={modalSize || undefined}>
-              <>
-                <ModalHeader
-                  show={show}
-                  animate={animate}
-                  setAnimate={setAnimate}
-                  title={title}
-                />
-                {children}
-              </>
-            </ModalInnerContainer>
-          </ModalContainer>
+          <OutsideClickHandler onOutsideClick={() => setAnimate(false)}>
+            <ModalContainer
+              animate={animate}
+              delay={delay}
+              modalSize={modalSize || undefined}
+              backgroundColor={bg}
+            >
+              <ModalInnerContainer modalSize={modalSize || undefined}>
+                <>
+                  <ModalHeader
+                    show={show}
+                    animate={animate}
+                    setAnimate={setAnimate}
+                    title={title}
+                  />
+                  {children}
+                </>
+              </ModalInnerContainer>
+            </ModalContainer>
+          </OutsideClickHandler>
         </ModalAnimateOpacity>
       </ModalBackGroundColor>
     </Box>
