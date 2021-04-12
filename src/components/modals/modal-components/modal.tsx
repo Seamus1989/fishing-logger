@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
-import {deviceHeight, deviceWidth} from '../../../consts';
+import {lightColor, deviceHeight, deviceWidth} from '../../../consts';
 import {useModalContext} from '../../../context/modal-context';
 import {ModalComponent} from './modal-component';
 
@@ -26,7 +26,7 @@ export const Modal = ({
             height: height || `${deviceHeight - 300}px`,
             width: width || `${deviceWidth - 60}px`,
           }}
-          bg="white"
+          bg={lightColor}
           delay={300}
         >
           {children}

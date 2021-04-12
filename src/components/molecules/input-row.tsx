@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import React, {useCallback, useMemo, useState} from 'react';
 import {SlideDown} from 'react-slidedown';
-import {deviceWidth} from '../../consts';
+import {darkColor, deviceWidth} from '../../consts';
 import {Box} from '../common/box';
 import {Text} from '../common/text';
 import 'react-slidedown/lib/slidedown.css';
@@ -108,7 +108,7 @@ export const InputRow = ({
         margin="10px"
         padding="5px"
         borderRadius="5px"
-        bg="#FFC2BB"
+        bg={darkColor}
       >
         <Box display="flex" flex={1} pt="5px" pl="5px" flexDirection="row">
           {specimensArr.map((specimensString, index) => {

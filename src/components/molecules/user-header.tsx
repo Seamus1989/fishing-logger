@@ -12,13 +12,14 @@ import {UserModalContent} from '../modals/user-modal';
 import {capitaliseMe, roundToDecimalPlace} from '../../utils';
 import {TextDisplayColumn} from '../common/text-display-column';
 import {useFishContext} from '../../context/fish-list';
+import {lightColor, darkColor} from '../../consts';
 
 const StyledContainer = styled.div`
   position: sticky;
   position: -webkit-sticky;
   top: 0;
   left: 0;
-  background-color: #ff8883;
+  background-color: ${lightColor};
   z-index: 100;
 `;
 
@@ -43,7 +44,7 @@ const UserHeaderProfile = () => {
 
   return (
     <AnimateHeight duration={450} height={height}>
-      <Box m="10px" bg="#FFC2BB" borderRadius="10px" p="15px">
+      <Box m="10px" bg={darkColor} borderRadius="10px" p="15px">
         <Box>
           <Box pb="5px">
             <Text lineHeight="18px" fontWeight={600} fontSize="16px">

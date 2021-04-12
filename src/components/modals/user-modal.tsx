@@ -8,6 +8,8 @@ import {Modal} from './modal-components/modal';
 import {TextDisplayColumn} from '../common/text-display-column';
 import {Text} from '../common/text';
 import {roundToDecimalPlace} from '../../utils';
+import {Divider} from '../common/divider';
+import {darkColor} from '../../consts';
 
 const StyledContainer = styled.div`
   overflow-y: scroll;
@@ -24,7 +26,7 @@ export const UserModalContent = () => {
   return (
     <Modal title="User Score">
       <StyledContainer>
-        <Box p="15px" flex={1} bg="#FFC2BB">
+        <Box p="15px" flex={1} bg={darkColor}>
           <Box pb="25px">
             <Box pb="5px">
               <Text lineHeight="18px" fontWeight={600} fontSize="16px">
@@ -43,6 +45,10 @@ export const UserModalContent = () => {
                   user ? roundToDecimalPlace(user.score) : 0
                 }`}
               />
+            </Box>
+
+            <Box pt="15px">
+              <Divider />
             </Box>
           </Box>
           <Box pb="50px">

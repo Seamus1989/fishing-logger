@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react';
 import styled from 'styled-components';
+import {lightColor} from '../../consts';
 import {useModalContext} from '../../context/modal-context';
 
 import group from '../../group.svg';
@@ -10,7 +11,7 @@ import {StyledImage} from '../random';
 const navMenuHeight = '50px';
 const navIconHeight = 30;
 const NavMenuContainer = styled.div`
-  background: #ff8883;
+  background: ${lightColor};
   font-family: roboto;
   font-weight: 200;
   position: fixed;
@@ -27,7 +28,7 @@ const SingleNavDiv = styled.div({
   display: 'flex',
   whiteSpace: 'normal',
   '&:hover, :active': {
-    backgroundColor: `#FFC2BB`,
+    backgroundColor: `darkColor`,
     cursor: `pointer`,
     transition: 'all 0.7s',
   },

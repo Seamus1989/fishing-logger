@@ -83,7 +83,7 @@ const ModalHeader = ({
   show: boolean;
 }): JSX.Element => {
   return (
-    <Box backgroundColor="white">
+    <Box backgroundColor="darkColor">
       <Box px="15px" py="10px" display="flex" flexDirection="row">
         <Box display="flex" flexDirection="column" justifyContent="center">
           <Text lineHeight="18px" fontWeight={400} fontSize="14px">
@@ -188,7 +188,7 @@ const ModalInnerContainer = ({
         width={modalSize.width}
         // height={modalSize.height}
         // width={modalSize.width}
-        // SEAMO TODO see how this handles lodads of content!
+        // SEAMO TODO see how this handles lodads of content! ere
       >
         {children}
       </Box>

@@ -53,6 +53,7 @@ const FishProvider = (props: {children: JSX.Element}): JSX.Element => {
       if (!selection) {
         setRegion(null);
         setFish(null);
+        return;
       }
       const indexOfSelection = allFishedWithRegions.findIndex(
         (e) => e.region === selection,

@@ -16,7 +16,8 @@ export const deviceHeight = Math.max(
 );
 
 export const totalPlusIconWidth = 32;
-
+export const darkColor = '#FFC2BB';
+export const lightColor = '#ff8883';
 export const rodEmoji = '🎣';
 export const fishEmojis = ['🐟', '🐠', '🐡', rodEmoji];
 const randomNumberGenerator = (num: number) =>
