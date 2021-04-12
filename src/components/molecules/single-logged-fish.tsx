@@ -1,4 +1,5 @@
 import React from 'react';
+import {randomFishEmojiGenerator} from '../../consts';
 import {useUserContext} from '../../context/all-user-score';
 import {Box} from '../common/box';
 import {TextDisplayRow} from '../common/text-display-row';
@@ -21,10 +22,18 @@ export const SingleLoggedFish = ({
   id: string;
 }) => {
   const {deleteFish} = useUserContext();
+  const isSpecimen = recordedWeight >= specimenWeight;
   if (!isFirst) {
     return (
       <Box display="flex" flexDirection="row">
-        <TextDisplayRow verticalPadding={2} text={name} />
+        <TextDisplayRow
+          verticalPadding={2}
+          text={
+            !isSpecimen
+              ? name
+              : `${name} ${randomFishEmojiGenerator(Math.random())}`
+          }
+        />
         <TextDisplayRow verticalPadding={2} text={`${scoredPoints}`} />
         <TextDisplayRow verticalPadding={2} text={`${region}`} />
         <TextDisplayRow verticalPadding={2} text={`${recordedWeight} lbs`} />

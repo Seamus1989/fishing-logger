@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {User} from '../../context/all-user-score';
+import {EmptyDisplay} from '../common/empty-component';
 import {SingleLoggedFish} from './single-logged-fish';
 
 export const AllLoggedFish = ({user}: {user: User}) => {
@@ -26,8 +27,7 @@ export const AllLoggedFish = ({user}: {user: User}) => {
     );
   }, [user]);
   if (!renderFish) {
-    // whuttt TODO default empty component
-    return <>{null}</>;
+    return <EmptyDisplay text="There seems to be nothing to show." />;
   }
   return <>{renderFish}</>;
 };

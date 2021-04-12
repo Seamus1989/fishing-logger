@@ -5,6 +5,7 @@ import {randomFishEmojiGenerator} from '../consts';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {Region} from '../fish-data';
+import {useToast} from '../hooks/toast';
 
 export type Fish = {
   name: string;
@@ -54,10 +55,11 @@ const UserContext = createContext<{
 const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
   const [users, setUsers] = useState<User[] | null>(null);
   const [currentUser, setCurrentUser] = useState('');
+  const {showToast} = useToast();
 
   const pushUserToList = useCallback(
     (newUser: string) => {
-      // TO be used in text input only
+      // THIS IS NOT USED!
       setCurrentUser(newUser);
       const allNewUserInfo = {name: newUser, ...defaultNewUserFields};
       if (users) {
@@ -147,7 +149,6 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
       setCurrentUser(newUser);
       const allUsers = users ? [...users] : [];
       setUsers([...allUsers, {name: newUser, ...defaultNewUserFields}]);
-      // have a text input and tick button to add and fire this! TODO
     },
     [users],
   );
@@ -190,8 +191,10 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         if (!allFish || !allFish.length) return;
 
         const indexToDelete = allFish.findIndex((e) => e.id === id);
-        if (indexToDelete === -1) return;
-        // TODO THROW ERROR
+        if (indexToDelete === -1) {
+          showToast('Something has gone wrong.', true);
+          return;
+        }
         const old = allFish.splice(indexToDelete, 1);
 
         if (specimens && specimens.length) {
@@ -214,7 +217,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         setUsers([...otherUsers, newInfo]);
       }
     },
-    [currentUser, users],
+    [currentUser, showToast, users],
   );
 
   return (

@@ -26,7 +26,6 @@ export const Modal = ({
             height: height || `${deviceHeight - 100}px`,
             width: width || `${deviceWidth - 60}px`,
           }}
-          // TODO
           bg="white"
           delay={300}
         >

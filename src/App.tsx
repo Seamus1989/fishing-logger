@@ -120,6 +120,19 @@ export const App = () => {
 NOW
 User modal specimen fish emoji?
 Test removing fish removes emojis from string?
+
+USER MODAL
+1. Specimen table (create reusable table component?)
+2. Table by fish? Like in UI selection?
+
+Group User modal
+1. All user score table
+2. All fish by biggest recorded
+3. Specimen league
+
+Rename components and reorganise into file/structure
+
+create empty component
 new close button on modal header, use something else! use red to delete fish?
 ^^ on that note have a general test of everything!
 Create single user modal
@@ -147,41 +160,20 @@ change emoji in header to a number - stop flexing issues
 handle flex box inside sfsh component, stop drop down arrow flexing, and flex in weight
 Deleting fish is to be done via single user modal, inside of which you can delete fish
 
-NEW plan
-change mechanism we use to delete/add, have this in single user modal, with text saying edit entries on top header (to ope modal)
-
-Bottom nav will change pages - one shows modal. 
-
-
-// MAIN TODO
-
-
-1. Main task - having multiple users, clearing fields and being able to edit user by clicking in
 
 2. User modal - list all fish logged, and connect to nav menu buttons
 create components for fish - add large fish emoji for specimens
 
-3. Do some of the other tasks
-
-
-
-// RANDOM LIST
-1. Delete fish - and associate each with id = ${name}${number} and add to fish context BUG FIXXX
-
-10. Error toast? https://www.npmjs.com/package/react-toastify - modal - create Error modal
-
 
 BONUS
 Toast positioning when scrolling down ???  seems okay now
+Bottom nav will change pages - one shows modal. 
 
 
 Later
 Check all todos
 Test
 user background  - on main page // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
-
-ALL USERS TABLE
-Score table first
 
 
 */

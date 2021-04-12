@@ -9,6 +9,7 @@ import {useUserContext} from '../../context/all-user-score';
 import plus from '../../plus.svg';
 import {StyledImage} from '../random';
 import {useFishContext} from '../../context/fish-list';
+import {useToast} from '../../hooks/toast';
 
 export const SingleRow = ({
   specimenWeight,
@@ -22,6 +23,7 @@ export const SingleRow = ({
   const [ounces, setOunces] = useState(0);
   const [drams, setDrams] = useState(0);
   const {addFishToUser, addSpecimenToUser} = useUserContext();
+  const {showToast} = useToast();
 
   const fishInPounds = useMemo(() => getFishInPounds(pounds, ounces, drams), [
     drams,
@@ -30,8 +32,10 @@ export const SingleRow = ({
   ]);
 
   const addFish = useCallback(() => {
-    // throw Error TODO
-    if (!region) return;
+    if (!region) {
+      showToast('Something has gone wrong.', true);
+      return;
+    }
     const score = (fishInPounds * 100) / specimenWeight;
 
     if (score === 0) return;
@@ -53,16 +57,21 @@ export const SingleRow = ({
     addSpecimenToUser,
     fishInPounds,
     region,
+    showToast,
     specimen,
     specimenWeight,
   ]);
 
   const handleClick = useCallback(() => {
+    if (pounds === 0 && ounces === 0 && drams === 0) {
+      showToast('Please enter a weight first.', true);
+      return;
+    }
     addFish();
     setPounds(0);
     setOunces(0);
     setDrams(0);
-  }, [addFish]);
+  }, [addFish, drams, ounces, pounds, showToast]);
 
   const renderRight = useMemo(() => {
     return (

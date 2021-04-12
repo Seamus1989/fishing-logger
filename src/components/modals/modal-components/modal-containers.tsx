@@ -188,7 +188,7 @@ const ModalInnerContainer = ({
         width={modalSize.width}
         // height={modalSize.height}
         // width={modalSize.width}
-        // SEAMO see how this handles lodads of content!
+        // SEAMO TODO see how this handles lodads of content!
       >
         {children}
       </Box>
