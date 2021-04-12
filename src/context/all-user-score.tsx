@@ -12,6 +12,7 @@ export type Fish = {
   specimenWeight: number;
   scoredPoints: number;
   region: Region;
+  recordedWeight: number;
 };
 export type User = {
   name: string;
@@ -20,7 +21,6 @@ export type User = {
   specimenStringArray: string[];
   specimens: Fish[] | null;
   allFish: Fish[] | null;
-  bonusPoints: number;
 };
 const defaultNewUserFields = {
   score: 0,
@@ -28,7 +28,6 @@ const defaultNewUserFields = {
   specimenStringArray: [],
   specimens: null,
   allFish: null,
-  bonusPoints: 0,
 };
 const UserContext = createContext<{
   users: User[] | null;
@@ -82,7 +81,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         const {allFish, score, ...rest} = user;
         const sortedFish = allFish
           ? [...allFish, newFish].sort((a, b) => {
-              return a.scoredPoints - b.scoredPoints;
+              return b.scoredPoints - a.scoredPoints;
             })
           : [newFish];
         const newInfo = {
@@ -113,7 +112,6 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           totalSpecimenNumber,
           name,
           specimenStringArray,
-          bonusPoints,
         } = user;
 
         const newSpecimenArr = [
@@ -122,7 +120,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         ];
         const sortedFish = allFish
           ? [...allFish, newFish].sort((a, b) => {
-              return a.scoredPoints - b.scoredPoints;
+              return b.scoredPoints - a.scoredPoints;
             })
           : [newFish];
         const newInfo = {
@@ -132,7 +130,6 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           score: score + scoreToAdd,
           totalSpecimenNumber: totalSpecimenNumber + 1,
           specimenStringArray: newSpecimenArr,
-          bonusPoints: bonusPoints + 3,
         } as User;
 
         setUsers([...otherUsers, newInfo]);
@@ -189,7 +186,6 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           totalSpecimenNumber,
           specimenStringArray,
           name,
-          bonusPoints,
         } = user;
         if (!allFish || !allFish.length) return;
 
@@ -214,7 +210,6 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           score: score - old[0].scoredPoints,
           totalSpecimenNumber: totalSpecimenNumber - specimensToDelete,
           specimenStringArray: newSpecimenArr,
-          bonusPoints: bonusPoints === 3 ? 0 : bonusPoints - 3,
         } as User;
         setUsers([...otherUsers, newInfo]);
       }
