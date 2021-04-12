@@ -16,7 +16,7 @@ export const getFishInPounds = (
   ounce: number,
   dram: number,
 ): number => {
-  const dramTotal = (dram / 16) * 16;
+  const dramTotal = dram / (16 * 16);
   const ounceTotal = ounce / 16;
   const poundsTotal = pound;
   return dramTotal + ounceTotal + poundsTotal;
