@@ -80,9 +80,15 @@ const AppInner = () => {
               onChange={(newValue) => {
                 handleFilterInput(newValue.currentTarget.value);
               }}
-              placeholder="Filter specimen..."
+              placeholder="Filter by specimen..."
             />
-            <Box onClick={() => handleFilterInput('')} pl="10px">
+            <Box
+              onClick={() => handleFilterInput('')}
+              pl="10px"
+              justifyContent="center"
+              display="flex"
+              alignItems="center"
+            >
               <UnderlinedText>Clear Filter</UnderlinedText>
             </Box>
           </Box>
