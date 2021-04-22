@@ -77,7 +77,10 @@ export const SingleLoggedFish = ({
             text={`${roundToDecimalPlace(scoredPoints)}`}
           />
           <TextDisplayRow verticalPadding={5} text={`${region}`} />
-          <TextDisplayRow verticalPadding={5} text={`${recordedWeight} lbs`} />
+          <TextDisplayRow
+            verticalPadding={5}
+            text={`${roundToDecimalPlace(recordedWeight)} lbs`}
+          />
           <TextDisplayRow
             verticalPadding={5}
             underline

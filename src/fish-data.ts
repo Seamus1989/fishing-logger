@@ -28,6 +28,11 @@ export type FishByRegionData = {
 
 const fishSpeciesSouthDevon: FishList = [
   {
+    // online but not on dyls list
+    name: 'Angler fish',
+    specimenWeight: 25.0,
+  },
+  {
     name: 'Bass',
     specimenWeight: 8.0,
   },
@@ -49,19 +54,24 @@ const fishSpeciesSouthDevon: FishList = [
   },
   {
     name: 'Bull Huss',
-    specimenWeight: 10,
+    specimenWeight: 10.0,
   },
   {
     name: 'Coalfish',
     specimenWeight: 2.5,
   },
   {
+    // online but not on dyls list
+    name: 'Catfish',
+    specimenWeight: 4.0,
+  },
+  {
     name: 'Cod',
-    specimenWeight: 8,
+    specimenWeight: 8.0,
   },
   {
     name: 'Conger Eel',
-    specimenWeight: 25,
+    specimenWeight: 25.0,
   },
   {
     name: 'Dab',
@@ -109,7 +119,7 @@ const fishSpeciesSouthDevon: FishList = [
   },
   {
     name: 'Monkfish',
-    specimenWeight: 25,
+    specimenWeight: 25.0,
   },
   {
     name: 'Grey Mullet',
@@ -189,7 +199,7 @@ const fishSpeciesSouthDevon: FishList = [
   },
   {
     name: 'Tope',
-    specimenWeight: 25,
+    specimenWeight: 25.0,
   },
   {
     name: 'Trigger Fish',
@@ -198,6 +208,10 @@ const fishSpeciesSouthDevon: FishList = [
   {
     name: 'Turbot',
     specimenWeight: 3.0,
+  },
+  {
+    name: 'Weaver - Greater',
+    specimenWeight: 0.75,
   },
   {
     name: 'Whiting',
@@ -215,16 +229,21 @@ const fishSpeciesSouthDevon: FishList = [
 
 const fishSpeciesNorthDevon: FishList = [
   {
+    // online but not on dyls list
+    name: 'Angler fish',
+    specimenWeight: 20.0,
+  },
+  {
     name: 'Bass',
     specimenWeight: 8.0,
   },
   {
     name: 'Black Bream',
-    specimenWeight: 2.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Gilthead Bream',
-    specimenWeight: 3.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Red Bream',
@@ -232,23 +251,27 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Brill',
-    specimenWeight: 2.0,
+    specimenWeight: 3.0,
   },
   {
     name: 'Bull Huss',
-    specimenWeight: 10,
+    specimenWeight: 10.0,
+  },
+  {
+    name: 'Catfish',
+    specimenWeight: 4.0,
   },
   {
     name: 'Coalfish',
-    specimenWeight: 2.5,
+    specimenWeight: 3.5,
   },
   {
     name: 'Cod',
-    specimenWeight: 8,
+    specimenWeight: 12.0,
   },
   {
     name: 'Conger Eel',
-    specimenWeight: 25,
+    specimenWeight: 20.0,
   },
   {
     name: 'Dab',
@@ -256,11 +279,11 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Flounder',
-    specimenWeight: 2.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Garfish',
-    specimenWeight: 1.25,
+    specimenWeight: 1.5,
   },
   {
     name: 'Gurnard (Tub)',
@@ -280,11 +303,11 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Dogfish (LS)',
-    specimenWeight: 2.5,
+    specimenWeight: 2.75,
   },
   {
     name: 'Ling',
-    specimenWeight: 4.5,
+    specimenWeight: 5.0,
   },
   {
     name: 'Mackerel',
@@ -296,11 +319,11 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Monkfish',
-    specimenWeight: 25,
+    specimenWeight: 25.0,
   },
   {
     name: 'Grey Mullet',
-    specimenWeight: 2.0,
+    specimenWeight: 1.5,
   },
   {
     name: 'Red Mullet',
@@ -320,7 +343,7 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Polluck',
-    specimenWeight: 3.75,
+    specimenWeight: 5.0,
   },
   {
     name: 'Pouting',
@@ -344,7 +367,7 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Thornback Ray',
-    specimenWeight: 10.0,
+    specimenWeight: 8.0,
   },
   {
     name: 'Undulate Ray',
@@ -352,11 +375,11 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Rockling',
-    specimenWeight: 1.5,
+    specimenWeight: 1.75,
   },
   {
     name: 'Scad',
-    specimenWeight: 1.0,
+    specimenWeight: 1.25,
   },
   {
     name: 'Silver Eel',
@@ -364,7 +387,7 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Smooth Hounds',
-    specimenWeight: 8.0,
+    specimenWeight: 10.0,
   },
   {
     name: 'Sole',
@@ -376,7 +399,7 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Tope',
-    specimenWeight: 25,
+    specimenWeight: 30.0,
   },
   {
     name: 'Trigger Fish',
@@ -384,7 +407,11 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Turbot',
-    specimenWeight: 3.0,
+    specimenWeight: 2.0,
+  },
+  {
+    name: 'Weaver - Greater',
+    specimenWeight: 1.0,
   },
   {
     name: 'Whiting',
@@ -392,7 +419,7 @@ const fishSpeciesNorthDevon: FishList = [
   },
   {
     name: 'Ballan Wrasse',
-    specimenWeight: 4.0,
+    specimenWeight: 5.0,
   },
   {
     name: 'Cucko Wrasse',
@@ -402,12 +429,17 @@ const fishSpeciesNorthDevon: FishList = [
 
 const fishSpeciesCornwall: FishList = [
   {
+    // online but not on dyls list
+    name: 'Angler fish',
+    specimenWeight: 30.0,
+  },
+  {
     name: 'Bass',
     specimenWeight: 8.0,
   },
   {
     name: 'Black Bream',
-    specimenWeight: 2.5,
+    specimenWeight: 2.25,
   },
   {
     name: 'Gilthead Bream',
@@ -415,27 +447,31 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Red Bream',
-    specimenWeight: 1.0,
+    specimenWeight: 1.25,
   },
   {
     name: 'Brill',
-    specimenWeight: 2.0,
+    specimenWeight: 2.25,
   },
   {
     name: 'Bull Huss',
-    specimenWeight: 10,
+    specimenWeight: 10.0,
+  },
+  {
+    name: 'Catfish',
+    specimenWeight: 4.0,
   },
   {
     name: 'Coalfish',
-    specimenWeight: 2.5,
+    specimenWeight: 2.25,
   },
   {
     name: 'Cod',
-    specimenWeight: 8,
+    specimenWeight: 8.0,
   },
   {
     name: 'Conger Eel',
-    specimenWeight: 25,
+    specimenWeight: 25.0,
   },
   {
     name: 'Dab',
@@ -447,23 +483,23 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Garfish',
-    specimenWeight: 1.25,
+    specimenWeight: 1.5,
   },
   {
     name: 'Gurnard (Tub)',
-    specimenWeight: 2.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Gurnard (Red)',
-    specimenWeight: 1.0,
+    specimenWeight: 1.25,
   },
   {
     name: 'Haddock',
-    specimenWeight: 1.0,
+    specimenWeight: 1.5,
   },
   {
     name: 'John Dory',
-    specimenWeight: 1.0,
+    specimenWeight: 2.0,
   },
   {
     name: 'Dogfish (LS)',
@@ -471,7 +507,7 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Ling',
-    specimenWeight: 4.5,
+    specimenWeight: 6.25,
   },
   {
     name: 'Mackerel',
@@ -479,15 +515,15 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Megrim',
-    specimenWeight: 1.0,
+    specimenWeight: 1.25,
   },
   {
     name: 'Monkfish',
-    specimenWeight: 25,
+    specimenWeight: 20,
   },
   {
     name: 'Grey Mullet',
-    specimenWeight: 2.0,
+    specimenWeight: 2.625,
   },
   {
     name: 'Red Mullet',
@@ -499,15 +535,15 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Thin Lip Mullet',
-    specimenWeight: 3.5,
+    specimenWeight: 3.25,
   },
   {
     name: 'Plaice',
-    specimenWeight: 2.5,
+    specimenWeight: 2.25,
   },
   {
     name: 'Polluck',
-    specimenWeight: 3.75,
+    specimenWeight: 6.0,
   },
   {
     name: 'Pouting',
@@ -515,11 +551,11 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Blonde Ray',
-    specimenWeight: 13.0,
+    specimenWeight: 12.0,
   },
   {
     name: 'Small Eyed Ray',
-    specimenWeight: 8.0,
+    specimenWeight: 12.0,
   },
   {
     name: 'Spotted Ray',
@@ -531,11 +567,11 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Thornback Ray',
-    specimenWeight: 10.0,
+    specimenWeight: 9.0,
   },
   {
     name: 'Undulate Ray',
-    specimenWeight: 12.0,
+    specimenWeight: 10.0,
   },
   {
     name: 'Rockling',
@@ -551,7 +587,7 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Smooth Hounds',
-    specimenWeight: 8.0,
+    specimenWeight: 9.5,
   },
   {
     name: 'Sole',
@@ -563,7 +599,7 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Tope',
-    specimenWeight: 25,
+    specimenWeight: 30.0,
   },
   {
     name: 'Trigger Fish',
@@ -571,26 +607,35 @@ const fishSpeciesCornwall: FishList = [
   },
   {
     name: 'Turbot',
-    specimenWeight: 3.0,
+    specimenWeight: 1.75,
+  },
+  {
+    name: 'Weaver - Greater',
+    specimenWeight: 1.25,
   },
   {
     name: 'Whiting',
-    specimenWeight: 1.5,
+    specimenWeight: 1.75,
   },
   {
     name: 'Ballan Wrasse',
-    specimenWeight: 4.0,
+    specimenWeight: 5.0,
   },
   {
     name: 'Cucko Wrasse',
-    specimenWeight: 1.25,
+    specimenWeight: 1.0,
   },
 ];
 
 const fishSpeciesDorset: FishList = [
   {
+    // online but not on dyls list
+    name: 'Angler fish',
+    specimenWeight: 20.0,
+  },
+  {
     name: 'Bass',
-    specimenWeight: 8.0,
+    specimenWeight: 9.5,
   },
   {
     name: 'Black Bream',
@@ -598,7 +643,7 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Gilthead Bream',
-    specimenWeight: 3.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Red Bream',
@@ -606,19 +651,19 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Brill',
-    specimenWeight: 2.0,
+    specimenWeight: 1.5,
   },
   {
     name: 'Bull Huss',
-    specimenWeight: 10,
+    specimenWeight: 8.0,
   },
   {
     name: 'Coalfish',
-    specimenWeight: 2.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Cod',
-    specimenWeight: 8,
+    specimenWeight: 10.0,
   },
   {
     name: 'Conger Eel',
@@ -638,7 +683,7 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Gurnard (Tub)',
-    specimenWeight: 2.5,
+    specimenWeight: 1.5,
   },
   {
     name: 'Gurnard (Red)',
@@ -658,7 +703,7 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Ling',
-    specimenWeight: 4.5,
+    specimenWeight: 5.0,
   },
   {
     name: 'Mackerel',
@@ -674,7 +719,7 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Grey Mullet',
-    specimenWeight: 2.0,
+    specimenWeight: 1.5,
   },
   {
     name: 'Red Mullet',
@@ -694,7 +739,7 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Polluck',
-    specimenWeight: 3.75,
+    specimenWeight: 4.0,
   },
   {
     name: 'Pouting',
@@ -702,7 +747,7 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Blonde Ray',
-    specimenWeight: 13.0,
+    specimenWeight: 12.0,
   },
   {
     name: 'Small Eyed Ray',
@@ -710,11 +755,11 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Spotted Ray',
-    specimenWeight: 5.0,
+    specimenWeight: 4.5,
   },
   {
     name: 'Sting Ray',
-    specimenWeight: 20.0,
+    specimenWeight: 25.0,
   },
   {
     name: 'Thornback Ray',
@@ -738,11 +783,11 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Smooth Hounds',
-    specimenWeight: 8.0,
+    specimenWeight: 10.0,
   },
   {
     name: 'Sole',
-    specimenWeight: 1.75,
+    specimenWeight: 2.0,
   },
   {
     name: 'Spurdog',
@@ -750,7 +795,7 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Tope',
-    specimenWeight: 25,
+    specimenWeight: 25.0,
   },
   {
     name: 'Trigger Fish',
@@ -758,7 +803,11 @@ const fishSpeciesDorset: FishList = [
   },
   {
     name: 'Turbot',
-    specimenWeight: 3.0,
+    specimenWeight: 5.0,
+  },
+  {
+    name: 'Weaver - Greater',
+    specimenWeight: 0.75,
   },
   {
     name: 'Whiting',
@@ -776,6 +825,11 @@ const fishSpeciesDorset: FishList = [
 
 const fishSpeciesSomerset: FishList = [
   {
+    // online but not on dyls list
+    name: 'Angler fish',
+    specimenWeight: 20.0,
+  },
+  {
     name: 'Bass',
     specimenWeight: 8.0,
   },
@@ -785,7 +839,7 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Gilthead Bream',
-    specimenWeight: 3.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Red Bream',
@@ -797,19 +851,23 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Bull Huss',
-    specimenWeight: 10,
+    specimenWeight: 10.0,
+  },
+  {
+    name: 'Catfish',
+    specimenWeight: 4.0,
   },
   {
     name: 'Coalfish',
-    specimenWeight: 2.5,
+    specimenWeight: 5.0,
   },
   {
     name: 'Cod',
-    specimenWeight: 8,
+    specimenWeight: 10.0,
   },
   {
     name: 'Conger Eel',
-    specimenWeight: 25,
+    specimenWeight: 18.0,
   },
   {
     name: 'Dab',
@@ -817,15 +875,15 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Flounder',
-    specimenWeight: 2.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Garfish',
-    specimenWeight: 1.25,
+    specimenWeight: 1.0,
   },
   {
     name: 'Gurnard (Tub)',
-    specimenWeight: 2.5,
+    specimenWeight: 3.0,
   },
   {
     name: 'Gurnard (Red)',
@@ -845,11 +903,11 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Ling',
-    specimenWeight: 4.5,
+    specimenWeight: 5.0,
   },
   {
     name: 'Mackerel',
-    specimenWeight: 1.5,
+    specimenWeight: 1.75,
   },
   {
     name: 'Megrim',
@@ -861,7 +919,7 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Grey Mullet',
-    specimenWeight: 2.0,
+    specimenWeight: 1.5,
   },
   {
     name: 'Red Mullet',
@@ -877,11 +935,11 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Plaice',
-    specimenWeight: 2.5,
+    specimenWeight: 2.0,
   },
   {
     name: 'Polluck',
-    specimenWeight: 3.75,
+    specimenWeight: 5.0,
   },
   {
     name: 'Pouting',
@@ -897,11 +955,11 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Spotted Ray',
-    specimenWeight: 5.0,
+    specimenWeight: 4.0,
   },
   {
     name: 'Sting Ray',
-    specimenWeight: 20.0,
+    specimenWeight: 15.0,
   },
   {
     name: 'Thornback Ray',
@@ -909,11 +967,11 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Undulate Ray',
-    specimenWeight: 12.0,
+    specimenWeight: 10.0,
   },
   {
     name: 'Rockling',
-    specimenWeight: 1.5,
+    specimenWeight: 1.75,
   },
   {
     name: 'Scad',
@@ -925,27 +983,31 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Smooth Hounds',
-    specimenWeight: 8.0,
+    specimenWeight: 10.0,
   },
   {
     name: 'Sole',
-    specimenWeight: 1.75,
+    specimenWeight: 2.0,
   },
   {
     name: 'Spurdog',
-    specimenWeight: 8.0,
+    specimenWeight: 6.0,
   },
   {
     name: 'Tope',
-    specimenWeight: 25,
+    specimenWeight: 20.0,
   },
   {
     name: 'Trigger Fish',
-    specimenWeight: 2.5,
+    specimenWeight: 2.75,
   },
   {
     name: 'Turbot',
-    specimenWeight: 3.0,
+    specimenWeight: 4.0,
+  },
+  {
+    name: 'Weaver - Greater',
+    specimenWeight: 1.0,
   },
   {
     name: 'Whiting',
@@ -953,7 +1015,7 @@ const fishSpeciesSomerset: FishList = [
   },
   {
     name: 'Ballan Wrasse',
-    specimenWeight: 4.0,
+    specimenWeight: 3.0,
   },
   {
     name: 'Cucko Wrasse',
