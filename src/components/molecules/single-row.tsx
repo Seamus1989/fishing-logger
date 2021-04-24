@@ -7,82 +7,71 @@ import 'react-slidedown/lib/slidedown.css';
 import {getFishInPounds} from '../../utils';
 import {useUserContext} from '../../context/all-user-score';
 import plus from '../../plus.svg';
-import remove from '../../remove.svg';
 import {StyledImage} from '../random';
+import {useFishContext} from '../../context/fish-list';
+import {useToast} from '../../hooks/toast';
 
 export const SingleRow = ({
-  isFirst,
   specimenWeight,
   specimen,
-  rowNumber,
-  addRow,
-  removeRow,
 }: {
-  isFirst: boolean;
   specimenWeight: number;
   specimen: string;
-  rowNumber: number;
-  addRow: () => void;
-  removeRow: (rowNumber: number) => void;
 }): JSX.Element => {
+  const {region} = useFishContext();
   const [pounds, setPounds] = useState(0);
   const [ounces, setOunces] = useState(0);
   const [drams, setDrams] = useState(0);
-  const [isAdded, setIsAdded] = useState(false);
-  const {addFishToUser, addSpecimenToUser, deleteFish} = useUserContext();
+  const {addFishToUser, addSpecimenToUser} = useUserContext();
+  const {showToast} = useToast();
 
   const fishInPounds = useMemo(() => getFishInPounds(pounds, ounces, drams), [
     drams,
     ounces,
     pounds,
   ]);
+
   const addFish = useCallback(() => {
+    if (!region) {
+      showToast('Something has gone wrong.', true);
+      return;
+    }
     const score = (fishInPounds * 100) / specimenWeight;
-    /*
-    console.log('score', score);
-    console.log('specimenWeight', specimenWeight);
-    console.log('fishInPounds', fishInPounds);
-    console.log(fishInPounds >= specimenWeight);
-    */
+
     if (score === 0) return;
     const fish = {
       name: specimen,
-      id: `${specimen}-${rowNumber}`,
+      // TODO ID ? do wee actually need it, not really? Maybe not when fullstacked?
+      id: `${specimen}-${region}-${fishInPounds}`,
       specimenWeight,
+      region,
+      recordedWeight: fishInPounds,
     };
-    addRow();
     if (fishInPounds >= specimenWeight) {
       addSpecimenToUser({...fish, scoredPoints: score}, score);
-      setIsAdded(true);
       return;
     }
     addFishToUser({...fish, scoredPoints: score}, score);
-    setIsAdded(true);
   }, [
     addFishToUser,
-    addRow,
     addSpecimenToUser,
     fishInPounds,
-    rowNumber,
+    region,
+    showToast,
     specimen,
     specimenWeight,
   ]);
 
-  const removeFish = useCallback(() => {
-    deleteFish(`${specimen}-${rowNumber}`);
-    setPounds(0);
-    setOunces(0);
-    setDrams(0);
-    removeRow(rowNumber - 1);
-  }, [deleteFish, removeRow, rowNumber, specimen]);
-
   const handleClick = useCallback(() => {
-    if (isAdded) {
-      removeFish();
+    if (pounds === 0 && ounces === 0 && drams === 0) {
+      showToast('Please enter a weight first.', true);
       return;
     }
     addFish();
-  }, [addFish, isAdded, removeFish]);
+    setPounds(0);
+    setOunces(0);
+    setDrams(0);
+  }, [addFish, drams, ounces, pounds, showToast]);
 
   const renderRight = useMemo(() => {
     return (
@@ -101,37 +90,32 @@ export const SingleRow = ({
           flexDirection="column"
           justifyContent="flex-end"
         >
-          <StyledImage
-            height={25}
-            width={25}
-            src={!isAdded ? plus : remove}
-            alt="logo"
-          />
+          <StyledImage height={25} width={25} src={plus} alt="logo" />
         </Box>
       </Box>
     );
-  }, [handleClick, isAdded]);
+  }, [handleClick]);
 
   return (
     <Box py="5px" flex={1} display="flex" flexDirection="row">
       <SelectNumber
         width={50}
         padding={5}
-        title={isFirst ? 'Pounds' : undefined}
+        title="Pounds"
         onChange={(value) => setPounds(value)}
         value={pounds}
       />
       <SelectNumber
         width={50}
         padding={5}
-        title={isFirst ? 'Ounces' : undefined}
+        title="Ounces"
         onChange={(value) => setOunces(value)}
         value={ounces}
       />
       <SelectNumber
         width={50}
         padding={5}
-        title={isFirst ? 'Drams' : undefined}
+        title="Drams"
         onChange={(value) => setDrams(value)}
         value={drams}
         renderRight={renderRight}

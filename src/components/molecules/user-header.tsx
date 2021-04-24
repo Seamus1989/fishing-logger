@@ -1,75 +1,107 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Input} from 'antd';
 import styled from 'styled-components';
+import AnimateHeight from 'react-animate-height';
 import {useUserContext} from '../../context/all-user-score';
 import {Box} from '../common/box';
 import {Text} from '../common/text';
-import {StyledImage} from '../random';
+import {StyledImage, UnderlinedText} from '../random';
 import plus from '../../plus.svg';
+import {useModalContext} from '../../context/modal-context';
+import {UserModalContent} from '../modals/user-modal';
+import {capitaliseMe, roundToDecimalPlace} from '../../utils';
+import {TextDisplayColumn} from '../common/text-display-column';
 import {useFishContext} from '../../context/fish-list';
-import {MyDropdown} from './input-row';
+import {lightColor, darkColor} from '../../consts';
 
 const StyledContainer = styled.div`
   position: sticky;
   position: -webkit-sticky;
   top: 0;
   left: 0;
+  background-color: ${lightColor};
+  z-index: 100;
 `;
 
 const UserHeaderProfile = () => {
   const {currentUser, users} = useUserContext();
+  const [height, setHeight] = useState<string | number>(0);
+
+  const {setShow} = useModalContext();
   const user = users
     ? users.find((thisUser) => thisUser.name === currentUser)
     : null;
-  if (!user) return null;
+
+  useEffect(() => {
+    if (!user) {
+      setHeight(0);
+    }
+
+    if (user) {
+      setHeight('auto');
+    }
+  }, [user]);
+
   return (
-    <Box>
-      <Box>
-        <Text>{user.name}</Text>
-        <Text>Total Points: {user.score}</Text>
-        <Text>Total Fish: {user?.allFish?.length || 0}</Text>
-        <Text>Specimen number: {user?.specimens?.length || 0}</Text>
+    <AnimateHeight duration={450} height={height}>
+      <Box m="10px" bg={darkColor} borderRadius="10px" p="15px">
+        <Box>
+          <Box pb="5px">
+            <Text lineHeight="18px" fontWeight={600} fontSize="16px">
+              {user ? user.name : ''}
+            </Text>
+          </Box>
+          <TextDisplayColumn
+            text={`Total Fish: ${user?.allFish?.length || 0}`}
+          />
+          <TextDisplayColumn
+            text={`Total Specimen: ${user?.totalSpecimenNumber || 0}`}
+          />
+          <TextDisplayColumn
+            text={`Score Points: ${user ? roundToDecimalPlace(user.score) : 0}`}
+          />
+
+          <Box onClick={() => setShow(true)} mt="5px">
+            <UnderlinedText>See All / Edit</UnderlinedText>
+          </Box>
+          <UserModalContent />
+        </Box>
       </Box>
-    </Box>
+    </AnimateHeight>
   );
 };
-export const AppHeader = ({
-  showMessage,
-}: {
-  showMessage: boolean;
-}): JSX.Element => {
-  const {currentUser, changeUser, users} = useUserContext();
-  const {filterFish} = useFishContext();
+export const AppHeader = (): JSX.Element => {
+  const {currentUser, changeUser} = useUserContext();
   const [text, setText] = useState('');
-  const [fishFilter, setFishFilter] = useState('');
-
-  const specimensString = useMemo(() => {
-    if (users && users.length) {
-      const user = users.find((thisUser) => thisUser.name === currentUser);
-      if (!user) return '';
-      if (!user.totalSpecimenNumber) return '';
-
-      return new Array(user.totalSpecimenNumber).fill('🐟').join(' ');
-    }
-    return '';
-  }, [currentUser, users]);
+  const {toggleRegion} = useFishContext();
 
   return (
     <StyledContainer>
       <Box display="flex" flex={1} flexDirection="row">
-        <Box p="10px" my="10px" flex={1} display="flex" flexDirection="row">
+        <Box
+          pt="10px"
+          pb="10px"
+          pl="10px"
+          my="10px"
+          flex={1}
+          display="flex"
+          flexDirection="row"
+        >
           <Box display="flex" flexDirection="column">
-            <Box display="flex" py="10px" flexDirection="row">
+            <Box display="flex" pb="5px" pt="10px" flexDirection="row">
               <Input
                 min={0}
-                style={{width: '150px'}}
+                style={{width: '100px'}}
                 max={100}
                 defaultValue={0}
                 value={text}
-                onChange={(newValue) => setText(newValue.currentTarget.value)}
-                placeholder="Enter a new fisherer..."
+                disabled={!!currentUser}
+                onChange={(newValue) =>
+                  setText(capitaliseMe(newValue.currentTarget.value))
+                }
+                placeholder="Enter a user"
               />
-              {currentUser ? null : (
+              {currentUser || text === '' ? null : (
                 <Box
                   ml="15px"
                   mr="5px"
@@ -82,47 +114,34 @@ export const AppHeader = ({
                 </Box>
               )}
             </Box>
-            <Box display="flex" py="10px" flexDirection="row">
-              <Input
-                min={0}
-                style={{width: '150px'}}
-                max={100}
-                defaultValue={0}
-                value={fishFilter}
-                onChange={(newValue) => {
-                  setFishFilter(newValue.currentTarget.value);
-                  filterFish(newValue.currentTarget.value);
-                }}
-                placeholder="Filter specimen..."
-              />
-            </Box>
-          </Box>
 
-          {specimensString !== '' ? (
-            <Box flex={1} display="flex" flexDirection="row">
-              <Text lineHeight="12px" fontSize="10px">
-                {specimensString}
-              </Text>
-            </Box>
-          ) : null}
+            {!!currentUser && (
+              <Box pb="10px" justifyContent="center" flex={1}>
+                <Box
+                  display="flex"
+                  flex={1}
+                  justifyContent="flex-end"
+                  flexDirection="row"
+                >
+                  <Box
+                    onClick={() => {
+                      changeUser('');
+                      setText('');
+                      toggleRegion(undefined);
+                    }}
+                  >
+                    <UnderlinedText small>Next User</UnderlinedText>
+                  </Box>
+                </Box>
+              </Box>
+            )}
+          </Box>
         </Box>
 
         <Box flex={1} display="flex">
           <UserHeaderProfile />
         </Box>
       </Box>
-      <MyDropdown open={showMessage}>
-        <Box m="10px" justifyContent="center" flex={1}>
-          <Text
-            textAlign="center"
-            lineHeight="20px"
-            fontSize="16px"
-            color="red"
-          >
-            Please enter a user before making selections
-          </Text>
-        </Box>
-      </MyDropdown>
     </StyledContainer>
   );
 };

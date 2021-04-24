@@ -1,31 +1,50 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import styled from 'styled-components';
 
 import './App.css';
+import {ToastContainer} from 'react-toastify';
+import {Input} from 'antd';
 import {Box} from './components/common/box';
+import {useToast} from './hooks/toast';
 import {InputRow} from './components/molecules/input-row';
 import {Nav} from './components/molecules/nav';
 import {AppHeader} from './components/molecules/user-header';
-import {StyledImage} from './components/random';
+import {StyledImage, UnderlinedText} from './components/random';
 import {UserProvider, useUserContext} from './context/all-user-score';
 import {FishProvider, useFishContext} from './context/fish-list';
+import {ModalProvider} from './context/modal-context';
 import logo from './logo.png';
+import 'react-toastify/dist/ReactToastify.css';
+import {RegionSelect} from './components/region-dropdown';
 
 const StyledContainer = styled.div<{disabled: boolean}>`
   overflow-y: scroll;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  padding-bottom: 100px;
 `;
 const AppInner = () => {
-  const [showMessage, setShowMessage] = useState(false);
   const {fish} = useFishContext();
-  const {currentUser} = useUserContext();
+  const {currentUser, users} = useUserContext();
+  const [fishFilter, setFishFilter] = useState('');
+  const {filterFish} = useFishContext();
+  const {showToast} = useToast();
+
+  const handleFilterInput = useCallback(
+    (value: string) => {
+      setFishFilter(value);
+      filterFish(value);
+    },
+    [filterFish],
+  );
 
   return (
     <>
-      <AppHeader showMessage={showMessage} />
+      <AppHeader />
+
       <Box
-        py="15px"
+        pt="35px"
+        pb="10px"
         display="flex"
         flexDirection="row"
         justifyContent="center"
@@ -33,7 +52,7 @@ const AppInner = () => {
       >
         <Box flex={1} />
         <Box>
-          <StyledImage height={150} src={logo} width={150} />
+          <StyledImage height={180} src={logo} width={180} />
         </Box>
         <Box flex={1} />
       </Box>
@@ -41,72 +60,89 @@ const AppInner = () => {
         disabled={!currentUser}
         onClick={() => {
           if (!currentUser) {
-            setShowMessage(true);
-            setTimeout(() => setShowMessage(false), 4000);
+            showToast('Please select a user before making selections', true);
           }
         }}
       >
-        {fish.map(({name, specimenWeight}) => {
-          return <InputRow specimen={name} specimenWeight={specimenWeight} />;
-        })}
+        {(!!currentUser || fish) && (
+          <Box py="10px" mx="10px">
+            <RegionSelect disabled={!currentUser} />
+          </Box>
+        )}
+        {fish && (
+          <Box display="flex" p="10px" flexDirection="row">
+            <Input
+              min={0}
+              style={{width: '200px'}}
+              max={100}
+              defaultValue={0}
+              value={fishFilter}
+              onChange={(newValue) => {
+                handleFilterInput(newValue.currentTarget.value);
+              }}
+              placeholder="Filter by specimen..."
+            />
+            <Box
+              onClick={() => handleFilterInput('')}
+              pl="10px"
+              justifyContent="center"
+              display="flex"
+              alignItems="center"
+            >
+              <UnderlinedText>Clear Filter</UnderlinedText>
+            </Box>
+          </Box>
+        )}
+
+        {fish
+          ? fish.map(({name, specimenWeight}) => {
+              return (
+                <InputRow specimen={name} specimenWeight={specimenWeight} />
+              );
+            })
+          : null}
       </StyledContainer>
-      <Nav />
+      {users && users.length && <Nav />}
     </>
   );
 };
 export const App = () => {
   return (
-    <UserProvider>
-      <FishProvider>
-        <AppInner />
-      </FishProvider>
-    </UserProvider>
+    <FishProvider>
+      <ModalProvider>
+        <UserProvider>
+          <>
+            <AppInner />
+            <ToastContainer />
+          </>
+        </UserProvider>
+      </ModalProvider>
+    </FishProvider>
   );
 };
 
 /*
-// TODO
 
-// TODO NOW
-1. Delete fish - and associate each with id = ${name}${number} and add to fish context
-2. Add bin Icon to bin fish
+NOW
 
-// add species total into row
-3. Add user input and sticky header, disable fields if user === '', add fish emoji to header for specimen number
-4. Add tick button to action add user
-5. Add tick button to fish to add fish - if fields not all === 0
-6. Add 10 fish and test Test, make changes
-7. Create bottom nav menu + modals
-Nav = add user ? scoreboard ? view Current ? search fish
-8. Edit user from all user screen ? 
-9. Filter fish via search
-10. Error toast? https://www.npmjs.com/package/react-toastify
-11. Message to display on input - enter weight like this or like this
+New modal context, so we can show multiple user info
 
-ALSO
-Handle rounding numbersssss
+Create multiple user modal
 
+Create table component? Then easy to make the three below
 
-TONIGHT
-modal to show all user info https://ant.design/components/modal/ - evertyhing else is shit
-// or use nav menu and router
-Add other fish
-Handle rounding numbersssss
-Style font sizes a bit for mobile
+Group User modal
+1. All user score table
+2. All fish by biggest recorded
+3. Specimen league
+
+Add/edit all fish info for regions! DONE
 
 BONUS
-REGIONS
-User header info to transition in
-
-
-
-Later
-The bit I've made comments about
-user background // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
-multiple users - need a button, next user - reset all form values (when I do that big)
-Error toast
-Check TODO
-Test
+Toast positioning when scrolling down ???  seems okay now
+Bottom nav will change pages - one shows modal. 
+Rename components and reorganise into file/structure
+user background  - on main page // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
 
 
 */

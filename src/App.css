@@ -28,7 +28,10 @@ html {
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.ant-input {
+  border-radius: 5px;
+  outline: none;
+}
 .App-link {
   color: #61dafb;
 }
