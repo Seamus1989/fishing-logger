@@ -28,7 +28,7 @@ export const SingleLoggedFish = ({
   const isSpecimen = recordedWeight >= specimenWeight;
   if (!isFirst) {
     return (
-      <Box display="flex" flexDirection="row">
+      <Box display="flex" pb="3px" flexDirection="row">
         <TextDisplayRow
           verticalPadding={5}
           leftPadding={3}
@@ -55,7 +55,11 @@ export const SingleLoggedFish = ({
           justifyContent="center"
         >
           <Box justifyContent="center" display="flex" flexDirection="column">
-            <Box onClick={() => deleteFish(id)}>
+            <Box
+              mb="3px"
+              borderBottom="1px rgba(0,0,0,0.4) solid"
+              onClick={() => deleteFish(id)}
+            >
               <StyledImage height={15} width={15} src={bin} alt="logo" />
             </Box>
           </Box>
@@ -80,7 +84,7 @@ export const SingleLoggedFish = ({
           <Box flex={1} display="flex" flexDirection="column" />
         </Box>
 
-        <Box display="flex" flexDirection="row">
+        <Box display="flex" pb="3px" flexDirection="row">
           <TextDisplayRow
             verticalPadding={5}
             leftPadding={3}
@@ -108,7 +112,11 @@ export const SingleLoggedFish = ({
             justifyContent="center"
           >
             <Box justifyContent="center" display="flex" flexDirection="column">
-              <Box onClick={() => deleteFish(id)}>
+              <Box
+                mb="3px"
+                borderBottom="1px rgba(0,0,0,0.4) solid"
+                onClick={() => deleteFish(id)}
+              >
                 <StyledImage height={15} width={15} src={bin} alt="logo" />
               </Box>
             </Box>
