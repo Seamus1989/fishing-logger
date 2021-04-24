@@ -26,7 +26,7 @@ export const UserModalContent = () => {
   return (
     <Modal title="User Score">
       <StyledContainer>
-        <Box p="15px" flex={1} bg={darkColor}>
+        <Box p="10px" flex={1} bg={darkColor}>
           <Box pb="25px">
             <Box pb="5px">
               <Text lineHeight="18px" fontWeight={600} fontSize="16px">
@@ -45,10 +45,6 @@ export const UserModalContent = () => {
                   user ? roundToDecimalPlace(user.score) : 0
                 }`}
               />
-            </Box>
-
-            <Box pt="15px">
-              <Divider />
             </Box>
           </Box>
           <Box pb="50px">

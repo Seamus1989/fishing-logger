@@ -122,6 +122,23 @@ export const App = () => {
 };
 
 /*
+SOME TOUCH UPS
+
+Remove delete header in table (just flex)
+Maybe trial double flexing fish name
+vertically center all elements inside the table!
+Less padding on sides of table - make it inline with other bits
+Underline or give border to some elements?
+Change remove text to bin icon?
+Abbreviate region?
+
+Main scroll menu, outside click ref - if clicked outside, and is open then close. Auto tidy up.
+
+
+Disable scroll to refresh!
+
+Multiple modal work
+
 
 NOW
 
@@ -145,4 +162,22 @@ Rename components and reorganise into file/structure
 user background  - on main page // make a background gradient https://www.npmjs.com/package/react-gradient SEAMO TODO
 
 
+
+
+MVP FOR FULLSTACK
+
+database fish (id, name, specimen weight, region), users (id, name, (email, password later))
+
+Will need to seed all fish into database
+
+Saving fish entered - when. When we hit the plus icon
+
+Date component when adding single fish? And option to use today (easy click) - where inside modal?
+
+Then modal with users all - paginated fish, ordered by date
+Filters to allow filtered by date, fish species, region. A button to `comp` results - make filtered selection into a competition
+
+Can click into a user from all users and edit/remove fish.
+
+Some kind of detecting phone landscape/other
 */

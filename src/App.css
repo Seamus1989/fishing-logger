@@ -4,6 +4,9 @@
 html {
   font-family: roboto;
 }
+body {
+    overscroll-behavior-y: contain;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -1,6 +1,7 @@
 /* eslint-disable react/require-default-props */
 import React, {useCallback, useMemo, useState} from 'react';
 import {SlideDown} from 'react-slidedown';
+import OutsideClickHandler from 'react-outside-click-handler';
 import {darkColor, deviceWidth} from '../../consts';
 import {Box} from '../common/box';
 import {Text} from '../common/text';
@@ -101,8 +102,14 @@ export const InputRow = ({
     setShowDropdown(!showDropdown);
   }, [currentUser, showDropdown]);
 
+  const handleClickOutside = useCallback(() => {
+    if (!currentUser) return;
+    if (!showDropdown) return;
+    setShowDropdown(!showDropdown);
+  }, [currentUser, showDropdown]);
+
   return (
-    <>
+    <OutsideClickHandler onOutsideClick={() => handleClickOutside()}>
       <Box
         maxWidth={`${deviceWidth}px`}
         margin="10px"
@@ -168,6 +175,6 @@ export const InputRow = ({
           </Box>
         </MyDropdown>
       </Box>
-    </>
+    </OutsideClickHandler>
   );
 };
