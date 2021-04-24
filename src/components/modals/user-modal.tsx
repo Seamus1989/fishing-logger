@@ -8,7 +8,6 @@ import {Modal} from './modal-components/modal';
 import {TextDisplayColumn} from '../common/text-display-column';
 import {Text} from '../common/text';
 import {roundToDecimalPlace} from '../../utils';
-import {Divider} from '../common/divider';
 import {darkColor} from '../../consts';
 
 const StyledContainer = styled.div`
