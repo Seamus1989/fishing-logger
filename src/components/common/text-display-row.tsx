@@ -5,28 +5,31 @@ import {UnderlinedText} from '../random';
 
 export const TextDisplayRow = ({
   text,
-  noPadding,
+  leftPadding,
   bold,
   underline,
   verticalPadding,
   onClick,
+  borderBottom,
 }: {
   text: string;
-  noPadding?: boolean;
+  leftPadding?: number;
   bold?: boolean;
   underline?: boolean;
   verticalPadding?: number;
   onClick?: () => void;
+  borderBottom?: boolean;
 }) => {
   return (
     <Box
       flex={1}
       display="flex"
       flexDirection="column"
-      pl={noPadding ? '0px' : '10px'}
+      pl={!leftPadding ? '0px' : `${leftPadding}px`}
       justifyContent="center"
       pb={verticalPadding ? `${verticalPadding}px` : '0px'}
       onClick={onClick}
+      borderBottom={borderBottom ? '1px black solid' : undefined}
     >
       <>
         {underline ? (

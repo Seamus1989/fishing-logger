@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {User} from '../../context/all-user-score';
+import {Box} from '../common/box';
 import {EmptyDisplay} from '../common/empty-component';
 import {SingleLoggedFish} from './single-logged-fish';
 
@@ -29,5 +30,11 @@ export const AllLoggedFish = ({user}: {user: User}) => {
   if (!renderFish) {
     return <EmptyDisplay text="There seems to be nothing to show." />;
   }
-  return <>{renderFish}</>;
+  return (
+    <>
+      <Box border="1px rgba(0,0,0,0.4) solid" borderRadius="5px">
+        {renderFish}
+      </Box>
+    </>
+  );
 };

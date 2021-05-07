@@ -14,9 +14,11 @@ import {useToast} from '../../hooks/toast';
 export const SingleRow = ({
   specimenWeight,
   specimen,
+  hideRow,
 }: {
   specimenWeight: number;
   specimen: string;
+  hideRow: () => void;
 }): JSX.Element => {
   const {region} = useFishContext();
   const [pounds, setPounds] = useState(0);
@@ -49,13 +51,16 @@ export const SingleRow = ({
     };
     if (fishInPounds >= specimenWeight) {
       addSpecimenToUser({...fish, scoredPoints: score}, score);
+      hideRow();
       return;
     }
     addFishToUser({...fish, scoredPoints: score}, score);
+    hideRow();
   }, [
     addFishToUser,
     addSpecimenToUser,
     fishInPounds,
+    hideRow,
     region,
     showToast,
     specimen,
