@@ -7,6 +7,9 @@ import {TextDisplayRow} from '../common/text-display-row';
 import {StyledImage} from '../random';
 import bin from '../../delete.svg';
 
+const Bin = () => {
+  return <StyledImage height={15} width={15} src={bin} alt="logo" />;
+};
 export const SingleLoggedFish = ({
   name,
   scoredPoints,
@@ -60,7 +63,7 @@ export const SingleLoggedFish = ({
               borderBottom="1px rgba(0,0,0,0.4) solid"
               onClick={() => deleteFish(id)}
             >
-              <StyledImage height={15} width={15} src={bin} alt="logo" />
+              <Bin />
             </Box>
           </Box>
         </Box>
@@ -117,7 +120,7 @@ export const SingleLoggedFish = ({
                 borderBottom="1px rgba(0,0,0,0.4) solid"
                 onClick={() => deleteFish(id)}
               >
-                <StyledImage height={15} width={15} src={bin} alt="logo" />
+                <Bin />
               </Box>
             </Box>
           </Box>

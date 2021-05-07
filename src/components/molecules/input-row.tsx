@@ -170,7 +170,11 @@ export const InputRow = ({
             justifyContent="space-between"
           >
             <Box display="flex" flexDirection="column" flex={1} mr="5px">
-              <SingleRow specimen={specimen} specimenWeight={specimenWeight} />
+              <SingleRow
+                specimen={specimen}
+                specimenWeight={specimenWeight}
+                hideRow={() => handleClickOutside()}
+              />
             </Box>
           </Box>
         </MyDropdown>

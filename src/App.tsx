@@ -52,12 +52,7 @@ const AppInner = () => {
       >
         <Box flex={1} />
         <Box>
-          <StyledImage
-            className="App-logo"
-            height={180}
-            src={logo}
-            width={180}
-          />
+          <StyledImage height={180} src={logo} width={180} />
         </Box>
         <Box flex={1} />
       </Box>
