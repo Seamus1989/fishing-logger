@@ -219,7 +219,7 @@ const fishSpeciesSouthDevon: FishList = [
   },
   {
     name: 'Ballan Wrasse',
-    specimenWeight: 4.0,
+    specimenWeight: 4.5,
   },
   {
     name: 'Cucko Wrasse',
