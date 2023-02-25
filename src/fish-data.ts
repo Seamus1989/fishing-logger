@@ -155,7 +155,7 @@ const fishSpeciesSouthDevon: FishList = [
   },
   {
     name: 'Small Eyed Ray',
-    specimenWeight: 8.0,
+    specimenWeight: 9.0,
   },
   {
     name: 'Spotted Ray',
