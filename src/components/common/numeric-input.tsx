@@ -1,54 +1,50 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
 
-import {InputNumber} from 'antd';
-import {Box} from './box';
-import {Text} from './text';
+import {
+  Box,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Text,
+} from "@chakra-ui/react";
 
 export const SelectNumber = ({
   onChange,
   title,
-  width,
-  padding,
   value,
-  renderRight,
 }: {
   onChange: (value: number) => void;
   // eslint-disable-next-line react/require-default-props
   title?: string;
-  width: number;
-  padding: number;
   value: number;
-  renderRight?: JSX.Element;
 }): JSX.Element => {
-  const renderWidth = renderRight
-    ? `${50 + 2 * padding}px`
-    : `${100 + 2 * padding}px`;
   return (
     <Box flex={1} display="flex" flexDirection="column">
       {title && (
-        <Box px={`${padding}px`} pb="2px">
-          <Text lineHeight="10px" fontWeight={400} fontSize="8px">
+        <Box p="5px">
+          <Text lineHeight="10px" fontWeight={400} fontSize="10px">
             {title}
           </Text>
         </Box>
       )}
-      <Box
-        px={`${padding}px`}
-        width={renderWidth}
-        display="flex"
-        flexDirection="row"
-        flex={1}
-      >
-        <InputNumber
+      <Box display="flex" flexDirection="row" flex={1}>
+        <NumberInput
           inputMode="decimal"
           min={0}
-          style={{width: renderWidth}}
+          style={{ backgroundColor: "white" }}
           defaultValue={0}
           value={value}
-          onChange={(newValue) => onChange(newValue)}
-        />
-        {renderRight || null}
+          size="sm"
+          onChange={(newValue) => onChange(+newValue)}
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
       </Box>
     </Box>
   );

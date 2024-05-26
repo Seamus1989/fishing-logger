@@ -1,7 +1,7 @@
-import React from 'react';
-import {Text} from './text';
-import {Box} from './box';
-import {UnderlinedText} from '../random';
+import { Text } from "@chakra-ui/react";
+
+import { Box } from "@chakra-ui/react";
+import { UnderlinedText } from "../random";
 
 export const TextDisplayRow = ({
   text,
@@ -11,6 +11,7 @@ export const TextDisplayRow = ({
   verticalPadding,
   onClick,
   borderBottom,
+  fontSize,
 }: {
   text: string;
   leftPadding?: number;
@@ -19,25 +20,26 @@ export const TextDisplayRow = ({
   verticalPadding?: number;
   onClick?: () => void;
   borderBottom?: boolean;
+  fontSize?: string;
 }) => {
   return (
     <Box
       flex={1}
       display="flex"
       flexDirection="column"
-      pl={!leftPadding ? '0px' : `${leftPadding}px`}
+      pl={!leftPadding ? "0px" : `${leftPadding}px`}
       justifyContent="center"
-      pb={verticalPadding ? `${verticalPadding}px` : '0px'}
+      pb={verticalPadding ? `${verticalPadding}px` : "0px"}
       onClick={onClick}
-      borderBottom={borderBottom ? '1px black solid' : undefined}
+      borderBottom={borderBottom ? "1px black solid" : undefined}
     >
       <>
         {underline ? (
-          <UnderlinedText verySmall>{text}</UnderlinedText>
+          <UnderlinedText verySmall copy="text"></UnderlinedText>
         ) : (
           <Text
             lineHeight="12px"
-            fontSize="10px"
+            fontSize={fontSize || "10px"}
             fontWeight={bold ? 600 : undefined}
           >
             {text}

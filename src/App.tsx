@@ -1,48 +1,45 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, {useState, useCallback} from 'react';
-import styled from 'styled-components';
+import { useCallback, useState } from "react";
 
-import './App.css';
-import {ToastContainer} from 'react-toastify';
-import {Input} from 'antd';
-import {Box} from './components/common/box';
-import {useToast} from './hooks/toast';
-import {InputRow} from './components/molecules/input-row';
-import {Nav} from './components/molecules/nav';
-import {AppHeader} from './components/molecules/user-header';
-import {StyledImage, UnderlinedText} from './components/random';
-import {UserProvider, useUserContext} from './context/all-user-score';
-import {FishProvider, useFishContext} from './context/fish-list';
-import {ModalProvider} from './context/modal-context';
-import logo from './logo.png';
-import 'react-toastify/dist/ReactToastify.css';
-import {RegionSelect} from './components/region-dropdown';
+import { ToastContainer } from "react-toastify";
+import "./App.css";
 
-const StyledContainer = styled.div<{disabled: boolean}>`
-  overflow-y: scroll;
-  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  padding-bottom: 100px;
-`;
+import "react-toastify/dist/ReactToastify.css";
+
+import { Box, ChakraProvider, Image, Input } from "@chakra-ui/react";
+import { InputRow } from "./components/molecules/input-row";
+import { Nav } from "./components/molecules/nav";
+import { AppHeader } from "./components/molecules/user-header";
+import { UnderlinedText } from "./components/random";
+import { RegionSelect } from "./components/region-dropdown";
+import { UserProvider, useUserContext } from "./context/all-user-score";
+import { FishProvider, useFishContext } from "./context/fish-list";
+
+import { deviceHeight } from "./consts";
+import { useToast } from "./hooks/toast";
+import logo from "./images/logo.png";
+
+const bg = "#FF8883";
 const AppInner = () => {
-  const {fish} = useFishContext();
-  const {currentUser, users} = useUserContext();
-  const [fishFilter, setFishFilter] = useState('');
-  const {filterFish} = useFishContext();
-  const {showToast} = useToast();
+  const { fish } = useFishContext();
+  const { currentUser, users } = useUserContext();
+  const [fishFilter, setFishFilter] = useState("");
+  const { filterFish } = useFishContext();
+  const { showToast } = useToast();
 
   const handleFilterInput = useCallback(
     (value: string) => {
       setFishFilter(value);
       filterFish(value);
     },
-    [filterFish],
+    [filterFish]
   );
-  console.log(
+  console.timeLog(
     process.env.NEXT_PUBLIC_VERCEL_URL,
-    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.NEXT_PUBLIC_SITE_URL
   );
   return (
-    <>
+    <Box bg={bg} flexGrow={1} minHeight={`${deviceHeight}px`}>
       <AppHeader />
 
       <Box
@@ -55,15 +52,17 @@ const AppInner = () => {
       >
         <Box flex={1} />
         <Box>
-          <StyledImage height={180} src={logo} width={180} />
+          <Image height={180} src={logo} width={180} />
         </Box>
         <Box flex={1} />
       </Box>
-      <StyledContainer
-        disabled={!currentUser}
+      <Box
+        overflowY="scroll"
+        opacity={currentUser ? 1 : 0.5}
+        paddingBottom="100px"
         onClick={() => {
           if (!currentUser) {
-            showToast('Please select a user before making selections', true);
+            showToast("Please select a user before making selections", true);
           }
         }}
       >
@@ -76,7 +75,7 @@ const AppInner = () => {
           <Box display="flex" p="10px" flexDirection="row">
             <Input
               min={0}
-              style={{width: '200px'}}
+              //style={{ width: "200px" }}
               max={100}
               defaultValue={0}
               value={fishFilter}
@@ -84,43 +83,48 @@ const AppInner = () => {
                 handleFilterInput(newValue.currentTarget.value);
               }}
               placeholder="Filter by specimen..."
+              style={{ backgroundColor: "white" }}
             />
             <Box
-              onClick={() => handleFilterInput('')}
+              onClick={() => handleFilterInput("")}
               pl="10px"
               justifyContent="center"
               display="flex"
               alignItems="center"
             >
-              <UnderlinedText>Clear Filter</UnderlinedText>
+              <UnderlinedText copy="Clear"></UnderlinedText>
             </Box>
           </Box>
         )}
 
         {fish
-          ? fish.map(({name, specimenWeight}) => {
+          ? fish.map(({ name, specimenWeight }, index) => {
               return (
-                <InputRow specimen={name} specimenWeight={specimenWeight} />
+                <InputRow
+                  specimen={name}
+                  specimenWeight={specimenWeight}
+                  key={`${name}-${index}`}
+                ></InputRow>
               );
             })
           : null}
-      </StyledContainer>
+      </Box>
       {users && users.length && <Nav />}
-    </>
+    </Box>
   );
 };
 export const App = () => {
   return (
-    <FishProvider>
-      <ModalProvider>
+    <ChakraProvider>
+      <FishProvider>
         <UserProvider>
           <>
             <AppInner />
             <ToastContainer />
           </>
         </UserProvider>
-      </ModalProvider>
-    </FishProvider>
+      </FishProvider>
+    </ChakraProvider>
   );
 };
 

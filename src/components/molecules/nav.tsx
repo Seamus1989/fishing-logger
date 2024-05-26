@@ -1,38 +1,48 @@
-import React, {useCallback} from 'react';
-import styled from 'styled-components';
-import {lightColor} from '../../consts';
-import {useModalContext} from '../../context/modal-context';
+import { useCallback, useState } from "react";
 
-import group from '../../group.svg';
-import user from '../../user.svg';
-import {Box} from '../common/box';
-import {StyledImage} from '../random';
+import { lightColor } from "../../consts";
 
-const navMenuHeight = '50px';
+import group from "../../images/group.svg";
+import user from "../../images/user.svg";
+
+import { Box, Image } from "@chakra-ui/react";
+import { GroupUserModal } from "../modals/group-user-modal";
+import { UserModal } from "../modals/user-modal";
+
+const navMenuHeight = "50px";
 const navIconHeight = 30;
-const NavMenuContainer = styled.div`
-  background: ${lightColor};
-  font-family: roboto;
-  font-weight: 200;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  height: ${navMenuHeight};
-`;
-const SingleNavDiv = styled.div({
-  appearance: 'none',
-  height: navMenuHeight,
-  flex: 1,
-  display: 'flex',
-  whiteSpace: 'normal',
-  '&:hover, :active': {
-    backgroundColor: `darkColor`,
-    cursor: `pointer`,
-    transition: 'all 0.7s',
-  },
-});
+
+const NavMenuContainer = ({ children }: { children: JSX.Element }) => {
+  return (
+    <Box
+      background={lightColor}
+      fontFamily="roboto"
+      fontWeight={200}
+      position="fixed"
+      bottom={0}
+      left={0}
+      right={0}
+      display="flex"
+      height={navMenuHeight}
+    >
+      {children}
+    </Box>
+  );
+};
+const SingleNavDiv = ({ children }: { children: JSX.Element }) => {
+  return (
+    <Box
+      appearance="none"
+      height={navMenuHeight}
+      flex={1}
+      display="flex"
+      whiteSpace="normal"
+      position="relative"
+    >
+      {children}
+    </Box>
+  );
+};
 
 const ImageContainer = ({
   onClick,
@@ -71,50 +81,58 @@ const ImageContainer = ({
 };
 
 export const Nav = (): JSX.Element => {
-  const {setShow} = useModalContext();
-
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [showGroupUserModal, setShowGroupUserModal] = useState(false);
   const showUserInfo = useCallback(() => {
-    setShow(true);
-  }, [setShow]);
+    setShowUserModal(true);
+  }, []);
+
   const showGroupUserInfo = useCallback(() => {
-    // todo SEAMO handle redirect!
+    setShowGroupUserModal(true);
   }, []);
 
   return (
     <>
       <NavMenuContainer>
-        <SingleNavDiv>
-          <ImageContainer
-            title="User Stats"
-            onClick={showUserInfo}
-            bottomSpacer="10px"
-            render={() => (
-              <>
-                <StyledImage
-                  height={(2 * navIconHeight) / 3}
+        <>
+          <SingleNavDiv>
+            <ImageContainer
+              title="User Stats"
+              onClick={showUserInfo}
+              bottomSpacer="10px"
+              render={() => (
+                <>
+                  <Image
+                    height={(2 * navIconHeight) / 3}
+                    width={navIconHeight}
+                    src={user}
+                    alt="logo"
+                  />
+                </>
+              )}
+            />
+          </SingleNavDiv>
+          <SingleNavDiv>
+            <ImageContainer
+              title="Scoreboard"
+              onClick={showGroupUserInfo}
+              render={() => (
+                <Image
+                  height={navIconHeight}
                   width={navIconHeight}
-                  src={user}
+                  src={group}
                   alt="logo"
                 />
-              </>
-            )}
-          />
-        </SingleNavDiv>
-        <SingleNavDiv>
-          <ImageContainer
-            title="Scoreboard"
-            onClick={showGroupUserInfo}
-            render={() => (
-              <StyledImage
-                height={navIconHeight}
-                width={navIconHeight}
-                src={group}
-                alt="logo"
-              />
-            )}
-          />
-        </SingleNavDiv>
+              )}
+            />
+          </SingleNavDiv>
+        </>
       </NavMenuContainer>
+      <UserModal show={showUserModal} onClose={() => setShowUserModal(false)} />
+      <GroupUserModal
+        show={showGroupUserModal}
+        onClose={() => setShowGroupUserModal(false)}
+      />
     </>
   );
 };

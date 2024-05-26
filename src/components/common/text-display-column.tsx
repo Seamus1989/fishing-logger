@@ -1,7 +1,6 @@
-import React from 'react';
-import {Text} from './text';
+import { Text } from "@chakra-ui/react";
 
-export const TextDisplayColumn = ({text}: {text: string}) => {
+export const TextDisplayColumn = ({ text }: { text: string }) => {
   return (
     <Text lineHeight="16px" fontWeight={300} fontSize="12px">
       {text}

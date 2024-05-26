@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, {createContext, useContext, useCallback, useState} from 'react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {FishList, allFishedWithRegions, Region} from '../fish-data';
-import {useToast} from '../hooks/toast';
+import { createContext, useCallback, useContext, useState } from "react";
+
+import { FishList, Region, allFishWithRegions } from "../fish-data";
+import { useToast } from "../hooks/toast";
 
 const FishContext = createContext<{
   fish: FishList | null;
@@ -17,35 +15,35 @@ const FishContext = createContext<{
   toggleRegion: () => {},
 });
 
-const FishProvider = (props: {children: JSX.Element}): JSX.Element => {
+const FishProvider = (props: { children: JSX.Element }): JSX.Element => {
   const [fish, setFish] = useState<null | FishList>(null);
   const [region, setRegion] = useState<null | Region>(null);
-  const {showToast} = useToast();
+  const { showToast } = useToast();
 
   const filterFish = useCallback(
     (value: string) => {
-      const indexOfRegionSelected = allFishedWithRegions.findIndex(
-        (e) => e.region === region,
+      const indexOfRegionSelected = allFishWithRegions.findIndex(
+        (e) => e.region === region
       );
-      if (value === '' && region) {
+      if (value === "" && region) {
         if (indexOfRegionSelected === -1) {
-          showToast('Something has gone wrong.', true);
+          showToast("Something has gone wrong.", true);
           return;
         }
-        setFish(allFishedWithRegions[indexOfRegionSelected].fish);
+        setFish(allFishWithRegions[indexOfRegionSelected].fish);
         return;
       }
       if (indexOfRegionSelected === -1) {
-        showToast('Something has gone wrong.', true);
+        showToast("Something has gone wrong.", true);
         return;
       }
-      const currentFish = allFishedWithRegions[indexOfRegionSelected].fish;
+      const currentFish = allFishWithRegions[indexOfRegionSelected].fish;
       const result = currentFish.filter((singleFish) => {
         return singleFish.name.toLowerCase().includes(value.toLowerCase());
       });
       setFish(result);
     },
-    [region, showToast],
+    [region, showToast]
   );
 
   const toggleRegion = useCallback(
@@ -55,24 +53,24 @@ const FishProvider = (props: {children: JSX.Element}): JSX.Element => {
         setFish(null);
         return;
       }
-      const indexOfSelection = allFishedWithRegions.findIndex(
-        (e) => e.region === selection,
+      const indexOfSelection = allFishWithRegions.findIndex(
+        (e) => e.region === selection
       );
       if (indexOfSelection === -1) {
-        showToast('Something has gone wrong.', true);
+        showToast("Something has gone wrong.", true);
         return;
       }
-      setRegion(allFishedWithRegions[indexOfSelection].region);
-      setFish(allFishedWithRegions[indexOfSelection].fish);
+      setRegion(allFishWithRegions[indexOfSelection].region);
+      setFish(allFishWithRegions[indexOfSelection].fish);
     },
-    [showToast],
+    [showToast]
   );
   return (
-    <FishContext.Provider value={{fish, filterFish, region, toggleRegion}}>
+    <FishContext.Provider value={{ fish, filterFish, region, toggleRegion }}>
       {props.children}
     </FishContext.Provider>
   );
 };
 const useFishContext = () => useContext(FishContext);
 
-export {useFishContext, FishProvider};
+export { FishProvider, useFishContext };

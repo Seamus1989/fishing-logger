@@ -1,14 +1,15 @@
-import React from 'react';
-import {randomFishEmojiGenerator} from '../../consts';
-import {useUserContext} from '../../context/all-user-score';
-import {roundToDecimalPlace} from '../../utils';
-import {Box} from '../common/box';
-import {TextDisplayRow} from '../common/text-display-row';
-import {StyledImage} from '../random';
-import bin from '../../delete.svg';
+import { randomFishEmojiGenerator } from "../../consts";
+import { useUserContext } from "../../context/all-user-score";
+import { roundToDecimalPlace } from "../../utils";
+
+import { Box, Image } from "@chakra-ui/react";
+import { RegionEnum } from "../../fish-data";
+import bin from "../../images/delete.svg";
+import { TextDisplayRow } from "../common/text-display-row";
+import { labelMapper } from "../region-dropdown";
 
 const Bin = () => {
-  return <StyledImage height={15} width={15} src={bin} alt="logo" />;
+  return <Image height={15} width={15} src={bin} alt="logo" />;
 };
 export const SingleLoggedFish = ({
   name,
@@ -21,14 +22,15 @@ export const SingleLoggedFish = ({
 }: {
   name: string;
   scoredPoints: number;
-  region: string;
+  region: RegionEnum;
   recordedWeight: number;
   specimenWeight: number;
   isFirst: boolean;
   id: string;
 }) => {
-  const {deleteFish} = useUserContext();
+  const { deleteFish } = useUserContext();
   const isSpecimen = recordedWeight >= specimenWeight;
+  const label = labelMapper[region].replace("+", " ");
   if (!isFirst) {
     return (
       <Box display="flex" pb="3px" flexDirection="row">
@@ -46,7 +48,7 @@ export const SingleLoggedFish = ({
           leftPadding={5}
           text={`${roundToDecimalPlace(scoredPoints)}`}
         />
-        <TextDisplayRow verticalPadding={5} text={`${region}`} />
+        <TextDisplayRow verticalPadding={5} text={label} fontSize="14px" />
         <TextDisplayRow
           verticalPadding={5}
           text={`${roundToDecimalPlace(recordedWeight)} lbs`}
@@ -102,7 +104,7 @@ export const SingleLoggedFish = ({
             leftPadding={5}
             text={`${roundToDecimalPlace(scoredPoints)}`}
           />
-          <TextDisplayRow verticalPadding={5} text={`${region}`} />
+          <TextDisplayRow verticalPadding={5} text={label} fontSize="14px" />
           <TextDisplayRow
             verticalPadding={5}
             text={`${roundToDecimalPlace(recordedWeight)} lbs`}

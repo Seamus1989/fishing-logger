@@ -1,39 +1,57 @@
-import React, {useCallback, useState} from 'react';
-import Select from 'react-select';
-import {RegionEnum} from '../fish-data';
-import {useFishContext} from '../context/fish-list';
+import { useState } from "react";
 
+import { Select } from "@chakra-ui/react";
+import { useFishContext } from "../context/fish-list";
+import { Region, RegionEnum } from "../fish-data";
+
+export type RegionOption = {
+  value: Region;
+  label: string;
+};
+
+export const labelMapper = {
+  [RegionEnum.EnglandWales]: `🏴󠁧󠁢󠁥󠁮󠁧󠁿 + 🏴󠁧󠁢󠁷󠁬󠁳󠁿`,
+  [RegionEnum.ScotlandIreland]: `🏴󠁧󠁢󠁳󠁣󠁴󠁿 + 🇮🇪`,
+};
 const options = [
-  {value: RegionEnum.North_devon as string, label: 'North Devon'},
-  {value: RegionEnum.South_devon as string, label: 'South Devon'},
-  {value: RegionEnum.Cornwall as string, label: 'Cornwall'},
-  {value: RegionEnum.Dorset as string, label: 'Dorset & Hampshire'},
-  {value: RegionEnum.Somerset as string, label: 'Avon & Somerset'},
+  {
+    value: RegionEnum.EnglandWales as string,
+    label: labelMapper[RegionEnum.EnglandWales],
+  },
+  {
+    value: RegionEnum.ScotlandIreland as string,
+    label: labelMapper[RegionEnum.ScotlandIreland],
+  },
 ];
 
-export const RegionSelect = ({disabled}: {disabled: boolean}) => {
-  const [selection, setSelection] = useState(null);
-  const {toggleRegion} = useFishContext();
-
-  const handleChange = useCallback(
-    (selectedOption) => {
-      setSelection(selectedOption);
-      toggleRegion(selectedOption.value);
-    },
-    [toggleRegion],
+export const RegionSelect = ({ disabled }: { disabled: boolean }) => {
+  const [selection, setSelection] = useState<RegionOption | undefined>(
+    undefined
   );
+  const { toggleRegion } = useFishContext();
 
   return (
-    <>
-      <Select
-        className="basic-single"
-        value={selection}
-        onChange={handleChange}
-        options={options}
-        isSearchable
-        isDisabled={disabled}
-        placeholder="Select a fishing region..."
-      />
-    </>
+    <Select
+      width="100%"
+      variant="filled"
+      value={selection?.value}
+      onChange={(e) => {
+        const selectedOption = options.find(
+          (option) => option.value === e.target.value
+        );
+        if (selectedOption) {
+          setSelection(selectedOption as RegionOption);
+          toggleRegion(selectedOption.value as Region);
+        }
+      }}
+      isDisabled={disabled}
+      placeholder="Select a region..."
+    >
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </Select>
   );
 };
