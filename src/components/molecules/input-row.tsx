@@ -1,17 +1,16 @@
 /* eslint-disable react/require-default-props */
-import React, {useCallback, useMemo, useState} from 'react';
-import {SlideDown} from 'react-slidedown';
-import OutsideClickHandler from 'react-outside-click-handler';
-import {darkColor, deviceWidth} from '../../consts';
-import {Box} from '../common/box';
-import {Text} from '../common/text';
-import 'react-slidedown/lib/slidedown.css';
-import arrow from '../../down-arrow.svg';
-import {useUserContext} from '../../context/all-user-score';
-import {SingleRow} from './single-row';
-import {StyledImage, StyledRotate} from '../random';
-import {roundToDecimalPlace} from '../../utils';
-import {TextDisplayRow} from '../common/text-display-row';
+import { Box, Collapse, Image, Text } from "@chakra-ui/react";
+import { useCallback, useMemo, useState } from "react";
+
+import OutsideClickHandler from "react-outside-click-handler";
+import { darkColor, deviceWidth } from "../../consts";
+import { useUserContext } from "../../context/all-user-score";
+import arrow from "../../images/down-arrow.svg";
+import { roundToDecimalPlace } from "../../utils";
+
+import { TextDisplayRow } from "../common/text-display-row";
+import { StyledRotate } from "../random";
+import { SingleRow } from "./single-row";
 
 const DropdownArrow = ({
   onClick,
@@ -23,23 +22,9 @@ const DropdownArrow = ({
   return (
     <Box onClick={onClick}>
       <StyledRotate show={show}>
-        <StyledImage height={25} width={25} src={arrow} alt="logo" />
+        <Image height={15} width={15} src={arrow} alt="logo" />
       </StyledRotate>
     </Box>
-  );
-};
-
-export const MyDropdown = ({
-  open,
-  children,
-}: {
-  open: boolean;
-  children: JSX.Element;
-}): JSX.Element => {
-  return (
-    <SlideDown className="my-dropdown-slidedown">
-      {open ? children : null}
-    </SlideDown>
   );
 };
 
@@ -52,16 +37,16 @@ export const InputRow = ({
 }): JSX.Element => {
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const {users, currentUser} = useUserContext();
+  const { users, currentUser } = useUserContext();
 
   const specimensArr = useMemo(() => {
     if (users && users.length) {
       const user = users.find((thisUser) => thisUser.name === currentUser);
       if (!user) return [];
       if (!user.specimens) return [];
-      const {specimenStringArray} = user;
+      const { specimenStringArray } = user;
       const thisSpecimenNumber = user.specimens.filter(
-        (fish) => fish && fish.name === specimen,
+        (fish) => fish && fish.name === specimen
       ).length;
       if (thisSpecimenNumber === 0) return [];
       return specimenStringArray.slice(0, thisSpecimenNumber);
@@ -72,10 +57,11 @@ export const InputRow = ({
   const totalFish = useMemo(() => {
     if (users && users.length) {
       const user = users.find((thisUser) => thisUser.name === currentUser);
-      if (!user) return '';
-      if (!user.allFish) return '';
-      const total = user.allFish.filter((fish) => fish.name === specimen)
-        .length;
+      if (!user) return "";
+      if (!user.allFish) return "";
+      const total = user.allFish.filter(
+        (fish) => fish.name === specimen
+      ).length;
 
       return total;
     }
@@ -115,12 +101,17 @@ export const InputRow = ({
         margin="10px"
         padding="5px"
         borderRadius="5px"
+        borderColor={specimensArr?.length ? "black" : darkColor}
+        borderWidth={1}
         bg={darkColor}
       >
         <Box display="flex" flex={1} pt="5px" pl="5px" flexDirection="row">
           {specimensArr.map((specimensString, index) => {
             return (
-              <Box pl={index === 0 ? '0px' : '12px'}>
+              <Box
+                pl={index === 0 ? "0px" : "12px"}
+                key={`${specimensString}-${index}`}
+              >
                 <Text lineHeight="12px" fontWeight={500} fontSize="10px">
                   {specimensString}
                 </Text>
@@ -143,7 +134,7 @@ export const InputRow = ({
             </Box>
           </Box>
 
-          <TextDisplayRow text={`${'🏆  '} ${specimenWeight} lbs`} />
+          <TextDisplayRow text={`${"🏆  "} ${specimenWeight} lbs`} />
           <TextDisplayRow text={`Fish: ${totalFish || 0}`} />
           <TextDisplayRow
             text={`Points: ${roundToDecimalPlace(totalPoints)}`}
@@ -162,7 +153,7 @@ export const InputRow = ({
             </Box>
           </Box>
         </Box>
-        <MyDropdown open={showDropdown}>
+        <Collapse in={showDropdown} animateOpacity>
           <Box
             display="flex"
             flexDirection="row"
@@ -177,7 +168,7 @@ export const InputRow = ({
               />
             </Box>
           </Box>
-        </MyDropdown>
+        </Collapse>
       </Box>
     </OutsideClickHandler>
   );

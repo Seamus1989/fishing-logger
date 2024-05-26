@@ -1,35 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
-import {useUserContext} from '../../context/all-user-score';
-import {AllLoggedFish} from '../molecules/all-logged-fish';
-import {TableHeader} from '../common/table-header';
-import {Box} from '../common/box';
-import {Modal} from './modal-components/modal';
-import {TextDisplayColumn} from '../common/text-display-column';
-import {Text} from '../common/text';
-import {roundToDecimalPlace} from '../../utils';
-import {darkColor} from '../../consts';
+import { Box, Text } from "@chakra-ui/react";
 
-const StyledContainer = styled.div`
-  overflow-y: scroll;
-  max-height: 100%;
-`;
+import { darkColor } from "../../consts";
+import { useUserContext } from "../../context/all-user-score";
 
-export const UserModalContent = () => {
-  const {currentUser, users} = useUserContext();
+import { roundToDecimalPlace } from "../../utils";
+
+import { TableHeader } from "../common/table-header";
+import { TextDisplayColumn } from "../common/text-display-column";
+import { AllLoggedFish } from "../molecules/all-logged-fish";
+import { Modal, ModalContentProps } from "./modal";
+
+export const UserModal = ({ show, onClose }: ModalContentProps) => {
+  const { currentUser, users } = useUserContext();
   const user = users
     ? users.find((thisUser) => thisUser.name === currentUser)
     : null;
 
   if (!user) return null;
   return (
-    <Modal title="User Score">
-      <StyledContainer>
+    <Modal bg={darkColor} title="User Score" show={show} onClose={onClose}>
+      <Box overflowY={"scroll"} maxH="100%">
         <Box p="10px" flex={1} bg={darkColor}>
           <Box pb="25px">
             <Box pb="5px">
               <Text lineHeight="18px" fontWeight={600} fontSize="16px">
-                {user ? user.name : ''}
+                {user ? user.name : ""}
               </Text>
             </Box>
             <Box pl="5px">
@@ -51,7 +46,7 @@ export const UserModalContent = () => {
             <AllLoggedFish user={user} />
           </Box>
         </Box>
-      </StyledContainer>
+      </Box>
     </Modal>
   );
 };

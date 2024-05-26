@@ -1,8 +1,6 @@
-import React from 'react';
-import {Text} from './text';
-import {Box} from './box';
+import { Box, Text } from "@chakra-ui/react";
 
-export const EmptyDisplay = ({text}: {text: string}) => {
+export const EmptyDisplay = ({ text }: { text: string }) => {
   return (
     <Box flex={1} display="flex" flexDirection="row" p="10px">
       <>

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
-import React, {createContext, useContext, useCallback, useState} from 'react';
-import {randomFishEmojiGenerator} from '../consts';
+import { createContext, useCallback, useContext, useState } from "react";
+import { randomFishEmojiGenerator } from "../consts";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {Region} from '../fish-data';
-import {useToast} from '../hooks/toast';
+import { Region } from "../fish-data";
+import { useToast } from "../hooks/toast";
+import { copyToClipboard, getTrophyWithName } from "../utils";
 
 export type Fish = {
   name: string;
@@ -18,6 +19,7 @@ export type Fish = {
 export type User = {
   name: string;
   score: number;
+  bonusScore: number;
   totalSpecimenNumber: number;
   specimenStringArray: string[];
   specimens: Fish[] | null;
@@ -25,6 +27,7 @@ export type User = {
 };
 const defaultNewUserFields = {
   score: 0,
+  bonusScore: 0,
   totalSpecimenNumber: 0,
   specimenStringArray: [],
   specimens: null,
@@ -40,8 +43,10 @@ const UserContext = createContext<{
   deleteUser: (name: string) => void;
   resetAllUsers: () => void;
   deleteFish: (id: string) => void;
+  editBonusScore: (name: string, bonusScore: number) => void;
+  exportToText: () => void;
 }>({
-  currentUser: '',
+  currentUser: "",
   users: null,
   pushUserToList: () => {},
   changeUser: () => {},
@@ -50,26 +55,30 @@ const UserContext = createContext<{
   resetAllUsers: () => {},
   deleteUser: () => {},
   deleteFish: () => {},
+  editBonusScore: () => {},
+  exportToText: () => {},
 });
 
-const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
+const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
   const [users, setUsers] = useState<User[] | null>(null);
-  const [currentUser, setCurrentUser] = useState('');
-  const {showToast} = useToast();
+  console.log(JSON.stringify(users));
+  const [currentUser, setCurrentUser] = useState("");
+  const { showToast } = useToast();
 
   const pushUserToList = useCallback(
     (newUser: string) => {
       // THIS IS NOT USED!
       setCurrentUser(newUser);
-      const allNewUserInfo = {name: newUser, ...defaultNewUserFields};
+      const allNewUserInfo = { name: newUser, ...defaultNewUserFields };
       if (users) {
         setUsers([...users, allNewUserInfo]);
         return;
       }
       setUsers([allNewUserInfo]);
     },
-    [users],
+    [users]
   );
+
   const addFishToUser = useCallback(
     (newFish: Fish, scoreToAdd: number) => {
       if (users) {
@@ -77,10 +86,10 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
 
         if (!user) return;
         const otherUsers = users.filter(
-          (compareUser) => compareUser.name !== currentUser,
+          (compareUser) => compareUser.name !== currentUser
         );
 
-        const {allFish, score, ...rest} = user;
+        const { allFish, score, ...rest } = user;
         const sortedFish = allFish
           ? [...allFish, newFish].sort((a, b) => {
               return b.scoredPoints - a.scoredPoints;
@@ -94,7 +103,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         setUsers([...otherUsers, newInfo]);
       }
     },
-    [currentUser, users],
+    [currentUser, users]
   );
 
   const addSpecimenToUser = useCallback(
@@ -104,7 +113,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         if (!user) return;
 
         const otherUsers = users.filter(
-          (compareUser) => compareUser.name !== currentUser,
+          (compareUser) => compareUser.name !== currentUser
         );
 
         const {
@@ -132,31 +141,66 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
           score: score + scoreToAdd,
           totalSpecimenNumber: totalSpecimenNumber + 1,
           specimenStringArray: newSpecimenArr,
+          bonusScore: 0,
+          // HERE SEAMO ADD BONUS SCORE HERE
         } as User;
 
         setUsers([...otherUsers, newInfo]);
       }
     },
-    [currentUser, users],
+    [currentUser, users]
   );
 
   const changeUser = useCallback(
     (newUser: string) => {
-      if (newUser === '') {
-        setCurrentUser('');
+      if (newUser === "") {
+        setCurrentUser("");
         return;
       }
       setCurrentUser(newUser);
       const allUsers = users ? [...users] : [];
-      setUsers([...allUsers, {name: newUser, ...defaultNewUserFields}]);
+      setUsers([...allUsers, { name: newUser, ...defaultNewUserFields }]);
     },
-    [users],
+    [users]
   );
   const resetAllUsers = useCallback(() => {
     setUsers(null);
-    setCurrentUser('');
+    setCurrentUser("");
   }, []);
   // eslint-disable-next-line no-console
+
+  const editBonusScore = useCallback(
+    (username: string, bonusScore: number) => {
+      if (users) {
+        const user = users.find((thisUser) => thisUser.name === username);
+        if (!user) return;
+
+        const otherUsers = users.filter(
+          (compareUser) => compareUser.name !== username
+        );
+
+        const {
+          allFish,
+          specimens,
+          score,
+          totalSpecimenNumber,
+          specimenStringArray,
+          name,
+        } = user;
+        const newInfo = {
+          name,
+          allFish,
+          specimens,
+          score,
+          totalSpecimenNumber,
+          specimenStringArray,
+          bonusScore,
+        } as User;
+        setUsers([...otherUsers, newInfo]);
+      }
+    },
+    [users]
+  );
 
   const deleteUser = useCallback(() => {
     if (!users) return;
@@ -164,7 +208,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
     if (!user) return;
 
     const otherUsers = users.filter(
-      (compareUser) => compareUser.name !== currentUser,
+      (compareUser) => compareUser.name !== currentUser
     );
     setUsers(otherUsers);
   }, [currentUser, users]);
@@ -177,7 +221,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         if (!user) return;
 
         const otherUsers = users.filter(
-          (compareUser) => compareUser.name !== currentUser,
+          (compareUser) => compareUser.name !== currentUser
         );
 
         const {
@@ -192,7 +236,7 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
 
         const indexToDelete = allFish.findIndex((e) => e.id === id);
         if (indexToDelete === -1) {
-          showToast('Something has gone wrong.', true);
+          showToast("Something has gone wrong.", true);
           return;
         }
         const old = allFish.splice(indexToDelete, 1);
@@ -217,9 +261,33 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         setUsers([...otherUsers, newInfo]);
       }
     },
-    [currentUser, showToast, users],
+    [currentUser, showToast, users]
   );
 
+  const exportToText = () => {
+    const text = users
+      ?.sort((a, b) =>
+        a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
+      )
+      ?.map((user, index) => {
+        const values = {
+          name: user.name,
+          score: user.score,
+          bonusScore: user.bonusScore,
+          totalScore: user.score + user.bonusScore,
+          fishBreakdownString: (user.allFish || [])?.map((fish) => {
+            return `${fish.recordedWeight}lbs ${fish.name} (${fish.scoredPoints}%)`;
+          }),
+          trophyString: getTrophyWithName(index, user.name),
+        };
+        return `${values.trophyString} SCORE: ${
+          values.totalScore
+        }: WEIGH-INS: ${values.fishBreakdownString.join(", ") || "(none)"}`;
+      })
+      .join("\n\n");
+    copyToClipboard(text || "");
+    showToast("Text copied to clipboard", false);
+  };
   return (
     <UserContext.Provider
       value={{
@@ -232,6 +300,8 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
         deleteUser,
         resetAllUsers,
         deleteFish,
+        editBonusScore,
+        exportToText,
       }}
     >
       {props.children}
@@ -240,4 +310,4 @@ const UserProvider = (props: {children: JSX.Element}): JSX.Element => {
 };
 const useUserContext = () => useContext(UserContext);
 
-export {useUserContext, UserProvider};
+export { UserProvider, useUserContext };

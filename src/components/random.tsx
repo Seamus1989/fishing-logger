@@ -1,35 +1,41 @@
-import styled from 'styled-components';
+import { Box, Text } from "@chakra-ui/react";
 
-const StyledRotate = styled.div<{show: boolean}>`
-  -ms-transform: ${(props) => (props.show ? `rotate(180deg)` : `rotate(0deg)`)};
-  transform: ${(props) => (props.show ? `rotate(180deg)` : `rotate(0deg)`)};
-`;
+const StyledRotate = ({
+  children,
+  show,
+}: {
+  children: React.ReactNode;
+  show: boolean;
+}) => {
+  return (
+    <Box
+      style={{
+        msTransform: show ? "rotate(180deg)" : "rotate(0deg)",
+        transform: show ? "rotate(180deg)" : "rotate(0deg)",
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
 
-const StyledImage = styled.img<{height: number; width: number}>`
-  height: ${(props) => props.height}px;
-  width: ${(props) => props.width}px;
-`;
-const UnderlinedText = styled.p<{small?: boolean; verySmall?: boolean}>`
-  text-decoration: underline;
-  line-height: ${(props) => {
-    if (props.small) {
-      return '14px';
-    }
-    if (props.verySmall) {
-      return '12px';
-    }
-    return '16px';
-  }};
-  font-weight: 300;
-  font-size: ${(props) => {
-    if (props.small) {
-      return '12px';
-    }
-    if (props.verySmall) {
-      return '10px';
-    }
-    return '14px';
-  }};
-  margin: 0;
-`;
-export {UnderlinedText, StyledImage, StyledRotate};
+const UnderlinedText = ({
+  copy,
+  small,
+  verySmall,
+}: {
+  copy: string;
+  small?: boolean;
+  verySmall?: boolean;
+}) => {
+  const styles = {
+    lineHeight: small ? "14px" : verySmall ? "12px" : "16px",
+    fontSize: small ? "12px" : verySmall ? "10px" : "14px",
+    fontWeight: 300,
+    textDecoration: "underline",
+  };
+
+  return <Text {...styles}>{copy}</Text>;
+};
+
+export { StyledRotate, UnderlinedText };
