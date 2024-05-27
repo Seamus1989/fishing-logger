@@ -160,13 +160,11 @@ export const InputRow = ({
             flex={1}
             justifyContent="space-between"
           >
-            <Box display="flex" flexDirection="column" flex={1} mr="5px">
-              <SingleRow
-                specimen={specimen}
-                specimenWeight={specimenWeight}
-                hideRow={() => handleClickOutside()}
-              />
-            </Box>
+            <SingleRow
+              specimen={specimen}
+              specimenWeight={specimenWeight}
+              hideRow={() => handleClickOutside()}
+            />
           </Box>
         </Collapse>
       </Box>

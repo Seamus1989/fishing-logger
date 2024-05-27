@@ -59,13 +59,35 @@ export const getTrophy = (index: number) => {
 
 export const getTrophyWithName = (index: number, name: string) => {
   if (index === 0) {
-    return `1. 🏆 - ${name} - 🏆: `;
+    return `1. 🏆 - ${name} - 🏆 `;
   }
   if (index === 1) {
-    return `2. 🥈 - ${name} - 🥈: `;
+    return `2. 🥈 - ${name} - 🥈 `;
   }
   if (index === 2) {
-    return `3. 🥉 - ${name} - 🥉: `;
+    return `3. 🥉 - ${name} - 🥉 `;
   }
-  return `${index + 1}. ${name}: `;
+  return `${index + 1}. ${name} `;
+};
+
+export const getActualScore = (index: number, numberOfFish: number) => {
+  if (index === 0) {
+    return 11;
+  }
+  if (index === 1) {
+    return 10;
+  }
+  if (index === 2) {
+    return 9;
+  }
+  if (index === 3) {
+    return 8;
+  }
+  if (index === 4) {
+    return 7;
+  }
+  if (index === 5) {
+    return 6;
+  }
+  return !!numberOfFish ? 5 : 3;
 };

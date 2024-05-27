@@ -14,11 +14,13 @@ export const SelectNumber = ({
   onChange,
   title,
   value,
+  hideSteppers,
 }: {
-  onChange: (value: number) => void;
+  onChange: (value: string) => void;
   // eslint-disable-next-line react/require-default-props
   title?: string;
-  value: number;
+  value: string;
+  hideSteppers?: boolean;
 }): JSX.Element => {
   return (
     <Box flex={1} display="flex" flexDirection="column">
@@ -34,16 +36,17 @@ export const SelectNumber = ({
           inputMode="decimal"
           min={0}
           style={{ backgroundColor: "white" }}
-          defaultValue={0}
           value={value}
           size="sm"
-          onChange={(newValue) => onChange(+newValue)}
+          onChange={(newValue) => onChange(newValue)}
         >
           <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
+          {!hideSteppers && (
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          )}
         </NumberInput>
       </Box>
     </Box>

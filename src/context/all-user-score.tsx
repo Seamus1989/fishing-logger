@@ -6,7 +6,12 @@ import { randomFishEmojiGenerator } from "../consts";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Region } from "../fish-data";
 import { useToast } from "../hooks/toast";
-import { copyToClipboard, getTrophyWithName } from "../utils";
+import {
+  copyToClipboard,
+  getActualScore,
+  getTrophyWithName,
+  roundToDecimalPlace,
+} from "../utils";
 
 export type Fish = {
   name: string;
@@ -276,18 +281,24 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
           bonusScore: user.bonusScore,
           totalScore: user.score + user.bonusScore,
           fishBreakdownString: (user.allFish || [])?.map((fish) => {
-            return `${fish.recordedWeight}lbs ${fish.name} (${fish.scoredPoints}%)`;
+            return `${fish.recordedWeight}lbs ${
+              fish.name
+            } (${roundToDecimalPlace(fish.scoredPoints)}%)`;
           }),
           trophyString: getTrophyWithName(index, user.name),
+          actualScore: getActualScore(index, user.allFish?.length || 0),
         };
-        return `${values.trophyString} SCORE: ${
+        return `${values.trophyString} - SCORE: ${roundToDecimalPlace(
           values.totalScore
-        }: WEIGH-INS: ${values.fishBreakdownString.join(", ") || "(none)"}`;
+        )} - WEIGH-INS: ${
+          values.fishBreakdownString.join(", ") || "(none)"
+        } \n - ${values.actualScore} Points`;
       })
       .join("\n\n");
     copyToClipboard(text || "");
     showToast("Text copied to clipboard", false);
   };
+
   return (
     <UserContext.Provider
       value={{

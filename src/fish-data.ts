@@ -134,7 +134,7 @@ const fishSpeciesEnglandWales: FishList = [
     specimenWeight: 2.5,
   },
   {
-    name: "Polluck",
+    name: "Pollack",
     specimenWeight: 3.75,
   },
   {
@@ -334,7 +334,7 @@ const fishSpeciesScotlandIreland: FishList = [
     specimenWeight: 2.5,
   },
   {
-    name: "Polluck",
+    name: "Pollack",
     specimenWeight: 6.0,
   },
   {

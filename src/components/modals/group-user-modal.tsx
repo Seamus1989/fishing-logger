@@ -22,7 +22,7 @@ const SingleUserBreakdown = ({
   hideDetail?: boolean;
   index: number;
 }) => {
-  const [bonusPoints, setBonusPoints] = React.useState(0);
+  const [bonusPoints, setBonusPoints] = React.useState("");
   const { editBonusScore } = useUserContext();
 
   return (
@@ -75,7 +75,7 @@ const SingleUserBreakdown = ({
                   flexDirection="column"
                   justifyContent="flex-end"
                   onClick={() => {
-                    editBonusScore(user.name, bonusPoints);
+                    editBonusScore(user.name, parseFloat(bonusPoints || "0"));
                   }}
                 >
                   <Image height={"25px"} width={"25px"} src={plus} alt="logo" />
