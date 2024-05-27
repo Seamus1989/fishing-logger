@@ -281,7 +281,7 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
           bonusScore: user.bonusScore,
           totalScore: user.score + user.bonusScore,
           fishBreakdownString: (user.allFish || [])?.map((fish) => {
-            return `${fish.recordedWeight}lbs ${
+            return `${roundToDecimalPlace(fish.recordedWeight)}lbs ${
               fish.name
             } (${roundToDecimalPlace(fish.scoredPoints)}%)`;
           }),
