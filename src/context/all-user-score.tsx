@@ -209,16 +209,24 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
     [users]
   );
 
-  const deleteUser = useCallback(() => {
-    if (!users) return;
-    const user = users.find((thisUser) => thisUser.name === currentUser);
-    if (!user) return;
+  const deleteUser = useCallback(
+    (username: string) => {
+      if (!users?.length) return;
+      const user = users.find((thisUser) => thisUser.name === username);
+      if (!user) return;
 
-    const otherUsers = users.filter(
-      (compareUser) => compareUser.name !== currentUser
-    );
-    setUsers(otherUsers);
-  }, [currentUser, users]);
+      const otherUsers = users.filter(
+        (compareUser) => compareUser.name !== username
+      );
+      if (otherUsers.length === 0) {
+        setUsers(null);
+        setCurrentUser("");
+        return;
+      }
+      setUsers(otherUsers);
+    },
+    [users]
+  );
 
   const deleteFish = useCallback(
     (id: string) => {

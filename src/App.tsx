@@ -23,6 +23,7 @@ const bg = "#FF8883";
 const AppInner = () => {
   const { fish } = useFishContext();
   const { currentUser, users } = useUserContext();
+
   const [fishFilter, setFishFilter] = useState("");
   const { filterFish } = useFishContext();
   const { showToast } = useToast();
@@ -36,7 +37,7 @@ const AppInner = () => {
   );
 
   const fishes = useMemo(() => {
-    if (!fish) return null;
+    if (!fish || !users?.length || !currentUser) return null;
     return fish
       .sort((a, b) => a.name.localeCompare(b.name))
       .map(({ name, specimenWeight }, index) => {
@@ -48,7 +49,7 @@ const AppInner = () => {
           ></InputRow>
         );
       });
-  }, [fish]);
+  }, [currentUser, fish, users?.length]);
 
   return (
     <Box bg={bg} flexGrow={1} minHeight={`${deviceHeight}px`}>
