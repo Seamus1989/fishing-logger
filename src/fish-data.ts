@@ -217,6 +217,10 @@ const fishSpeciesEnglandWales: FishList = [
     name: "Cucko Wrasse",
     specimenWeight: 1.25,
   },
+  {
+    name: "Whiting",
+    specimenWeight: 1.5,
+  },
 ];
 
 const fishSpeciesScotlandIreland: FishList = [
@@ -416,6 +420,10 @@ const fishSpeciesScotlandIreland: FishList = [
   {
     name: "Cucko Wrasse",
     specimenWeight: 1.25,
+  },
+  {
+    name: "Whiting",
+    specimenWeight: 1.5,
   },
 ];
 export const allFishWithRegions: FishByRegionData = [
