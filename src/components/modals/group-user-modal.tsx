@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
-import React from "react";
+import { Box, Button, Fade, Flex, Image, Text } from "@chakra-ui/react";
+import React, { useMemo } from "react";
 
 import { darkColor } from "../../consts";
 import { User, useUserContext } from "../../context/all-user-score";
@@ -23,18 +23,39 @@ const SingleUserBreakdown = ({
   index: number;
 }) => {
   const [bonusPoints, setBonusPoints] = React.useState("");
-  const { editBonusScore } = useUserContext();
+  const [enableEditBonus, setEnableEditBonus] = React.useState(false);
+  const { editBonusScore, deleteUser } = useUserContext();
 
   return (
     <Box px="10px" py="5px" flex={1} bg={darkColor}>
-      <Box pb={!hideDetail ? "5px" : undefined}>
-        <Text lineHeight="16px" fontWeight={500} fontSize="14px">
-          {user
-            ? `${getTrophy(index)}${user.name} - ${
-                user ? roundToDecimalPlace(user.score + user.bonusScore) : 0
-              }`
-            : ""}
-        </Text>
+      <Box
+        pb={!hideDetail ? "5px" : undefined}
+        flexDirection="row"
+        display="flex"
+        justifyContent={"space-between"}
+      >
+        <Box>
+          <Text lineHeight="16px" fontWeight={500} fontSize="14px">
+            {user
+              ? `${getTrophy(index)}${user.name} - ${
+                  user ? roundToDecimalPlace(user.score + user.bonusScore) : 0
+                }`
+              : ""}
+            efef
+          </Text>
+        </Box>
+        {!hideDetail && (
+          <Box onClick={() => deleteUser(user.name)}>
+            <Text
+              lineHeight="14px"
+              fontWeight={500}
+              fontSize="12px"
+              textDecoration={"underline"}
+            >
+              Remove User
+            </Text>
+          </Box>
+        )}
       </Box>
       <Flex direction="row" pb="3px">
         {!hideDetail && (
@@ -61,44 +82,74 @@ const SingleUserBreakdown = ({
               />
             </Box>
             <Box flex={2}>
-              <Flex direction="row" gap="5px">
-                <Box width="70px">
-                  <SelectNumber
-                    title="Bonus"
-                    onChange={(value) => setBonusPoints(value)}
-                    value={bonusPoints}
-                  />
-                </Box>
-                <Box
-                  ml="5px"
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="flex-end"
-                  onClick={() => {
-                    editBonusScore(user.name, parseFloat(bonusPoints || "0"));
-                  }}
-                >
-                  <Image height={"25px"} width={"25px"} src={plus} alt="logo" />
-                </Box>
-                <Box
-                  ml="5px"
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="flex-end"
-                  onClick={() => {
-                    editBonusScore(user.name, 0);
-                  }}
-                >
-                  <Box bg="white">
-                    <Image
-                      height={"25px"}
-                      width={"25px"}
-                      src={bin}
-                      alt="logo"
-                    />
-                  </Box>
-                </Box>
-              </Flex>
+              {enableEditBonus ? (
+                <Fade in={enableEditBonus}>
+                  <Flex direction="row" gap="5px">
+                    <Box width="70px">
+                      <SelectNumber
+                        title="Bonus"
+                        onChange={(value) => setBonusPoints(value)}
+                        value={bonusPoints}
+                      />
+                    </Box>
+                    <Box
+                      ml="5px"
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="flex-end"
+                      onClick={() => {
+                        editBonusScore(
+                          user.name,
+                          parseFloat(bonusPoints || "0")
+                        );
+                      }}
+                    >
+                      <Image
+                        height={"25px"}
+                        width={"25px"}
+                        src={plus}
+                        alt="logo"
+                      />
+                    </Box>
+                    <Box
+                      ml="5px"
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="flex-end"
+                      onClick={() => {
+                        editBonusScore(user.name, 0);
+                      }}
+                    >
+                      <Box bg="white">
+                        <Image
+                          height={"25px"}
+                          width={"25px"}
+                          src={bin}
+                          alt="logo"
+                        />
+                      </Box>
+                    </Box>
+                  </Flex>
+                </Fade>
+              ) : (
+                <Flex direction="row" gap="5px" height="100%" justify="center">
+                  <Flex
+                    width="70px"
+                    justify="center"
+                    height="100%"
+                    direction="column"
+                  >
+                    <Text
+                      lineHeight="14px"
+                      fontSize="12px"
+                      textDecoration={"underline"}
+                      onClick={() => setEnableEditBonus(true)}
+                    >
+                      Edit Bonus
+                    </Text>
+                  </Flex>
+                </Flex>
+              )}
             </Box>
           </Box>
         )}
@@ -109,6 +160,24 @@ const SingleUserBreakdown = ({
 
 const AllUserTable = () => {
   const { exportToText, users } = useUserContext();
+
+  const renderUsers = useMemo(() => {
+    if (!users) return null;
+    return users
+      ?.sort((a, b) =>
+        a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
+      )
+      .map((user, index) => {
+        return (
+          <SingleUserBreakdown
+            user={user}
+            hideDetail
+            key={`all-user-table-${user.name}-${index}`}
+            index={index}
+          />
+        );
+      });
+  }, [users]);
   return (
     <Box
       pb="15px"
@@ -120,20 +189,7 @@ const AllUserTable = () => {
       mx="10px"
     >
       <TableHeader text="Top Scores" />
-      {users
-        ?.sort((a, b) =>
-          a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
-        )
-        .map((user, index) => {
-          return (
-            <SingleUserBreakdown
-              user={user}
-              hideDetail
-              key={`all-user-table-${user.name}-${index}`}
-              index={index}
-            />
-          );
-        })}
+      {renderUsers}
       <Flex direction="row" justifyContent="flex-end">
         <Button mt="20px" onClick={exportToText} colorScheme="blue" mr={3}>
           <Text>Export to text</Text>
@@ -145,22 +201,27 @@ const AllUserTable = () => {
 export const GroupUserModal = ({ show, onClose }: ModalContentProps) => {
   const { users } = useUserContext();
 
+  const renderUsers = useMemo(() => {
+    if (!users) return null;
+    return users
+      ?.sort((a, b) =>
+        a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
+      )
+      .map((user, index) => {
+        return (
+          <SingleUserBreakdown
+            user={user}
+            key={`grouped-users-${user.name}-${index}`}
+            index={index}
+          />
+        );
+      });
+  }, [users]);
+
   return (
     <Modal title="All Scores" show={show} onClose={onClose} bg={darkColor}>
       <Box overflowY={"scroll"} maxH="100%">
-        {users
-          ?.sort((a, b) =>
-            a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
-          )
-          .map((user, index) => {
-            return (
-              <SingleUserBreakdown
-                user={user}
-                key={`grouped-users-${user.name}-${index}`}
-                index={index}
-              />
-            );
-          })}
+        {renderUsers}
         {!!users?.length && (
           <Box py="20px">
             <AllUserTable />

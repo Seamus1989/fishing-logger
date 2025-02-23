@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Select } from "@chakra-ui/react";
 import { useFishContext } from "../context/fish-list";
@@ -30,6 +30,13 @@ export const RegionSelect = ({ disabled }: { disabled: boolean }) => {
   );
   const { toggleRegion } = useFishContext();
 
+  const renderOptions = useMemo(() => {
+    return options.map((option) => (
+      <option key={option.value} value={option.value}>
+        {option.label}
+      </option>
+    ));
+  }, []);
   return (
     <Select
       width="100%"
@@ -47,11 +54,7 @@ export const RegionSelect = ({ disabled }: { disabled: boolean }) => {
       isDisabled={disabled}
       placeholder="Select a region..."
     >
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
+      {renderOptions}
     </Select>
   );
 };
