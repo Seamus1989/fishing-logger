@@ -94,6 +94,22 @@ export const InputRow = ({
     setShowDropdown(!showDropdown);
   }, [currentUser, showDropdown]);
 
+  const renderSpecimens = useMemo(() => {
+    if (!specimensArr) return null;
+    return specimensArr.map((specimensString, index) => {
+      return (
+        <Box
+          pl={index === 0 ? "0px" : "12px"}
+          key={`${specimensString}-${index}`}
+        >
+          <Text lineHeight="12px" fontWeight={500} fontSize="10px">
+            {specimensString}
+          </Text>
+        </Box>
+      );
+    });
+  }, [specimensArr]);
+
   return (
     <OutsideClickHandler onOutsideClick={() => handleClickOutside()}>
       <Box
@@ -106,18 +122,7 @@ export const InputRow = ({
         bg={darkColor}
       >
         <Box display="flex" flex={1} pt="5px" pl="5px" flexDirection="row">
-          {specimensArr.map((specimensString, index) => {
-            return (
-              <Box
-                pl={index === 0 ? "0px" : "12px"}
-                key={`${specimensString}-${index}`}
-              >
-                <Text lineHeight="12px" fontWeight={500} fontSize="10px">
-                  {specimensString}
-                </Text>
-              </Box>
-            );
-          })}
+          {renderSpecimens}
         </Box>
         <Box
           onClick={() => handleDropdownClick()}

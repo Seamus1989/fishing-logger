@@ -7,7 +7,7 @@ export const getFishScore = (
   specimenWeight: number,
   fishWeight: number
 ): number => {
-  if (specimenWeight === 0) return 0; // Avoid division by zero
+  if (specimenWeight === 0 || fishWeight === 0) return 0; // Avoid division by zero
   return (fishWeight / specimenWeight) * 100;
 };
 
@@ -39,6 +39,7 @@ export const copyToClipboard = async (text: string) => {
 };
 
 export const getTrophy = (index: number) => {
+  if (index < 0) return "";
   const trophies = ["🏆 ", "🥈 ", "🥉 "];
   return index < trophies.length ? trophies[index] : ` ${index + 1}. `;
 };

@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useMemo } from "react";
 
 import { darkColor } from "../../consts";
 import { User, useUserContext } from "../../context/all-user-score";
@@ -109,6 +109,24 @@ const SingleUserBreakdown = ({
 
 const AllUserTable = () => {
   const { exportToText, users } = useUserContext();
+
+  const renderUsers = useMemo(() => {
+    if (!users) return null;
+    return users
+      ?.sort((a, b) =>
+        a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
+      )
+      .map((user, index) => {
+        return (
+          <SingleUserBreakdown
+            user={user}
+            hideDetail
+            key={`all-user-table-${user.name}-${index}`}
+            index={index}
+          />
+        );
+      });
+  }, [users]);
   return (
     <Box
       pb="15px"
@@ -120,20 +138,7 @@ const AllUserTable = () => {
       mx="10px"
     >
       <TableHeader text="Top Scores" />
-      {users
-        ?.sort((a, b) =>
-          a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
-        )
-        .map((user, index) => {
-          return (
-            <SingleUserBreakdown
-              user={user}
-              hideDetail
-              key={`all-user-table-${user.name}-${index}`}
-              index={index}
-            />
-          );
-        })}
+      {renderUsers}
       <Flex direction="row" justifyContent="flex-end">
         <Button mt="20px" onClick={exportToText} colorScheme="blue" mr={3}>
           <Text>Export to text</Text>
@@ -145,22 +150,27 @@ const AllUserTable = () => {
 export const GroupUserModal = ({ show, onClose }: ModalContentProps) => {
   const { users } = useUserContext();
 
+  const renderUsers = useMemo(() => {
+    if (!users) return null;
+    return users
+      ?.sort((a, b) =>
+        a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
+      )
+      .map((user, index) => {
+        return (
+          <SingleUserBreakdown
+            user={user}
+            key={`grouped-users-${user.name}-${index}`}
+            index={index}
+          />
+        );
+      });
+  }, [users]);
+
   return (
     <Modal title="All Scores" show={show} onClose={onClose} bg={darkColor}>
       <Box overflowY={"scroll"} maxH="100%">
-        {users
-          ?.sort((a, b) =>
-            a.score + a.bonusScore < b.bonusScore + b.score ? 1 : -1
-          )
-          .map((user, index) => {
-            return (
-              <SingleUserBreakdown
-                user={user}
-                key={`grouped-users-${user.name}-${index}`}
-                index={index}
-              />
-            );
-          })}
+        {renderUsers}
         {!!users?.length && (
           <Box py="20px">
             <AllUserTable />

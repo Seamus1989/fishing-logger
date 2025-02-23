@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { ToastContainer } from "react-toastify";
 import "./App.css";
@@ -34,10 +34,22 @@ const AppInner = () => {
     },
     [filterFish]
   );
-  console.timeLog(
-    process.env.NEXT_PUBLIC_VERCEL_URL,
-    process.env.NEXT_PUBLIC_SITE_URL
-  );
+
+  const fishes = useMemo(() => {
+    if (!fish) return null;
+    return fish
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(({ name, specimenWeight }, index) => {
+        return (
+          <InputRow
+            specimen={name}
+            specimenWeight={specimenWeight}
+            key={`${name}-${index}`}
+          ></InputRow>
+        );
+      });
+  }, [fish]);
+
   return (
     <Box bg={bg} flexGrow={1} minHeight={`${deviceHeight}px`}>
       <AppHeader />
@@ -97,17 +109,7 @@ const AppInner = () => {
           </Box>
         )}
 
-        {fish
-          ? fish.map(({ name, specimenWeight }, index) => {
-              return (
-                <InputRow
-                  specimen={name}
-                  specimenWeight={specimenWeight}
-                  key={`${name}-${index}`}
-                ></InputRow>
-              );
-            })
-          : null}
+        {fishes}
       </Box>
       {users && users.length && <Nav />}
     </Box>
