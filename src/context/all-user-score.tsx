@@ -66,7 +66,7 @@ const UserContext = createContext<{
 
 const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
   const [users, setUsers] = useState<User[] | null>(null);
-  console.log(JSON.stringify(users));
+
   const [currentUser, setCurrentUser] = useState("");
   const { showToast } = useToast();
 
@@ -95,6 +95,7 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
         );
 
         const { allFish, score, ...rest } = user;
+
         const sortedFish = allFish
           ? [...allFish, newFish].sort((a, b) => {
               return b.scoredPoints - a.scoredPoints;
@@ -104,7 +105,8 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
           allFish: sortedFish,
           score: score + scoreToAdd,
           ...rest,
-        } as User;
+        };
+
         setUsers([...otherUsers, newInfo]);
       }
     },
@@ -127,6 +129,7 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
           score,
           totalSpecimenNumber,
           name,
+          bonusScore,
           specimenStringArray,
         } = user;
 
@@ -146,9 +149,8 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
           score: score + scoreToAdd,
           totalSpecimenNumber: totalSpecimenNumber + 1,
           specimenStringArray: newSpecimenArr,
-          bonusScore: 0,
-          // HERE SEAMO ADD BONUS SCORE HERE
-        } as User;
+          bonusScore,
+        };
 
         setUsers([...otherUsers, newInfo]);
       }
@@ -200,7 +202,7 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
           totalSpecimenNumber,
           specimenStringArray,
           bonusScore,
-        } as User;
+        };
         setUsers([...otherUsers, newInfo]);
       }
     },
@@ -236,6 +238,7 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
           totalSpecimenNumber,
           specimenStringArray,
           name,
+          bonusScore,
         } = user;
         if (!allFish || !allFish.length) return;
 
@@ -262,7 +265,8 @@ const UserProvider = (props: { children: JSX.Element }): JSX.Element => {
           score: score - old[0].scoredPoints,
           totalSpecimenNumber: totalSpecimenNumber - specimensToDelete,
           specimenStringArray: newSpecimenArr,
-        } as User;
+          bonusScore,
+        };
         setUsers([...otherUsers, newInfo]);
       }
     },

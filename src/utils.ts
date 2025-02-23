@@ -1,14 +1,14 @@
 export const getNumberOfDecimals = (value: number): number => {
-  if (Math.floor(value.valueOf()) === value.valueOf()) return 0;
-  return value.toString().split(".")[1].length || 0;
+  const decimalPart = value.toString().split(".")[1];
+  return decimalPart ? decimalPart.length : 0;
 };
 
 export const getFishScore = (
   specimenWeight: number,
   fishWeight: number
 ): number => {
-  const decimal = fishWeight / specimenWeight;
-  return decimal * 100;
+  if (specimenWeight === 0) return 0; // Avoid division by zero
+  return (fishWeight / specimenWeight) * 100;
 };
 
 export const getFishInPounds = (
@@ -18,76 +18,40 @@ export const getFishInPounds = (
 ): number => {
   const dramTotal = dram / (16 * 16);
   const ounceTotal = ounce / 16;
-  const poundsTotal = pound;
-  return dramTotal + ounceTotal + poundsTotal;
+  return pound + ounceTotal + dramTotal;
 };
 
 export const capitaliseMe = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
-const rounded = (decimals: number, howMany: number) =>
-  Math.round(decimals * howMany) / howMany;
-
-export const roundToDecimalPlace = (num: number, howMany?: number) => {
-  const factor = 10 ** (howMany || 2);
-  const round = Math.round(num);
-  const leftOvers = num - round;
-  if (leftOvers > 0) {
-    return round + rounded(leftOvers, factor);
-  }
-  return round + rounded(leftOvers, factor);
+export const roundToDecimalPlace = (num: number, howMany: number = 2) => {
+  const factor = 10 ** howMany;
+  return Math.round(num * factor) / factor;
 };
 
-export const copyToClipboard = (text: string) => {
-  // Copy the text inside the text field
-  navigator.clipboard.writeText(text);
+export const copyToClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (err) {
+    console.error("Failed to copy:", err);
+  }
 };
 
 export const getTrophy = (index: number) => {
-  if (index === 0) {
-    return `🏆 `;
-  }
-  if (index === 1) {
-    return `🥈 `;
-  }
-  if (index === 2) {
-    return `🥉 `;
-  }
-  return ` ${index + 1}. `;
+  const trophies = ["🏆 ", "🥈 ", "🥉 "];
+  return index < trophies.length ? trophies[index] : ` ${index + 1}. `;
 };
 
 export const getTrophyWithName = (index: number, name: string) => {
-  if (index === 0) {
-    return `1. 🏆 - ${name} - 🏆 `;
-  }
-  if (index === 1) {
-    return `2. 🥈 - ${name} - 🥈 `;
-  }
-  if (index === 2) {
-    return `3. 🥉 - ${name} - 🥉 `;
-  }
-  return `${index + 1}. ${name} `;
+  const trophies = ["🏆", "🥈", "🥉"];
+  return index < trophies.length
+    ? `${index + 1}. ${trophies[index]} - ${name} - ${trophies[index]}`
+    : `${index + 1}. ${name}`;
 };
 
 export const getActualScore = (index: number, numberOfFish: number) => {
-  if (index === 0) {
-    return 11;
-  }
-  if (index === 1) {
-    return 10;
-  }
-  if (index === 2) {
-    return 9;
-  }
-  if (index === 3) {
-    return 8;
-  }
-  if (index === 4) {
-    return 7;
-  }
-  if (index === 5) {
-    return 6;
-  }
-  return !!numberOfFish ? 5 : 3;
+  if (index < 0) return 0;
+  const scores = [11, 10, 9, 8, 7, 6];
+  return index < scores.length ? scores[index] : numberOfFish ? 5 : 3;
 };
